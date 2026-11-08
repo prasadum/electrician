@@ -1,13 +1,13 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin · NSTI Calicut</title>
 <style>:root{--bg:#eef2f7;--c:#fff;--t:#152033;--b:#1a56cc;--bd:#cbd5e3;--r:#c0392b;--g:#1e8449}@media(prefers-color-scheme:dark){:root{--bg:#101722;--c:#18212f;--t:#e8eef8;--bd:#2c3a50}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:16px/1.4 system-ui,sans-serif;padding:16px}main{max-width:900px;margin:0 auto}
-input,select,.btn{min-height:44px;font-size:16px;border-radius:10px;border:1px solid var(--bd);padding:0 12px;background:var(--c);color:var(--t)}.btn{background:var(--b);color:#fff;border:0;font-weight:700;cursor:pointer}.btn.r{background:var(--r)}.btn.g{background:var(--g)}.btn.s{background:#64748b}
+input,select,.btn{min-height:44px;font-size:16px;border-radius:10px;border:1px solid var(--bd);padding:0 12px;background:var(--c);color:var(--t)}.btn{background:var(--b);color:#fff;border:0;font-weight:700;cursor:pointer}.btn.r{background:var(--r)}.btn.g{background:var(--g)}.btn.s{background:#b9770e}.btn.g2{background:var(--g)}#warn{background:#fdecea;color:#7b1c12;border:1px solid #f5b7b1;border-radius:10px;padding:10px;margin:10px 0}
 .card{background:var(--c);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:10px 0}h2{margin:18px 0 6px}table{width:100%;border-collapse:collapse;background:var(--c);margin-top:12px}th,td{padding:8px;border-bottom:1px solid var(--bd);text-align:left;font-size:15px}.w{overflow:auto}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row>.f{flex:1;min-width:160px}[hidden]{display:none!important}.tag{font-size:13px;padding:2px 8px;border-radius:99px;background:var(--bd)}.tag.h{background:#f5b7b1;color:#641e16}small{opacity:.8}</style></head><body><main>
 <h1>Admin · NSTI Calicut</h1>
 <div class="card"><b>Sign in</b>
 <div class="row" style="margin-top:8px"><input class="f" id="k" type="password" placeholder="Admin key (trainee data)"><input class="f" id="tk" type="password" placeholder="GitHub token (for changes)"><button class="btn" id="ld">Load</button></div>
 <small>The GitHub token is a fine-grained token for repo prasadum/electrician with Contents: Read and write. It stays in this tab only and is forgotten when you close it.</small><p id="m"></p></div>
-<div id="adm" hidden>
+<div id="adm" hidden><div id="warn" hidden>No valid GitHub token in this tab, so Hide, Replace, Delete and uploads will not work. Paste the token above and tap Load again.</div>
 <h2>Modules</h2><div id="mods"></div>
 <div class="card"><b>Add or replace a module (.html)</b>
 <div class="row" style="margin-top:8px"><input class="f" id="nid" placeholder="ID, e.g. M03"><input class="f" id="nti" placeholder="Title"><input class="f" id="nsb" placeholder="Short description"></div>
@@ -37,20 +37,20 @@ async function saveLib(note){await put('library.json',enc(JSON.stringify(LIB,nul
 const allMods=()=>{const base=(NSTI.MODULES||[]).filter(m=>!LIB.removed.includes(m.id));const ex=LIB.modules.filter(m=>!LIB.removed.includes(m.id));return base.filter(b=>!ex.find(e=>e.id===b.id)).concat(ex)};
 function draw(){
  $('#mods').innerHTML=allMods().map(m=>{const h=LIB.hidden.includes(m.id);return `<div class="card"><div class="row"><div class="f"><b>${esc(m.title)}</b> <span class="tag ${h?'h':''}">${h?'Hidden':'Visible'}</span><br><small>${esc(m.file)}</small></div>
- <button class="btn s" data-a="hide" data-id="${esc(m.id)}">${h?'Unhide':'Hide'}</button><button class="btn" data-a="rep" data-id="${esc(m.id)}">Replace file</button><button class="btn r" data-a="del" data-id="${esc(m.id)}">Delete</button></div></div>`}).join('')||'<small>No modules.</small>';
+ <button class="btn ${h?'g2':'s'}" data-a="hide" data-id="${esc(m.id)}">${h?'Unhide':'Hide'}</button><button class="btn" data-a="rep" data-id="${esc(m.id)}">Replace file</button><button class="btn r" data-a="del" data-id="${esc(m.id)}">Delete</button></div></div>`}).join('')||'<small>No modules.</small>';
  $('#res').innerHTML=LIB.resources.map(x=>`<div class="card"><div class="row"><div class="f"><b>${esc(x.title)}</b> <span class="tag ${x.hidden?'h':''}">${x.hidden?'Hidden':'Visible'}</span> <span class="tag">${x.type==='link'?'Link':'File'}</span><br><small>${esc(x.url)}</small></div>
- <button class="btn s" data-a="rhide" data-id="${esc(x.id)}">${x.hidden?'Unhide':'Hide'}</button><button class="btn r" data-a="rdel" data-id="${esc(x.id)}">Delete</button></div></div>`).join('')||'<small>Nothing added yet.</small>'}
+ <button class="btn ${x.hidden?'g2':'s'}" data-a="rhide" data-id="${esc(x.id)}">${x.hidden?'Unhide':'Hide'}</button><button class="btn r" data-a="rdel" data-id="${esc(x.id)}">Delete</button></div></div>`).join('')||'<small>Nothing added yet.</small>'}
 let ra=0;
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b)return;const id=b.dataset.id,a=b.dataset.a;
  try{
-  if(a==='hide'){LIB.hidden=LIB.hidden.includes(id)?LIB.hidden.filter(x=>x!==id):LIB.hidden.concat(id);msg('Saving...');await saveLib('Toggle '+id);msg('Saved.')}
+  if(a==='hide'){const bk=JSON.stringify(LIB);try{LIB.hidden=LIB.hidden.includes(id)?LIB.hidden.filter(x=>x!==id):LIB.hidden.concat(id);msg('Saving...');await saveLib('Toggle '+id);msg('Saved.')}catch(x){LIB=JSON.parse(bk);draw();throw x}}
   else if(a==='rep'){const i=document.createElement('input');i.type='file';i.accept='.html';i.onchange=async()=>{try{const m=allMods().find(x=>x.id===id);msg('Uploading...');await put(m.file,await b64(i.files[0]),'Replace '+m.file);msg('Replaced '+m.file+'. Live in about a minute.')}catch(x){msg('Failed: '+x.message)}};i.click()}
   else if(a==='del'){if(b.dataset.c!=='1'){b.dataset.c='1';b.textContent='Tap again to delete';setTimeout(()=>{b.dataset.c='';b.textContent='Delete'},4000);return}
    const m=allMods().find(x=>x.id===id);msg('Deleting...');await del(m.file,'Delete '+m.file);LIB.modules=LIB.modules.filter(x=>x.id!==id);LIB.removed=LIB.removed.concat(id);LIB.hidden=LIB.hidden.filter(x=>x!==id);await saveLib('Remove '+id);msg('Deleted.')}
-  else if(a==='rhide'){const x=LIB.resources.find(r=>r.id===id);x.hidden=!x.hidden;msg('Saving...');await saveLib('Toggle resource');msg('Saved.')}
+  else if(a==='rhide'){const x=LIB.resources.find(r=>r.id===id);x.hidden=!x.hidden;msg('Saving...');try{await saveLib('Toggle resource');msg('Saved.')}catch(y){x.hidden=!x.hidden;draw();throw y}}
   else if(a==='rdel'){if(b.dataset.c!=='1'){b.dataset.c='1';b.textContent='Tap again to delete';setTimeout(()=>{b.dataset.c='';b.textContent='Delete'},4000);return}
    const x=LIB.resources.find(r=>r.id===id);msg('Deleting...');if(x.type==='file')await del(x.path,'Delete '+x.path);LIB.resources=LIB.resources.filter(r=>r.id!==id);await saveLib('Remove resource');msg('Deleted.')}
- }catch(x){msg('Failed: '+x.message)}});
+ }catch(x){msg('Failed: '+(/bad credentials/i.test(x.message)?'GitHub token is wrong or expired. Paste a new token and tap Load.':x.message))}});
 $('#nadd').onclick=async()=>{try{const id=$('#nid').value.trim(),f=$('#nfl').files[0];if(!id||!f){msg('Enter an ID and choose a .html file.');return}
  const ex=allMods().find(m=>m.id===id);let m=ex;msg('Uploading...');
  if(!ex){const ti=$('#nti').value.trim();if(!ti){msg('Enter a title.');return}m={id,title:ti,sub:$('#nsb').value.trim(),file:id+'_'+ti.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_|_$/g,'')+'.html',key:$('#nky').value.trim()||('cits_'+id.toLowerCase()+'_v1'),slides:+$('#nsl').value||20,ready:true};LIB.modules=LIB.modules.filter(x=>x.id!==id).concat(m);LIB.removed=LIB.removed.filter(x=>x!==id)}
@@ -62,9 +62,9 @@ $('#ladd').onclick=async()=>{try{const t=$('#lti').value.trim(),u=$('#lur').valu
 function show(){const b=$('#bt').value,r=rows.filter(x=>!b||x.batch===b);$('#tb').innerHTML=r.map(x=>`<tr><td>${esc(x.email)}</td><td>${esc(x.batch)}</td><td>${esc(x.module)}</td><td>${x.slide}</td><td>${x.done}</td><td>${esc(String(x.updated).slice(0,16).replace('T',' '))}</td></tr>`).join('');$('#m2').textContent=r.length+' trainees'}
 $('#ld').onclick=async()=>{TK=$('#tk').value.trim()||TK;
  if(!TK&&!$('#k').value){msg('Enter the admin key, the GitHub token, or both.');return}
- if(TK){try{sessionStorage.setItem('gh',TK)}catch(e){}const t=await gh('?ref=main');if(!t.ok){msg('GitHub token rejected.');return}await loadLib()}
+ if(TK){try{sessionStorage.setItem('gh',TK)}catch(e){}const t=await gh('?ref=main');if(!t.ok){TK='';try{sessionStorage.removeItem('gh')}catch(e){}msg('GitHub token rejected (wrong, expired, or no access to prasadum/electrician). Create a new token with Contents: Read and write.');$('#adm').hidden=false;$('#warn').hidden=false;return}await loadLib()}
  if($('#k').value&&NSTI.SCRIPT_URL){try{const j=await (await fetch(NSTI.SCRIPT_URL+'?action=summary&key='+encodeURIComponent($('#k').value))).json();if(!j.ok){msg('Wrong admin key.');return}rows=j.rows;$('#bt').innerHTML='<option value="">All batches</option>'+[...new Set(rows.map(x=>x.batch))].map(b=>`<option>${esc(b)}</option>`).join('');show()}catch(e){msg('Could not reach the server.');return}}
- $('#adm').hidden=false;draw();msg(TK?'Signed in.':'Signed in (view only: add the GitHub token to change modules).')};
+ $('#adm').hidden=false;$('#warn').hidden=!!TK;draw();msg(TK?'Signed in.':'Signed in (view only: add the GitHub token to change modules).')};
 $('#bt').onchange=show;
 $('#csv').onclick=()=>{if(!rows.length)return;const b=$('#bt').value,r=rows.filter(x=>!b||x.batch===b);const t='email,batch,module,slide,quiz,updated\n'+r.map(x=>[x.email,x.batch,x.module,x.slide,x.done,x.updated].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download='progress.csv';a.click()};
 </script></body></html>
