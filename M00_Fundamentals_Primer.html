@@ -311,6 +311,18 @@ body.short .slide.stepped[data-step] .q .t .hi,body.short .slide.stepped[data-st
 body.short .slide[data-id="fault1"] .s-vis svg,body.short [data-id="fault1"] svg{max-height:calc(var(--sh,500px)*.26)}
 
 #b-home{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:inherit}
+/* big screens (tablet, PC, projector): larger text and controls */
+@media (min-width:700px) and (min-height:700px){
+ .hook{font-size:26px}.hook small{font-size:15px}
+ .opt{font-size:21px;min-height:60px}
+ .pane>.btn.big{font-size:24px;min-height:68px}
+ .fm{font-size:32px}.ex,.trick,.note,.add-note,.go-hint,.pane p{font-size:21px}
+ .steps .st{font-size:18px;min-height:52px}
+ .bar .btn,.bar .seg button{font-size:18px;min-height:48px}
+ .s-head h2,.s-head .term{font-size:36px}
+ .slide.stepped[data-step="0"] .s-vis svg,.realpic svg{max-height:40vh}
+ .slide.stepped[data-step="2"] .s-vis svg{max-height:44vh}
+}
 </style>
 <script>/* ===== Terms: [English, Hindi, Malayalam, symbol/unit html] ===== */
 const T={
