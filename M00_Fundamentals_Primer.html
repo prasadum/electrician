@@ -250,7 +250,7 @@ body[data-lang=hi] .trick small .t .hi,body[data-lang=all] .trick small .t .hi,b
 .realpic{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:6px}
 .realpic svg{width:100%;height:auto;max-height:30vh;display:block}
 @media (orientation:portrait){.slide.hasreal[data-step="0"] .s-vis{display:none}}
-@media (min-width:820px) and (orientation:landscape){.realpic{display:none}}
+@media (min-width:820px) and (orientation:landscape){.realpic svg{max-height:26vh}}
 
 .eqs{display:flex;flex-direction:column;gap:3px;margin-top:6px;font-size:16px}
 .eql{opacity:.75}.eql.now{font-weight:700;color:var(--frm);opacity:1}
@@ -309,6 +309,8 @@ body.short .slide.stepped[data-step] .q .t .hi,body.short .slide.stepped[data-st
  .slide.stepped[data-step="2"] .s-vis svg{max-height:calc(var(--sh,600px)*.36)}
 }
 body.short .slide[data-id="fault1"] .s-vis svg,body.short [data-id="fault1"] svg{max-height:calc(var(--sh,500px)*.26)}
+
+#b-home{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:inherit}
 </style>
 <script>/* ===== Terms: [English, Hindi, Malayalam, symbol/unit html] ===== */
 const T={
@@ -661,7 +663,7 @@ function init(){
   document.body.innerHTML=`<div id="app">
   <div class="bar"><span class="ttl">M0<span class="lg"> · Fundamentals Primer · NSTI Calicut</span></span><span id="xp"></span>
    <div class="seg" id="lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="false">EN</button><button data-l="hi" aria-pressed="false">HI</button><button data-l="ml" aria-pressed="false">ML</button><button data-l="all" aria-pressed="false">All</button></div>
-   <button class="btn" id="b-menu" aria-label="Slide list">List</button><button class="btn" id="b-set" aria-label="Settings">Set</button></div>
+   <a class="btn" id="b-home" href="index.html" aria-label="Home">Home</a><button class="btn" id="b-menu" aria-label="Slide list">List</button><button class="btn" id="b-set" aria-label="Settings">Set</button></div>
   <div id="prog" role="progressbar" aria-label="Progress"><i></i></div>
   <div id="stage" tabindex="-1"></div>
   <div class="nav"><button class="btn" id="prev" aria-label="Previous slide">&lt; Prev</button><span class="cnt" id="cnt"></span><button class="btn" id="next" aria-label="Next slide">Next &gt;</button></div>
