@@ -329,104 +329,108 @@ body.short .slide[data-id="fault1"] .s-vis svg,body.short [data-id="fault1"] svg
 .ctl .btn.stb b{font-size:18px}.ctl .btn.stb small{font-size:14px;font-weight:600}
 
 .fm,.ex,.defn{flex-shrink:0}.fm{overflow-y:hidden}
+
+.ctl .btn.stb .t span{display:none!important}
+body[data-lang=en] .ctl .btn.stb .t .en,body[data-lang=all] .ctl .btn.stb .t .en,body[data-lang=hi] .ctl .btn.stb .t .hi,body[data-lang=ml] .ctl .btn.stb .t .ml{display:inline!important;font-size:14px;font-weight:600;color:inherit}
+.t .hi,.t .ml{font-size:16px;color:var(--fg);opacity:.88}
 </style>
 <script>/* ===== Terms: [English, Hindi, Malayalam, symbol/unit html] ===== */
 const T={
-primer:['Fundamentals Primer','बुनियादी बातें','അടിസ്ഥാന കാര്യങ്ങൾ',''],
-check0:['Starting-point check','शुरुआती जाँच','തുടക്ക പരിശോധന',''],
-atom:['Atom','परमाणु','ആറ്റം',''],
+primer:['Fundamentals Primer','फंडामेंटल्स प्राइमर','ഫണ്ടമെന്റൽസ് പ്രൈമർ',''],
+check0:['Starting-point check','स्टार्टिंग चेक','സ്റ്റാർട്ടിങ് ചെക്ക്',''],
+atom:['Atom','एटम','ആറ്റം',''],
 electron:['Electron','इलेक्ट्रॉन','ഇലക്ട്രോൺ','e<sup>−</sup>'],
-freee:['Free electron','मुक्त इलेक्ट्रॉन','സ്വതന്ത്ര ഇലക്ട്രോൺ',''],
-charge:['Charge','आवेश','ചാർജ്','Q · coulomb (C)'],
-coulomb:['Coulomb','कूलॉम','കൂളോം','C'],
-current:['Current','धारा','കറന്റ്','I · ampere (A)'],
+freee:['Free electron','फ्री इलेक्ट्रॉन','ഫ്രീ ഇലക്ട്രോൺ',''],
+charge:['Charge','चार्ज','ചാർജ്','Q · coulomb (C)'],
+coulomb:['Coulomb','कूलम्ब','കൂളോം','C'],
+current:['Current','करंट','കറന്റ്','I · ampere (A)'],
 ampere:['Ampere','एम्पियर','ആമ്പിയർ','A'],
-convcur:['Conventional current','परंपरागत धारा','കൺവെൻഷണൽ കറന്റ്','+ to −'],
-eflow:['Electron flow','इलेक्ट्रॉन प्रवाह','ഇലക്ട്രോൺ ഫ്ലോ','− to +'],
+convcur:['Conventional current','कन्वेंशनल करंट','കൺവെൻഷണൽ കറന്റ്','+ to −'],
+eflow:['Electron flow','इलेक्ट्रॉन फ्लो','ഇലക്ട്രോൺ ഫ്ലോ','− to +'],
 voltage:['Voltage','वोल्टेज','വോൾട്ടേജ്','V · volt (V)'],
-emf:['EMF','विद्युत वाहक बल','ഇ.എം.എഫ്.','E · volt (V)'],
+emf:['EMF','ई.एम.एफ.','ഇ.എം.എഫ്.','E · volt (V)'],
 tv:['Terminal voltage','टर्मिनल वोल्टेज','ടെർമിനൽ വോൾട്ടേജ്','V'],
-intres:['Internal resistance','आंतरिक प्रतिरोध','ആന്തരിക റെസിസ്റ്റൻസ്','r · ohm (Ω)'],
-resistance:['Resistance','प्रतिरोध','റെസിസ്റ്റൻസ്','R · ohm (Ω)'],
-resistivity:['Resistivity','विशिष्ट प्रतिरोध','റെസിസ്റ്റിവിറ്റി','ρ · Ω·mm²/m'],
-conductance:['Conductance','चालकता','ചാലകത','G · siemens (S)'],
-conductor:['Conductor','चालक','കണ്ടക്ടർ (ചാലകം)',''],
-insulator:['Insulator','कुचालक','ഇൻസുലേറ്റർ',''],
-semi:['Semiconductor','अर्धचालक','സെമികണ്ടക്ടർ (അർധചാലകം)',''],
-ohmslaw:['Ohm’s law (preview)','ओम का नियम','ഓം നിയമം','I = V ÷ R'],
+intres:['Internal resistance','इंटरनल रेसिस्टेंस','ഇന്റേണൽ റെസിസ്റ്റൻസ്','r · ohm (Ω)'],
+resistance:['Resistance','रेसिस्टेंस','റെസിസ്റ്റൻസ്','R · ohm (Ω)'],
+resistivity:['Resistivity','रेसिस्टिविटी','റെസിസ്റ്റിവിറ്റി','ρ · Ω·mm²/m'],
+conductance:['Conductance','कंडक्टेंस','കണ്ടക്ടൻസ്','G · siemens (S)'],
+conductor:['Conductor','कंडक्टर','കണ്ടക്ടർ',''],
+insulator:['Insulator','इंसुलेटर','ഇൻസുലേറ്റർ',''],
+semi:['Semiconductor','सेमीकंडक्टर','സെമികണ്ടക്ടർ',''],
+ohmslaw:['Ohm’s law (preview)','ओम्स लॉ','ഓംസ് ലോ','I = V ÷ R'],
 source:['Source','स्रोत','സോഴ്സ്',''],
 load:['Load','लोड','ലോഡ്',''],
 switch:['Switch','स्विच','സ്വിച്ച്',''],
 lamp:['Lamp','लैम्प','ലാമ്പ്',''],
 cell:['Cell','सेल','സെൽ',''],
-resistor:['Resistor','प्रतिरोधक','റെസിസ്റ്റർ',''],
+resistor:['Resistor','रेसिस्टर','റെസിസ്റ്റർ',''],
 fuse:['Fuse','फ्यूज़','ഫ്യൂസ്',''],
 earth:['Earth','अर्थ','എർത്ത്',''],
-ammeter:['Ammeter','एमीटर','ആമീറ്റർ',''],
+ammeter:['Ammeter','अमीटर','അമ്മീറ്റർ',''],
 voltmeter:['Voltmeter','वोल्टमीटर','വോൾട്ട്മീറ്റർ',''],
 circuit:['Circuit','सर्किट','സർക്യൂട്ട്',''],
 open:['Open circuit','खुला सर्किट','ഓപ്പൺ സർക്യൂട്ട്',''],
 closed:['Closed circuit','बंद सर्किट','ക്ലോസ്ഡ് സർക്യൂട്ട്',''],
 short:['Short circuit','शॉर्ट सर्किट','ഷോർട്ട് സർക്യൂട്ട്',''],
-fault:['Fault Finder','दोष खोजें','ഫോൾട്ട് ഫൈൻഡർ',''],
-symbols:['Circuit symbols','सर्किट चिह्न','സർക്യൂട്ട് ചിഹ്നങ്ങൾ','IEC / IS'],
-series:['Series','श्रेणी (सीरीज़)','സീരീസ്',''],
-parallel:['Parallel','समांतर','പാരലൽ',''],
-prefix:['Unit prefixes','यूनिट उपसर्ग','യൂണിറ്റ് പ്രിഫിക്സ്',''],
+fault:['Fault Finder','फॉल्ट फाइंडर','ഫോൾട്ട് ഫൈൻഡർ',''],
+symbols:['Circuit symbols','सर्किट सिंबल','സർക്യൂട്ട് സിംബൽസ്','IEC / IS'],
+series:['Series','सीरीज़','സീരീസ്',''],
+parallel:['Parallel','पैरेलल','പാരലൽ',''],
+prefix:['Unit prefixes','यूनिट प्रीफिक्स','യൂണിറ്റ് പ്രീഫിക്സ്',''],
 kilo:['kilo (k)','किलो','കിലോ','10<sup>3</sup>'],
 mega:['mega (M)','मेगा','മെഗാ','10<sup>6</sup>'],
 milli:['milli (m)','मिली','മില്ലി','10<sup>−3</sup>'],
 micro:['micro (µ)','माइक्रो','മൈക്രോ','10<sup>−6</sup>'],
-power:['Power','शक्ति','പവർ','P · watt (W)'],
-energy:['Energy','ऊर्जा','എനർജി (ഊർജം)','E · kWh'],
+power:['Power','पावर','പവർ','P · watt (W)'],
+energy:['Energy','एनर्जी','എനർജി','E · kWh'],
 unit:['Unit (kWh)','यूनिट','യൂണിറ്റ്','1 kWh'],
-dc:['DC','दिष्ट धारा (DC)','ഡി.സി.',''],
-ac:['AC','प्रत्यावर्ती धारा (AC)','എ.സി.',''],
-frequency:['Frequency','आवृत्ति','ആവൃത്തി','f · hertz (Hz)'],
-period:['Time period','आवर्तकाल','ആവർത്തനകാലം','T · second (s)'],
-cycle:['Cycle','चक्र','സൈക്കിൾ',''],
-peak:['Peak value','शिखर मान','പീക്ക് വാല്യൂ','V<sub>m</sub>'],
-pp:['Peak-to-peak','शिखर से शिखर','പീക്ക്-ടു-പീക്ക്','V<sub>pp</sub>'],
-avg:['Average value','औसत मान','ശരാശരി മൂല്യം','V<sub>av</sub>'],
-rms:['RMS value','आरएमएस मान','ആർ.എം.എസ്. വാല്യൂ','V<sub>rms</sub>'],
-phase:['Phase','कला (फेज़)','ഫേസ്','φ · degree (°)'],
-phdiff:['Phase difference','कलांतर','ഫേസ് വ്യത്യാസം','φ'],
-lead:['Lead','अग्र','ലീഡ്',''],
-lag:['Lag','पश्च','ലാഗ്',''],
+dc:['DC','डी.सी.','ഡി.സി.',''],
+ac:['AC','ए.सी.','എ.സി.',''],
+frequency:['Frequency','फ्रीक्वेंसी','ഫ്രീക്വൻസി','f · hertz (Hz)'],
+period:['Time period','टाइम पीरियड','ടൈം പീരിയഡ്','T · second (s)'],
+cycle:['Cycle','साइकिल','സൈക്കിൾ',''],
+peak:['Peak value','पीक वैल्यू','പീക്ക് വാല്യൂ','V<sub>m</sub>'],
+pp:['Peak-to-peak','पीक-टू-पीक','പീക്ക്-ടു-പീക്ക്','V<sub>pp</sub>'],
+avg:['Average value','एवरेज वैल्यू','ആവറേജ് വാല്യൂ','V<sub>av</sub>'],
+rms:['RMS value','आर.एम.एस. वैल्यू','ആർ.എം.എസ്. വാല്യൂ','V<sub>rms</sub>'],
+phase:['Phase','फेज़','ഫേസ്','φ · degree (°)'],
+phdiff:['Phase difference','फेज़ डिफरेंस','ഫേസ് ഡിഫറൻസ്','φ'],
+lead:['Lead','लीड','ലീഡ്',''],
+lag:['Lag','लैग','ലാഗ്',''],
 phasor:['Phasor','फेज़र','ഫേസർ',''],
-omega:['Angular speed','कोणीय गति','ആംഗുലർ സ്പീഡ്','ω · rad/s'],
-hyp:['Hypotenuse','कर्ण','കർണം',''],
-opp:['Opposite side','सम्मुख भुजा','എതിർവശം',''],
-adj:['Adjacent side','संलग्न भुजा','സമീപവശം',''],
-rtri:['Right triangle','समकोण त्रिभुज','മട്ടത്രികോണം',''],
+omega:['Angular speed','एंगुलर स्पीड','ആംഗുലർ സ്പീഡ്','ω · rad/s'],
+hyp:['Hypotenuse','हाइपोटेन्यूज़','ഹൈപ്പോട്ടനൂസ്',''],
+opp:['Opposite side','ऑपोज़िट साइड','ഓപ്പോസിറ്റ് സൈഡ്',''],
+adj:['Adjacent side','एडजेसेंट साइड','അഡ്ജസെന്റ് സൈഡ്',''],
+rtri:['Right triangle','राइट एंगल ट्राएंगल','റൈറ്റ് ആംഗിൾ ട്രയാംഗിൾ',''],
 pyth:['Pythagoras','पाइथागोरस','പൈതഗോറസ്','c² = a² + b²'],
 trig:['sin · cos · tan','','','SOH CAH TOA'],
-imptri:['Impedance triangle','प्रतिबाधा त्रिभुज','ഇംപിഡൻസ് ട്രയാംഗിൾ','R, X, Z'],
-pwrtri:['Power triangle','शक्ति त्रिभुज','പവർ ട്രയാംഗിൾ','kW, kVAR, kVA'],
-viva:['Viva flip-cards','मौखिक प्रश्न','വൈവ കാർഡുകൾ',''],
+imptri:['Impedance triangle','इम्पीडेंस ट्राएंगल','ഇംപിഡൻസ് ട്രയാംഗിൾ','R, X, Z'],
+pwrtri:['Power triangle','पावर ट्राएंगल','പവർ ട്രയാംഗിൾ','kW, kVAR, kVA'],
+viva:['Viva flip-cards','वाइवा कार्ड','വൈവ കാർഡുകൾ',''],
 interview:['Interview cards','इंटरव्यू कार्ड','ഇന്റർവ്യൂ കാർഡുകൾ',''],
-quiz:['MCQ quiz','बहुविकल्पीय प्रश्न','എം.സി.ക്യു. ക്വിസ്',''],
-mistakes:['Common mistakes','आम गलतियाँ','സാധാരണ തെറ്റുകൾ',''],
-revision:['Quick revision','त्वरित दोहराव','ക്വിക്ക് റിവിഷൻ',''],
+quiz:['MCQ quiz','एम.सी.क्यू. क्विज़','എം.സി.ക്യു. ക്വിസ്',''],
+mistakes:['Common mistakes','कॉमन मिस्टेक्स','കോമൺ മിസ്റ്റേക്സ്',''],
+revision:['Quick revision','क्विक रिवीज़न','ക്വിക്ക് റിവിഷൻ',''],
 coverage:['Syllabus coverage check','सिलेबस कवरेज जाँच','സിലബസ് കവറേജ് പരിശോധന',''],
 verify:['Please verify','कृपया जाँचें','ദയവായി പരിശോധിക്കുക','']
 };
-T.qit=['Charge, current, time','आवेश, धारा, समय','ചാർജ്, കറന്റ്, സമയം',''];
+T.qit=['Charge, current, time','चार्ज, करंट, टाइम','ചാർജ്, കറന്റ്, ടൈം',''];
 T.rw=['Real world','रियल वर्ल्ड','റിയൽ വേൾഡ്',''];
-T.sp=['Site problem','साइट की समस्या','സൈറ്റ് പ്രശ്നം',''];
-T.guess=['Guess','अनुमान लगाओ','ഊഹിക്കൂ',''];
-T.watch=['Watch','देखो','കാണൂ',''];
-T.rem=['Remember','याद रखो','ഓർക്കൂ',''];
-T.learn=['Learn','सीखो','പഠിക്കൂ',''];
-T.check=['Check','जाँचो','പരിശോധിക്കൂ',''];
-T.tg=['Tap to guess','अनुमान के लिए टैप करें','ഊഹിക്കാൻ തൊടൂ',''];
-T.tw=['Tap to watch','देखने के लिए टैप करें','കാണാൻ തൊടൂ',''];
-T.tl=['Tap to learn','सीखने के लिए टैप करें','പഠിക്കാൻ തൊടൂ',''];
-T.tc=['Tap to check','जाँचने के लिए टैप करें','പരിശോധിക്കാൻ തൊടൂ',''];
-T.twistR=['Resistance ratios','प्रतिरोध अनुपात','റെസിസ്റ്റൻസ് അനുപാതം',''];
-T.twistO=['Ohm and power ratios','ओम और शक्ति अनुपात','ഓം, പവർ അനുപാതം',''];
-T.twistS=['Series and parallel sums','श्रेणी-समांतर योग','സീരീസ്-പാരലൽ കണക്കുകൾ',''];
-T.twistA=['AC calculator','AC कैलकुलेटर','എ.സി. കാൽക്കുലേറ്റർ',''];
+T.sp=['Site problem','साइट प्रॉब्लम','സൈറ്റ് പ്രോബ്ലം',''];
+T.guess=['Guess','गेस करो','ഗസ് ചെയ്യൂ',''];
+T.watch=['Watch','वॉच करो','വാച്ച് ചെയ്യൂ',''];
+T.rem=['Remember','याद रखो','ഓർത്തുവെക്കൂ',''];
+T.learn=['Learn','लर्न करो','ലേൺ ചെയ്യൂ',''];
+T.check=['Check','चेक करो','ചെക്ക് ചെയ്യൂ',''];
+T.tg=['Tap to guess','गेस करने के लिए टैप करो','ഗസ് ചെയ്യാൻ ടാപ്പ് ചെയ്യൂ',''];
+T.tw=['Tap to watch','वॉच करने के लिए टैप करो','വാച്ച് ചെയ്യാൻ ടാപ്പ് ചെയ്യൂ',''];
+T.tl=['Tap to learn','लर्न करने के लिए टैप करो','ലേൺ ചെയ്യാൻ ടാപ്പ് ചെയ്യൂ',''];
+T.tc=['Tap to check','चेक करने के लिए टैप करो','ചെക്ക് ചെയ്യാൻ ടാപ്പ് ചെയ്യൂ',''];
+T.twistR=['Resistance ratios','रेसिस्टेंस रेशियो','റെസിസ്റ്റൻസ് റേഷ്യോ',''];
+T.twistO=['Ohm and power ratios','ओम और पावर रेशियो','ഓം, പവർ റേഷ്യോ',''];
+T.twistS=['Series and parallel sums','सीरीज़-पैरेलल सम','സീരീസ്-പാരലൽ സം',''];
+T.twistA=['AC calculator','ए.सी. कैलकुलेटर','എ.സി. കാൽക്കുലേറ്റർ',''];
 const SL=[];
 /* ===== shared SVG helpers ===== */
 const S=(w,hh,inner,label)=>`<svg viewBox="0 0 ${w} ${hh}" role="img" aria-label="${label||'diagram'}" preserveAspectRatio="xMidYMid meet">${inner}</svg>`;
@@ -502,11 +506,315 @@ trig:{hi:{hook:'cos φ ही पावर फैक्टर है।',play:'�
 rename:{hi:{hook:'एक ही आकार। तीन काम।',play:'हर नाम दबाओ। ट्रायंगल देखो।',pq:'ट्रायंगल की सबसे लंबी भुजा …',po:['हाइपोटेनस','बेस'],pw:'Z और kVA सबसे लंबी भुजाएँ हैं।',trick:'सबसे लंबी भुजा = Z या kVA।',cq:'kVA … भुजा है',co:['सबसे लंबी','सबसे छोटी'],note:'सिर्फ़ झलक। पूरा: मॉड्यूल 5B, मॉड्यूल 8।'},
  ml:{hook:'ഒരേ ആകൃതി. മൂന്ന് ജോലികൾ.',play:'ഓരോ പേരും ടാപ്പ് ചെയ്യൂ. ട്രയാംഗിൾ നോക്കൂ.',pq:'ട്രയാംഗിളിലെ ഏറ്റവും നീളമുള്ള വശം …',po:['ഹൈപ്പൊട്ടനൂസ്','ബേസ്'],pw:'Z ഉം kVA ഉം ആണ് ഏറ്റവും നീളം.',trick:'ഏറ്റവും നീളമുള്ള വശം = Z അല്ലെങ്കിൽ kVA.',cq:'kVA ആണ് … വശം',co:['ഏറ്റവും നീളമുള്ള','ഏറ്റവും ചെറിയ'],note:'പ്രിവ്യൂ മാത്രം. പൂർണ്ണമായി: മൊഡ്യൂൾ 5B, മൊഡ്യൂൾ 8.'}}
 };
-const UI={ok:{hi:'सही!',ml:'ശരി!'},no:{hi:'सही नहीं।',ml:'ശരിയല്ല.'},lock:{hi:'पक्का हुआ।',ml:'ഉറപ്പിച്ചു.'},again:{hi:'फिर कोशिश करो।',ml:'വീണ്ടും ശ്രമിക്കൂ.'},qc:{hi:'क्विक चेक',ml:'ക്വിക്ക് ചെക്ക്'},nx:{hi:'अगला स्लाइड',ml:'അടുത്ത സ്ലൈഡ്'},fb:{hi:'फ्लैशबैक',ml:'ഫ്ലാഷ്ബാക്ക്'}};
+const UI={ok:{hi:'सही!',ml:'ശരി!'},no:{hi:'सही नहीं।',ml:'ശരിയല്ല.'},lock:{hi:'पक्का हुआ।',ml:'ഉറപ്പിച്ചു.'},again:{hi:'फिर कोशिश करो।',ml:'വീണ്ടും ശ്രമിക്കൂ.'},qc:{hi:'क्विक चेक',ml:'ക്വിക്ക് ചെക്ക്'},nx:{hi:'नेक्स्ट स्लाइड',ml:'നെക്സ്റ്റ് സ്ലൈഡ്'},fb:{hi:'फ्लैशबैक',ml:'ഫ്ലാഷ്ബാക്ക്'}};
 /* bilingual wrapper: English line plus Hindi / Malayalam line; CSS shows lines per language mode */
 const BI=(en,hi,ml)=>`<span class="t"><span class="en">${en}</span>${hi?`<span class="hi">${hi}</span>`:''}${ml?`<span class="ml">${ml}</span>`:''}</span>`;
-const LF=(d,f,en,i)=>{const t=TR[d.id];if(!t)return en;const g=l=>{const v=t[l]&&t[l][f];return v==null?'':(Array.isArray(v)?v[i]:v)};return BI(en,g('hi'),g('ml'))};
+const LF=(d,f,en,i)=>{const t=TR[d.id];if(!t)return en;const g=l=>{const v=t[l]&&t[l][f];return v==null?'':(Array.isArray(v)?v[i]:v)};const x=(typeof xl==='function')?xl(en):null;return BI(en,g('hi')||(x?x[0]:''),g('ml')||(x?x[1]:''))};
 const UIB=k=>BI(({ok:'Correct.',no:'Not quite.',lock:'Locked in.',again:'Try again.',qc:'Quick check',nx:'Next slide',fb:'Flashback'})[k],UI[k].hi,UI[k].ml);
+
+/* Auto oral HI/ML layer: exact-string dictionary + patterns. Technical words are transliterated, not translated. */
+const XT={};
+const XR=[];
+const MISS=new Set();window.__miss=MISS;
+const norm=s=>s.replace(/\s+/g,' ').trim();
+function xl(s){const k=norm(s);if(XT[k])return XT[k];for(const [re,fn] of XR){const m=k.match(re);if(m){const r=fn(m);if(r)return r}}return null}
+const INL=new Set(['I','B','SUB','SUP','EM','STRONG','SMALL']);
+function wrapT(en,hi,ml){const sp=document.createElement('span');sp.className='t';sp.innerHTML=`<span class="en">${en}</span><span class="hi">${hi}</span><span class="ml">${ml}</span>`;return sp}
+const SYM=new Set(['Vav','Vrms','Vpp','rms','sin','cos','tan','kWh','kVA','kVAR','kW','Vm','Em','rad','mm','kHz','MHz','Hz','mA','kΩ','MΩ','VAR','RMS','AC','DC','Wb']);
+function needs(t){return (t.match(/[A-Za-z]{3,}/g)||[]).filter(w=>!SYM.has(w)).length>=1}
+function autoT(root){if(!root)return;
+ const els=[...root.querySelectorAll('*')];
+ for(const e of els){if(!e.isConnected||e.closest('.t,svg,script,style,textarea'))continue;
+  const kids=[...e.childNodes];if(!kids.length)continue;
+  const simple=kids.every(n=>n.nodeType===3||(n.nodeType===1&&INL.has(n.tagName)&&[...n.querySelectorAll('*')].every(c=>INL.has(c.tagName))));
+  if(simple){const txt=e.textContent;if(!norm(txt))continue;const r=xl(txt);
+   if(r){const en=e.innerHTML;e.innerHTML='';e.appendChild(wrapT(en,r[0],r[1]));continue}
+   if(needs(txt))MISS.add(norm(txt))
+  }else{
+   for(const n of kids){if(n.nodeType!==3)continue;const tx=n.textContent;if(!norm(tx))continue;const r=xl(tx);
+    if(r){const sp=wrapT(tx.trim(),r[0],r[1]);n.replaceWith(document.createTextNode(' '),sp)}
+    else if(needs(tx))MISS.add(norm(tx))}}}}
+let xq=false;function xsched(){if(xq)return;xq=true;requestAnimationFrame(()=>{xq=false;autoT(document.getElementById('stage'))})}
+function autoInit(){const st=document.getElementById('stage');if(!st||st.__xo)return;st.__xo=1;new MutationObserver(xsched).observe(st,{childList:true,subtree:true,characterData:true});xsched()}
+
+/* xt1: title, start check, current/voltage, exam twist (resistance) */
+const X=(en,hi,ml)=>{XT[norm(en.replace(/<[^>]+>/g,''))]=[hi,ml]};
+X('Charge · Current · Voltage','चार्ज · करंट · वोल्टेज','ചാർജ് · കറന്റ് · വോൾട്ടേജ്');
+X('Resistance · Conductance','रेसिस्टेंस · कंडक्टेंस','റെസിസ്റ്റൻസ് · കണ്ടക്ടൻസ്');
+X('Circuits · Series · Parallel','सर्किट · सीरीज़ · पैरेलल','സർക്യൂട്ട് · സീരീസ് · പാരലൽ');
+X('Units · Power · Energy','यूनिट · पावर · एनर्जी','യൂണിറ്റ് · പവർ · എനർജി');
+X('AC waves · RMS · Phase','AC वेव · RMS · फेज़','AC വേവ് · RMS · ഫേസ്');
+X('Triangles for later','आगे के ट्राएंगल','പിന്നീടുള്ള ട്രയാങ്കിൾസ്');
+X('Module 0 · Syllabus-preview and Additional tags','मॉड्यूल 0 · सिलेबस-प्रीव्यू और एडिशनल टैग','മൊഡ്യൂൾ 0 · സിലബസ്-പ്രിവ്യൂ, അഡീഷണൽ ടാഗ്');
+X('NSTI Calicut','NSTI Calicut','NSTI Calicut');
+X('3 quick taps. Not marked. Saved on this device.','3 क्विक टैप। मार्क नहीं मिलेगा। इसी फोन में सेव होगा।','3 ക്വിക്ക് ടാപ്പ്. മാർക്ക് ഇല്ല. ഈ ഫോണിൽ സേവ് ആകും.');
+X('1. Unit of current?','1. करंट की यूनिट?','1. കറന്റിന്റെ യൂണിറ്റ്?');
+X('3. In series there is … path','3. सीरीज़ में … रास्ता होता है','3. സീരീസിൽ … പാത്ത് ഉണ്ട്');
+X('Next: Atom','अगला: एटम','അടുത്തത്: ആറ്റം');
+X('Will be covered','आगे कवर होगा','പിന്നീട് പഠിക്കും');
+X('Voltage: OFF','वोल्टेज: OFF','വോൾട്ടേജ്: OFF');
+X('12 coulomb (C) in 4 s → I = 3 A. 1 C ≈ 6.24 × 10<sup>18</sup> electrons.','4 s में 12 कूलॉम (C) → I = 3 A। 1 C ≈ 6.24 × 10<sup>18</sup> इलेक्ट्रॉन।','4 s-ൽ 12 കൂളോം (C) → I = 3 A. 1 C ≈ 6.24 × 10<sup>18</sup> ഇലക്ട്രോൺ.');
+X('I = 3 A → 3 coulomb (C) every second','I = 3 A → हर सेकंड 3 कूलॉम (C)','I = 3 A → ഓരോ സെക്കൻഡിലും 3 കൂളോം (C)');
+X('Rate: 3 C every second','रेट: हर सेकंड 3 C','റേറ്റ്: ഓരോ സെക്കൻഡിലും 3 C');
+X('Count after 1 second','1 सेकंड बाद गिनती','1 സെക്കൻഡ് കഴിഞ്ഞ് കണക്ക്');
+X('Count after 2 seconds','2 सेकंड बाद गिनती','2 സെക്കൻഡ് കഴിഞ്ഞ് കണക്ക്');
+X('Any time t','कोई भी टाइम t','ഏത് ടൈം t');
+X('Divide both sides by t','दोनों तरफ t से भाग दो','രണ്ട് വശവും t കൊണ്ട് ഹരിക്കൂ');
+X('Result','रिज़ल्ट','റിസൾട്ട്');
+X('Electron flow','इलेक्ट्रॉन फ्लो','ഇലക്ട്രോൺ ഫ്ലോ');
+X('Conventional','कन्वेंशनल','കൺവെൻഷണൽ');
+X('1 volt = 1 joule per coulomb.','1 वोल्ट = 1 जूल प्रति कूलॉम।','1 വോൾട്ട് = 1 ജൂൾ പെർ കൂളോം.');
+X('Load current','लोड करंट','ലോഡ് കറന്റ്');
+X('Exam twist','एग्ज़ाम ट्विस्ट','എക്സാം ട്വിസ്റ്റ്');
+X('Stretched (volume same)','खींचा हुआ (वॉल्यूम वही)','വലിച്ചു നീട്ടി (വോളിയം അതേ)');
+X('Stretch × k: length × k, area ÷ k, so R × k².','k गुना खींचो: लेंथ × k, एरिया ÷ k, इसलिए R × k²।','k മടങ്ങ് വലിച്ചാൽ: ലെങ്ത് × k, ഏരിയ ÷ k, അതുകൊണ്ട് R × k².');
+X('Practice items written in the style of recruitment exams. Original questions, not past papers.','रिक्रूटमेंट एग्ज़ाम के स्टाइल की प्रैक्टिस। ओरिजिनल सवाल हैं, पुराने पेपर नहीं।','റിക്രൂട്ട്മെന്റ് എക്സാം സ്റ്റൈലിലുള്ള പ്രാക്ടീസ്. ഒറിജിനൽ ചോദ്യങ്ങൾ, പഴയ പേപ്പർ അല്ല.');
+X('Exam-style practice','एग्ज़ाम-स्टाइल प्रैक्टिस','എക്സാം-സ്റ്റൈൽ പ്രാക്ടീസ്');
+X('Same wire. Length doubles. Resistance becomes …','वही तार। लेंथ दोगुनी। रेसिस्टेंस हो जाएगा …','അതേ വയർ. ലെങ്ത്ത് ഇരട്ടി. റെസിസ്റ്റൻസ് ആകും …');
+X('R ∝ L, so double length = double R.','R ∝ L, इसलिए लेंथ दोगुनी तो R दोगुना।','R ∝ L, അതുകൊണ്ട് ലെങ്ത്ത് ഇരട്ടി = R ഇരട്ടി.');
+X('Diameter of a wire doubles. Resistance becomes …','तार का डायमीटर दोगुना। रेसिस्टेंस हो जाएगा …','വയറിന്റെ ഡയാമീറ്റർ ഇരട്ടി. റെസിസ്റ്റൻസ് ആകും …');
+X('Area ∝ d². d × 2 → area × 4 → R ÷ 4.','एरिया ∝ d²। d × 2 → एरिया × 4 → R ÷ 4।','ഏരിയ ∝ d². d × 2 → ഏരിയ × 4 → R ÷ 4.');
+X('Radius of a wire is halved. Resistance becomes …','तार का रेडियस आधा। रेसिस्टेंस हो जाएगा …','വയറിന്റെ റേഡിയസ് പകുതി. റെസിസ്റ്റൻസ് ആകും …');
+X('Area ÷ 4, so R × 4.','एरिया ÷ 4, इसलिए R × 4।','ഏരിയ ÷ 4, അതുകൊണ്ട് R × 4.');
+X('A wire is drawn to twice its length (same volume). Resistance becomes …','तार को दोगुनी लेंथ तक खींचा (वॉल्यूम वही)। रेसिस്റ്റेंस हो जाएगा …','വയർ ഇരട്ടി നീളത്തിൽ വലിച്ചു (വോളിയം അതേ). റെസിസ്റ്റൻസ് ആകും …');
+X('Length × 2 and area ÷ 2, so R × 2 × 2 = 4R.','लेंथ × 2 और एरिया ÷ 2, इसलिए R × 2 × 2 = 4R।','ലെങ്ത്ത് × 2, ഏരിയ ÷ 2, അതുകൊണ്ട് R × 2 × 2 = 4R.');
+X('A wire of resistance R is cut into 2 equal parts, joined in parallel. Result?','R रेसिस्टेंस के तार के 2 बराबर टुकड़े करके पैरेलल जोड़ा। रिज़ल्ट?','R റെസിസ്റ്റൻസ് ഉള്ള വയർ 2 തുല്യ കഷണമാക്കി പാരലൽ ആയി ഘടിപ്പിച്ചു. റിസൾട്ട്?');
+X('Each half = R ÷ 2. Two in parallel = R ÷ 4.','हर आधा = R ÷ 2। दो पैरेलल = R ÷ 4।','ഓരോ പകുതിയും = R ÷ 2. രണ്ടെണ്ണം പാരലൽ = R ÷ 4.');
+X('Two wires, same material and length. Diameters 1 : 2. Ratio of resistances?','दो तार, मटीरियल और लेंथ वही। डायमीटर 1 : 2। रेसिस्टेंस का रेशियो?','രണ്ട് വയർ, മെറ്റീരിയലും ലെങ്ത്തും ഒന്നുതന്നെ. ഡയാമീറ്റർ 1 : 2. റെസിസ്റ്റൻസ് റേഷ്യോ?');
+X('R ∝ 1 ÷ d², so 1 ÷ 1 : 1 ÷ 4 = 4 : 1.','R ∝ 1 ÷ d², इसलिए 1 ÷ 1 : 1 ÷ 4 = 4 : 1।','R ∝ 1 ÷ d², അതുകൊണ്ട് 1 ÷ 1 : 1 ÷ 4 = 4 : 1.');
+X('Resistance of a pure metal as temperature rises …','टेम्परेचर बढ़ने पर प्योर मेटल का रेसिस्टेंस …','ടെമ്പറേച്ചർ കൂടുമ്പോൾ പ്യുവർ മെറ്റലിന്റെ റെസിസ്റ്റൻസ് …');
+X('Stays same','वही रहता है','അതേ പോലെ നിൽക്കും');
+X('Becomes zero','ज़ीरो हो जाता है','സീറോ ആകും');
+X('Metals have positive temperature coefficient. Semiconductors decrease.','मेटल का टेम्परेचर कोएफिशिएंट पॉज़िटिव है। सेमीकंडक्टर में घटता है।','മെറ്റലിന് പോസിറ്റീവ് ടെമ്പറേച്ചർ കോഎഫിഷ്യന്റ്. സെമികണ്ടക്ടറിൽ കുറയും.');
+X('See score','स्कोर देखो','സ്കോർ കാണൂ');
+X('Try again','फिर से करो','വീണ്ടും ശ്രമിക്കൂ');
+X('Next question','अगला सवाल','അടുത്ത ചോദ്യം');
+X('Drag, or tap an item then tap a box.','ड्रैग करो, या आइटम टैप करके बॉक्स टैप करो।','ഡ്രാഗ് ചെയ്യൂ, അല്ലെങ്കിൽ ഐറ്റം ടാപ്പ് ചെയ്ത് ബോക്സ് ടാപ്പ് ചെയ്യൂ.');
+X('Core or cover?','कोर या कवर?','കോർ ആണോ കവർ ആണോ?');
+
+/* xt2: Ohm/power twist, fault finder, symbols, series/parallel, energy, AC twist, triangles */
+X('Assumes R stays constant when V changes.','मान लिया: V बदलने पर R वही रहता है।','V മാറുമ്പോൾ R മാറില്ല എന്ന് കരുതുന്നു.');
+X('V doubles, R same. Current becomes …','V दोगुना, R वही। करंट हो जाएगा …','V ഇരട്ടി, R അതേ. കറന്റ് ആകും …');
+X('I = V ÷ R.','I = V ÷ R।','I = V ÷ R.');
+X('R doubles, V same. Current becomes …','R दोगुना, V वही। करंट हो जाएगा …','R ഇരട്ടി, V അതേ. കറന്റ് ആകും …');
+X('Voltage halves, R constant. Power becomes …','वोल्टेज आधा, R वही। पावर हो जाएगी …','വോൾട്ടേജ് പകുതി, R അതേ. പവർ ആകും …');
+X('P = V² ÷ R, so (½)² = ¼.','P = V² ÷ R, इसलिए (½)² = ¼।','P = V² ÷ R, അതുകൊണ്ട് (½)² = ¼.');
+X('A 230 V, 100 W bulb runs on 115 V (R constant). Power ≈ ?','230 V, 100 W का बल्ब 115 V पर चला (R वही)। पावर ≈ ?','230 V, 100 W ബൾബ് 115 V-ൽ പ്രവർത്തിപ്പിച്ചു (R അതേ). പവർ ≈ ?');
+X('Half voltage → one-fourth power = 25 W.','आधा वोल्टेज → एक-चौथाई पावर = 25 W।','പകുതി വോൾട്ടേജ് → നാലിലൊന്ന് പവർ = 25 W.');
+X('A 230 V, 100 W bulb and a 230 V, 60 W bulb are joined in SERIES across 230 V. Which glows brighter?','230 V, 100 W और 230 V, 60 W के बल्ब 230 V पर SERIES में जोड़े। कौन ज़्यादा चमकेगा?','230 V, 100 W ബൾബും 230 V, 60 W ബൾബും 230 V-ൽ SERIES ആയി ഘടിപ്പിച്ചു. ഏതാണ് കൂടുതൽ തെളിയുക?');
+X('Both equal','दोनों बराबर','രണ്ടും തുല്യം');
+X('R = V² ÷ P: 100 W bulb ≈ 529 Ω, 60 W bulb ≈ 882 Ω. Same current in series, P = I²R, so more R (60 W bulb) is brighter.','R = V² ÷ P: 100 W बल्ब ≈ 529 Ω, 60 W बल्ब ≈ 882 Ω। सीरीज़ में करंट वही, P = I²R, इसलिए ज़्यादा R (60 W बल्ब) ज़्यादा चमकेगा।','R = V² ÷ P: 100 W ബൾബ് ≈ 529 Ω, 60 W ബൾബ് ≈ 882 Ω. സീരീസിൽ കറന്റ് ഒന്നുതന്നെ, P = I²R, അതുകൊണ്ട് കൂടുതൽ R (60 W ബൾബ്) കൂടുതൽ തെളിയും.');
+X('The same 230 V, 100 W bulb and 230 V, 60 W bulb are now joined in PARALLEL across 230 V. Which glows brighter?','वही 230 V, 100 W और 230 V, 60 W के बल्ब अब 230 V पर PARALLEL में जोड़े। कौन ज़्यादा चमकेगा?','അതേ 230 V, 100 W ബൾബും 230 V, 60 W ബൾബും ഇപ്പോൾ 230 V-ൽ PARALLEL ആയി ഘടിപ്പിച്ചു. ഏതാണ് കൂടുതൽ തെളിയുക?');
+X('Both get 230 V. P = V² ÷ R: lower R (100 W bulb, 529 Ω) gives more power than 882 Ω.','दोनों को 230 V मिलता है। P = V² ÷ R: कम R (100 W बल्ब, 529 Ω) ज़्यादा पावर देता है, 882 Ω से।','രണ്ടിനും 230 V കിട്ടും. P = V² ÷ R: കുറഞ്ഞ R (100 W ബൾബ്, 529 Ω) 882 Ω-നേക്കാൾ കൂടുതൽ പവർ തരും.');
+X('Switch: OFF','स्विच: OFF','സ്വിച്ച്: OFF');
+X('Test cell','सेल टेस्ट करो','സെൽ ടെസ്റ്റ് ചെയ്യൂ');
+X('Test switch','स्विच टेस्ट करो','സ്വിച്ച് ടെസ്റ്റ് ചെയ്യൂ');
+X('Test lamp','लैंप टेस्ट करो','ലാമ്പ് ടെസ്റ്റ് ചെയ്യൂ');
+X('No readings yet','अभी कोई रीडिंग नहीं','റീഡിംഗ് ഒന്നുമില്ല');
+X('Faulty part?','फॉल्टी पार्ट कौन सा?','ഫോൾട്ടി പാർട്ട് ഏത്?');
+X('Test more parts first.','पहले और पार्ट टेस्ट करो।','ആദ്യം കൂടുതൽ പാർട്ട് ടെസ്റ്റ് ചെയ്യൂ.');
+X('Open part (lamp) shows the full 1.5 V.','ओपन पार्ट (लैंप) पर पूरा 1.5 V दिखता है।','ഓപ്പൺ പാർട്ടിൽ (ലാമ്പ്) മുഴുവൻ 1.5 V കാണും.');
+X('Open part (switch) shows the full 1.5 V.','ओपन पार्ट (स्विच) पर पूरा 1.5 V दिखता है।','ഓപ്പൺ പാർട്ടിൽ (സ്വിച്ച്) മുഴുവൻ 1.5 V കാണും.');
+X('0 V everywhere: the cell is dead. All missions done.','हर जगह 0 V: सेल डेड है। सारे मिशन पूरे।','എല്ലായിടത്തും 0 V: സെൽ ഡെഡ് ആണ്. എല്ലാ മിഷനും കഴിഞ്ഞു.');
+X('Next mission','अगला मिशन','അടുത്ത മിഷൻ');
+X('Tap a symbol, then tap its name.','सिंबल टैप करो, फिर उसका नाम टैप करो।','സിംബൽ ടാപ്പ് ചെയ്യൂ, പിന്നെ അതിന്റെ പേര് ടാപ്പ് ചെയ്യൂ.');
+X('Read the panel drawing.','पैनल ड्रॉइंग पढ़ो।','പാനൽ ഡ്രോയിംഗ് വായിക്കൂ.');
+X('Not that one.','यह वाला नहीं।','ഇതല്ല.');
+X('Tap a symbol first.','पहले सिंबल टैप करो।','ആദ്യം സിംബൽ ടാപ്പ് ചെയ്യൂ.');
+X('Remove Lamp 1','लैंप 1 निकालो','ലാമ്പ് 1 എടുത്തുമാറ്റൂ');
+X('Put back Lamp 1','लैंप 1 वापस लगाओ','ലാമ്പ് 1 തിരികെ വെക്കൂ');
+X('<b><i>n</i></b> = how many equal resistors. <b><i>R</i></b> = ohm value of each one. Set both below, then watch the two totals.','<b><i>n</i></b> = कितने बराबर रेसिस्टर। <b><i>R</i></b> = हर एक की ओह्म वैल्यू। नीचे दोनों सेट करो, फिर दोनों टोटल देखो।','<b><i>n</i></b> = എത്ര തുല്യ റെസിസ്റ്റർ. <b><i>R</i></b> = ഓരോന്നിന്റെയും ഓം വാല്യൂ. താഴെ രണ്ടും സെറ്റ് ചെയ്ത് രണ്ട് ടോട്ടലും നോക്കൂ.');
+X('n = how many equal resistors. R = ohm value of each one. Set both below, then watch the two totals.','n = कितने बराबर रेसिस्टर। R = हर एक की ओह्म वैल्यू। नीचे दोनों सेट करो, फिर दोनों टोटल देखो।','n = എത്ര തുല്യ റെസിസ്റ്റർ. R = ഓരോന്നിന്റെയും ഓം വാല്യൂ. താഴെ രണ്ടും സെറ്റ് ചെയ്ത് രണ്ട് ടോട്ടലും നോക്കൂ.');
+X('Two unequal: RT = (R1R2) ÷ (R1 + R2). 10 Ω ∥ 15 Ω = 150 ÷ 25 = 6 Ω.','दो अलग वैल्यू: RT = (R1R2) ÷ (R1 + R2)। 10 Ω ∥ 15 Ω = 150 ÷ 25 = 6 Ω।','രണ്ട് വ്യത്യസ്ത വാല്യൂ: RT = (R1R2) ÷ (R1 + R2). 10 Ω ∥ 15 Ω = 150 ÷ 25 = 6 Ω.');
+X('Two equal resistors R in parallel. Total?','दो बराबर रेसिस्टर R पैरेलल में। टोटल?','രണ്ട് തുല്യ റെസിസ്റ്റർ R പാരലൽ. ടോട്ടൽ?');
+X('R ÷ n with n = 2.','R ÷ n, यहाँ n = 2।','R ÷ n, ഇവിടെ n = 2.');
+X('Three 6 Ω resistors in parallel. Total?','तीन 6 Ω रेसिस्टर पैरेलल में। टोटल?','മൂന്ന് 6 Ω റെസിസ്റ്റർ പാരലൽ. ടോട്ടൽ?');
+X('6 ÷ 3 = 2 Ω.','6 ÷ 3 = 2 Ω।','6 ÷ 3 = 2 Ω.');
+X('Two equal resistors: ratio (series ÷ parallel)?','दो बराबर रेसिस्टर: रेशियो (सीरीज़ ÷ पैरेलल)?','രണ്ട് തുല്യ റെസിസ്റ്റർ: റേഷ്യോ (സീരീസ് ÷ പാരലൽ)?');
+X('2R ÷ (R ÷ 2) = 4.','2R ÷ (R ÷ 2) = 4।','2R ÷ (R ÷ 2) = 4.');
+X('10 Ω and 15 Ω in parallel. Total?','10 Ω और 15 Ω पैरेलल में। टोटल?','10 Ω-ഉം 15 Ω-ഉം പാരലൽ. ടോട്ടൽ?');
+X('(10 × 15) ÷ (10 + 15) = 6 Ω.','(10 × 15) ÷ (10 + 15) = 6 Ω।','(10 × 15) ÷ (10 + 15) = 6 Ω.');
+X('Parallel total is always …','पैरेलल टोटल हमेशा …','പാരലൽ ടോട്ടൽ എപ്പോഴും …');
+X('More than the largest','सबसे बड़े से ज़्यादा','ഏറ്റവും വലുതിനേക്കാൾ കൂടുതൽ');
+X('Less than the smallest','सबसे छोटे से कम','ഏറ്റവും ചെറുതിനേക്കാൾ കുറവ്');
+X('Equal to the average','एवरेज के बराबर','ആവറേജിന് തുല്യം');
+X('Equal to the sum','सम के बराबर','സമിന് തുല്യം');
+X('Every extra path lowers the total resistance.','हर एक्स्ट्रा रास्ता टोटल रेसिस्टेंस घटाता है।','ഓരോ അധിക പാത്തും ടോട്ടൽ റെസിസ്റ്റൻസ് കുറയ്ക്കും.');
+X('Which has more total resistance: 3 lamps in series or 3 in parallel?','किसका टोटल रेसिस्टेंस ज़्यादा: 3 लैंप सीरीज़ में या 3 पैरेलल में?','ഏതിനാണ് ടോട്ടൽ റെസിസ്റ്റൻസ് കൂടുതൽ: സീരീസിലെ 3 ലാമ്പോ പാരലലിലെ 3 ലാമ്പോ?');
+X('Depends on colour','कलर पर निर्भर','കളർ അനുസരിച്ച്');
+X('Series adds. Parallel divides.','सीरीज़ जोड़ता है। पैरेलल भाग देता है।','സീരീസ് കൂട്ടുന്നു. പാരലൽ ഹരിക്കുന്നു.');
+X('100 W × 10 h = 1 kWh = 1 unit. P = V × I → 230 V × 0.43 A ≈ 100 W.','100 W × 10 h = 1 kWh = 1 यूनिट। P = V × I → 230 V × 0.43 A ≈ 100 W।','100 W × 10 h = 1 kWh = 1 യൂണിറ്റ്. P = V × I → 230 V × 0.43 A ≈ 100 W.');
+X('One full turn (360°) = one cycle.','एक पूरा चक्कर (360°) = एक साइकल।','ഒരു മുഴുവൻ കറക്കം (360°) = ഒരു സൈക്കിൾ.');
+X('Peak-to-peak','पीक-टू-पीक','പീക്ക്-ടു-പീക്ക്');
+X('Vm = 325 V → Vpp = 650 V; half-cycle average = 207 V.','Vm = 325 V → Vpp = 650 V; हाफ-साइकल एवरेज = 207 V।','Vm = 325 V → Vpp = 650 V; ഹാഫ്-സൈക്കിൾ ആവറേജ് = 207 V.');
+X('Average = area ÷ width','एवरेज = एरिया ÷ विड्थ','ആവറേജ് = ഏരിയ ÷ വിഡ്ത്ത്');
+X('RMS voltage','RMS वोल्टेज','RMS വോൾട്ടേജ്');
+X('Sine wave only. Vav is the half-cycle average.','सिर्फ़ साइन वेव। Vav = हाफ-साइकल एवरेज।','സൈൻ വേവിന് മാത്രം. Vav = ഹാഫ്-സൈക്കിൾ ആവറേജ്.');
+X('Peak of a sine wave is 100 V. RMS value?','साइन वेव का पीक 100 V है। RMS वैल्यू?','സൈൻ വേവിന്റെ പീക്ക് 100 V. RMS വാല്യൂ?');
+X('RMS is 230 V. Peak-to-peak value ≈ ?','RMS 230 V है। पीक-टू-पीक वैल्यू ≈ ?','RMS 230 V. പീക്ക്-ടു-പീക്ക് വാല്യൂ ≈ ?');
+X('Vm = 325 V, Vpp = 2 × 325 = 650 V.','Vm = 325 V, Vpp = 2 × 325 = 650 V।','Vm = 325 V, Vpp = 2 × 325 = 650 V.');
+X('Frequency doubles. Time period becomes …','फ्रीक्वेंसी दोगुनी। टाइम पीरियड हो जाएगा …','ഫ്രീക്വൻസി ഇരട്ടി. ടൈം പീരിയഡ് ആകും …');
+X('T = 1 ÷ f.','T = 1 ÷ f।','T = 1 ÷ f.');
+X('Form factor of a sine wave?','साइन वेव का फॉर्म फैक्टर?','സൈൻ വേവിന്റെ ഫോം ഫാക്ടർ?');
+X('Vrms ÷ Vav = 0.707 ÷ 0.637 = 1.11.','Vrms ÷ Vav = 0.707 ÷ 0.637 = 1.11।','Vrms ÷ Vav = 0.707 ÷ 0.637 = 1.11.');
+X('Peak 100 V. Half-cycle average?','पीक 100 V। हाफ-साइकल एवरेज?','പീക്ക് 100 V. ഹാഫ്-സൈക്കിൾ ആവറേജ്?');
+X('Instantaneous value at 30° of a 200 V peak sine?','200 V पीक साइन वेव की 30° पर इंस्टेंटेनियस वैल्यू?','200 V പീക്ക് സൈൻ വേവിന്റെ 30°-ലെ ഇൻസ്റ്റന്റേനിയസ് വാല്യൂ?');
+X('200 × sin 30° = 200 × 0.5 = 100 V.','200 × sin 30° = 200 × 0.5 = 100 V।','200 × sin 30° = 200 × 0.5 = 100 V.');
+X('cos φ = base ÷ hypotenuse','cos φ = बेस ÷ हाइपोटेन्यूज़','cos φ = ബേസ് ÷ ഹൈപ്പോട്ടിന്യൂസ്');
+X('sin φ = opposite ÷ hyp · tan φ = opposite ÷ base.','sin φ = अपोज़िट ÷ हाइप · tan φ = अपोज़िट ÷ बेस।','sin φ = ഓപ്പോസിറ്റ് ÷ ഹൈപ്പ് · tan φ = ഓപ്പോസിറ്റ് ÷ ബേസ്.');
+X('Right triangle','राइट-एंगल ट्राएंगल','റൈറ്റ്-ആംഗിൾ ട്രയാങ്കിൾ');
+X('kW, kVAR, kVA','kW, kVAR, kVA','kW, kVAR, kVA');
+X('cos φ = base ÷ hyp = 4 ÷ 5 = 0.8','cos φ = बेस ÷ हाइप = 4 ÷ 5 = 0.8','cos φ = ബേസ് ÷ ഹൈപ്പ് = 4 ÷ 5 = 0.8');
+X('cos φ = base ÷ hyp','cos φ = बेस ÷ हाइप','cos φ = ബേസ് ÷ ഹൈപ്പ്');
+
+/* xt3: derivations, mistakes, revision, viva, interview, MCQ, patterns */
+X('Area = ∫<sub>0</sub><sup>π</sup> V<sub>m</sub> sin θ dθ = 2V<sub>m</sub>','एरिया = ∫<sub>0</sub><sup>π</sup> V<sub>m</sub> sin θ dθ = 2V<sub>m</sub>','ഏരിയ = ∫<sub>0</sub><sup>π</sup> V<sub>m</sub> sin θ dθ = 2V<sub>m</sub>');
+X('Area = ∫0π Vm sin θ dθ = 2Vm','एरिया = ∫0π Vm sin θ dθ = 2Vm','ഏരിയ = ∫0π Vm sin θ dθ = 2Vm');
+X('Square: v² = Vm² sin²θ (never negative)','स्क्वेयर: v² = Vm² sin²θ (कभी नेगेटिव नहीं)','സ്ക്വയർ: v² = Vm² sin²θ (ഒരിക്കലും നെഗറ്റീവ് അല്ല)');
+X('Mean of v² = (1 ÷ 2π) ∫02π Vm² sin²θ dθ = Vm² ÷ 2','v² का मीन = (1 ÷ 2π) ∫02π Vm² sin²θ dθ = Vm² ÷ 2','v²-ന്റെ മീൻ = (1 ÷ 2π) ∫02π Vm² sin²θ dθ = Vm² ÷ 2');
+X('Vm = √2 × Vrms = 1.414 × Vrms','Vm = √2 × Vrms = 1.414 × Vrms','Vm = √2 × Vrms = 1.414 × Vrms');
+X('Peak factor = Vm ÷ Vrms = 1.414 · Form factor = Vrms ÷ Vav = 0.707 ÷ 0.637 = 1.11 (sine wave).','पीक फैक्टर = Vm ÷ Vrms = 1.414 · फॉर्म फैक्टर = Vrms ÷ Vav = 0.707 ÷ 0.637 = 1.11 (साइन वेव)।','പീക്ക് ഫാക്ടർ = Vm ÷ Vrms = 1.414 · ഫോം ഫാക്ടർ = Vrms ÷ Vav = 0.707 ÷ 0.637 = 1.11 (സൈൻ വേവ്).');
+/* mistakes */
+X('Voltage and current are the same','वोल्टेज और करंट एक ही हैं','വോൾട്ടേജും കറന്റും ഒന്നാണ്');
+X('Voltage pushes. Current flows.','वोल्टेज धक्का देता है। करंट बहता है।','വോൾട്ടേജ് തള്ളുന്നു. കറന്റ് ഒഴുകുന്നു.');
+X('Series lamps: one fails, rest glow','सीरीज़ लैंप: एक फेल, बाकी जलते हैं','സീരീസ് ലാമ്പ്: ഒന്ന് പോയാൽ ബാക്കി കത്തും');
+X('One fails, all go dark.','एक फेल तो सब बंद।','ഒന്ന് പോയാൽ എല്ലാം ഓഫ്.');
+X('230 V is the peak value','230 V पीक वैल्यू है','230 V പീക്ക് വാല്യൂ ആണ്');
+X('230 V is RMS. Peak ≈ 325 V.','230 V RMS है। पीक ≈ 325 V।','230 V RMS ആണ്. പീക്ക് ≈ 325 V.');
+X('kW and kWh are the same','kW और kWh एक ही हैं','kW-ഉം kWh-ഉം ഒന്നാണ്');
+X('kW = power. kWh = energy.','kW = पावर। kWh = एनर्जी।','kW = പവർ. kWh = എനർജി.');
+X('Electrons flow from + to −','इलेक्ट्रॉन + से − की तरफ़ बहते हैं','ഇലക്ട്രോൺ + ൽ നിന്ന് − ലേക്ക് ഒഴുകും');
+X('Conventional + to −. Electrons − to +.','कन्वेंशनल + से −। इलेक्ट्रॉन − से +।','കൺവെൻഷണൽ + ൽ നിന്ന് −. ഇലക്ട്രോൺ − ൽ നിന്ന് +.');
+X('Average = 0.5 × peak','एवरेज = 0.5 × पीक','ആവറേജ് = 0.5 × പീക്ക്');
+X('Average = 0.637 × peak (half cycle).','एवरेज = 0.637 × पीक (हाफ साइकल)।','ആവറേജ് = 0.637 × പീക്ക് (ഹാഫ് സൈക്കിൾ).');
+X('1 A = 100 mA','1 A = 100 mA','1 A = 100 mA');
+X('1 A = 1000 mA.','1 A = 1000 mA।','1 A = 1000 mA.');
+/* revision */
+X('Tap a tile to open its slide.','टाइल टैप करो, उसकी स्लाइड खुलेगी।','ടൈൽ ടാപ്പ് ചെയ്താൽ ആ സ്ലൈഡ് തുറക്കും.');
+const RV={'Current':['करंट','കറന്റ്'],'On-load voltage':['ऑन-लोड वोल्टेज','ഓൺ-ലോഡ് വോൾട്ടേജ്'],'Resistance':['रेसिस्टेंस','റെസിസ്റ്റൻസ്'],'Exam twist':['एग्ज़ाम ट्विस्ट','എക്സാം ട്വിസ്റ്റ്'],'Conductance':['कंडक्टेंस','കണ്ടക്ടൻസ്'],'Ohm and power':['ओह्म और पावर','ഓം, പവർ'],'Ohm preview':['ओह्म प्रीव्यू','ഓം പ്രിവ്യൂ'],'Series nR · Parallel R ÷ n':['सीरीज़ nR · पैरेलल R ÷ n','സീരീസ് nR · പാരലൽ R ÷ n'],'Equal resistors':['बराबर रेसिस्टर','തുല്യ റെസിസ്റ്റർ'],'Prefixes':['प्रीफिक्स','പ്രീഫിക്സ്'],'kWh unit':['kWh यूनिट','kWh യൂണിറ്റ്'],'Time period':['टाइम पीरियड','ടൈം പീരിയഡ്'],'Average':['एवरेज','ആവറേജ്'],'RMS':['RMS','RMS'],'314 rad/s at 50 Hz':['50 Hz पर 314 rad/s','50 Hz-ൽ 314 rad/s'],'Pythagoras':['पाइथागोरस','പൈതഗോറസ്'],'Triangle angle':['ट्राएंगल एंगल','ട്രയാങ്കിൾ ആംഗിൾ'],'230 V → 325 V':['230 V → 325 V','230 V → 325 V']};
+for(const k in RV)X(k,RV[k][0],RV[k][1]);
+/* viva L1 */
+X('Define electric current.','इलेक्ट्रिक करंट क्या है?','ഇലക്ട്രിക് കറന്റ് നിർവചിക്കൂ.');
+X('Rate of flow of charge. I = Q ÷ t. Unit: ampere (A).','चार्ज के बहने की रेट। I = Q ÷ t। यूनिट: एम्पियर (A)।','ചാർജ് ഒഴുകുന്ന റേറ്റ്. I = Q ÷ t. യൂണിറ്റ്: ആമ്പിയർ (A).');
+X('Unit of resistance?','रेसिस्टेंस की यूनिट?','റെസിസ്റ്റൻസിന്റെ യൂണിറ്റ്?');
+X('Ohm (Ω).','ओह्म (Ω)।','ഓം (Ω).');
+X('Define 1 volt.','1 वोल्ट क्या है?','1 വോൾട്ട് നിർവചിക്കൂ.');
+X('Potential difference when 1 joule of work moves 1 coulomb of charge.','1 कूलॉम चार्ज को 1 जूल वर्क से ले जाने पर जो पोटेंशियल डिफरेंस होता है।','1 കൂളോം ചാർജ് നീക്കാൻ 1 ജൂൾ വർക്ക് വേണ്ടി വരുന്ന പൊട്ടൻഷ്യൽ ഡിഫറൻസ്.');
+X('What is frequency? Value in India?','फ्रीक्वेंसी क्या है? भारत में वैल्यू?','ഫ്രീക്വൻസി എന്നാൽ എന്ത്? ഇന്ത്യയിലെ വാല്യൂ?');
+X('Cycles per second, in hertz (Hz). Supply is 50 Hz.','सेकंड में साइकल, यूनिट हर्ट्ज़ (Hz)। सप्लाई 50 Hz है।','സെക്കൻഡിലെ സൈക്കിൾ, യൂണിറ്റ് ഹെർട്സ് (Hz). സപ്ലൈ 50 Hz.');
+X('RMS value of a sine wave?','साइन वेव की RMS वैल्यू?','സൈൻ വേവിന്റെ RMS വാല്യൂ?');
+X('0.707 × peak value (Vm ÷ √2).','0.707 × पीक वैल्यू (Vm ÷ √2)।','0.707 × പീക്ക് വാല്യൂ (Vm ÷ √2).');
+X('Unit of conductance?','कंडक्टेंस की यूनिट?','കണ്ടക്ടൻസിന്റെ യൂണിറ്റ്?');
+X('Siemens (S). G = 1 ÷ R.','सीमेंस (S)। G = 1 ÷ R।','സീമൻസ് (S). G = 1 ÷ R.');
+X('What is 1 unit of electrical energy?','इलेक्ट्रिकल एनर्जी की 1 यूनिट क्या है?','ഇലക്ട്രിക്കൽ എനർജിയുടെ 1 യൂണിറ്റ് എന്ത്?');
+X('1 kWh = 1 kW used for 1 hour.','1 kWh = 1 kW को 1 घंटा चलाना।','1 kWh = 1 kW ഒരു മണിക്കൂർ ഉപയോഗിക്കുന്നത്.');
+/* viva L2 */
+X('Why is copper used for wires?','वायर में कॉपर क्यों यूज़ होता है?','വയറിന് കോപ്പർ എന്തിന് ഉപയോഗിക്കുന്നു?');
+X('Many free electrons, low resistivity, ductile, easy to joint.','फ्री इलेक्ट्रॉन ज़्यादा, रेसिस्टिविटी कम, डक्टाइल, जोड़ना आसान।','ഫ്രീ ഇലക്ട്രോൺ കൂടുതൽ, റെസിസ്റ്റിവിറ്റി കുറവ്, ഡക്റ്റൈൽ, ജോയിന്റ് ചെയ്യാൻ എളുപ്പം.');
+X('Why RMS, not average, for AC?','AC में एवरेज नहीं, RMS क्यों?','AC-ക്ക് ആവറേജ് അല്ല, RMS എന്തുകൊണ്ട്?');
+X('RMS gives the same heating as DC. Full-cycle average is zero.','RMS से DC जितनी ही हीटिंग मिलती है। फुल-साइकल एवरेज ज़ीरो होता है।','RMS-ന് DC-യുടെ അതേ ഹീറ്റിംഗ് ആണ്. ഫുൾ-സൈക്കിൾ ആവറേജ് സീറോ ആണ്.');
+X('Why does battery voltage fall on load?','लोड लगाने पर बैटरी वोल्टेज क्यों गिरता है?','ലോഡ് കൊടുക്കുമ്പോൾ ബാറ്ററി വോൾട്ടേജ് എന്തുകൊണ്ട് കുറയുന്നു?');
+X('Internal resistance drop: V = E − I·r.','इंटरनल रेसिस्टेंस ड्रॉप: V = E − I·r।','ഇന്റേണൽ റെസിസ്റ്റൻസ് ഡ്രോപ്പ്: V = E − I·r.');
+X('Where does 1 ÷ √2 come from?','1 ÷ √2 कहाँ से आता है?','1 ÷ √2 എവിടുന്ന് വരുന്നു?');
+X('Mean of sin²θ over a cycle is ½. Root of ½ = 0.707.','एक साइकल में sin²θ का मीन ½ है। ½ का रूट = 0.707।','ഒരു സൈക്കിളിൽ sin²θ-ന്റെ മീൻ ½ ആണ്. ½-ന്റെ റൂട്ട് = 0.707.');
+X('Why is home wiring in parallel?','घर की वायरिंग पैरेलल में क्यों?','വീട്ടിലെ വയറിംഗ് പാരലൽ ആയത് എന്തുകൊണ്ട്?');
+X('Each load gets full voltage and works independently.','हर लोड को पूरा वोल्टेज मिलता है और वो अलग से चलता है।','ഓരോ ലോഡിനും മുഴുവൻ വോൾട്ടേജ് കിട്ടും, സ്വതന്ത്രമായി പ്രവർത്തിക്കും.');
+X('Why is half-cycle average 0.637 Vm?','हाफ-साइकल एवरेज 0.637 Vm क्यों?','ഹാഫ്-സൈക്കിൾ ആവറേജ് 0.637 Vm എന്തുകൊണ്ട്?');
+X('Area 2Vm ÷ width π = 2Vm ÷ π.','एरिया 2Vm ÷ विड्थ π = 2Vm ÷ π।','ഏരിയ 2Vm ÷ വിഡ്ത്ത് π = 2Vm ÷ π.');
+/* viva L3 */
+X('Torch dead, switch closed. Voltmeter across lamp reads 1.5 V. Fault?','टॉर्च डेड, स्विच क्लोज़्ड। लैंप पर वोल्टमीटर 1.5 V दिखाता है। फॉल्ट?','ടോർച്ച് ഡെഡ്, സ്വിച്ച് ക്ലോസ്ഡ്. ലാമ്പിന് കുറുകെ വോൾട്ട്മീറ്റർ 1.5 V. ഫോൾട്ട്?');
+X('Lamp filament open. The open part shows full voltage.','लैंप का फिलामेंट ओपन। ओपन पार्ट पर पूरा वोल्टेज दिखता है।','ലാമ്പ് ഫിലമെന്റ് ഓപ്പൺ. ഓപ്പൺ പാർട്ടിൽ മുഴുവൻ വോൾട്ടേജ് കാണും.');
+X('New cell reads 1.5 V, but lamp is dim. Why?','नया सेल 1.5 V दिखाता है, फिर भी लैंप डिम है। क्यों?','പുതിയ സെൽ 1.5 V കാണിക്കുന്നു, പക്ഷേ ലാമ്പ് ഡിം. എന്തുകൊണ്ട്?');
+X('Weak cell: voltage falls on load. Also check loose contacts.','वीक सेल: लोड पर वोल्टेज गिरता है। लूज़ कॉन्टैक्ट भी चेक करो।','വീക്ക് സെൽ: ലോഡിൽ വോൾട്ടേജ് കുറയും. ലൂസ് കോൺടാക്ടും ചെക്ക് ചെയ്യൂ.');
+X('Meter reads 230 V. What is the scope peak?','मीटर 230 V दिखाता है। स्कोप में पीक कितना?','മീറ്റർ 230 V. സ്കോപ്പിൽ പീക്ക് എത്ര?');
+X('About 325 V (230 × 1.414).','करीब 325 V (230 × 1.414)।','ഏകദേശം 325 V (230 × 1.414).');
+X('100 W lamp runs 10 h. Units used?','100 W का लैंप 10 घंटे चला। कितनी यूनिट?','100 W ലാമ്പ് 10 മണിക്കൂർ. എത്ര യൂണിറ്റ്?');
+X('1 kWh = 1 unit.','1 kWh = 1 यूनिट।','1 kWh = 1 യൂണിറ്റ്.');
+X('A wire touches across a lamp and the fuse blows. Why?','लैंप के आर-पार तार छू गया और फ्यूज़ उड़ गया। क्यों?','ലാമ്പിന് കുറുകെ വയർ തൊട്ടു, ഫ്യൂസ് പോയി. എന്തുകൊണ്ട്?');
+X('Short circuit: very low resistance, very high current.','शॉर्ट सर्किट: रेसिस्टेंस बहुत कम, करंट बहुत ज़्यादा।','ഷോർട്ട് സർക്യൂട്ട്: റെസിസ്റ്റൻസ് വളരെ കുറവ്, കറന്റ് വളരെ കൂടുതൽ.');
+X('Series string: one lamp fails, all dark. Why?','सीरीज़ स्ट्रिंग: एक लैंप फेल, सब बंद। क्यों?','സീരീസ് സ്ട്രിംഗ്: ഒരു ലാമ്പ് പോയി, എല്ലാം ഓഫ്. എന്തുകൊണ്ട്?');
+X('Single path is broken. Parallel would keep the others on.','सिंगल पाथ टूट गया। पैरेलल में बाकी जलते रहते।','ഒറ്റ പാത്ത് മുറിഞ്ഞു. പാരലൽ ആയിരുന്നെങ്കിൽ ബാക്കി കത്തിയേനെ.');
+/* interview */
+X('Current vs voltage?','करंट बनाम वोल्टेज?','കറന്റ് vs വോൾട്ടേജ്?');
+X('Voltage pushes. Current is the flow. Volt (V) and ampere (A).','वोल्टेज धक्का देता है। करंट बहाव है। वोल्ट (V) और एम्पियर (A)।','വോൾട്ടേജ് തള്ളുന്നു. കറന്റ് ഒഴുക്ക്. വോൾട്ട് (V), ആമ്പിയർ (A).');
+X('EMF vs terminal voltage?','EMF बनाम टर्मिनल वोल्टेज?','EMF vs ടെർമിനൽ വോൾട്ടേജ്?');
+X('EMF is the no-load voltage. Terminal voltage is lower on load by I·r.','EMF नो-लोड वोल्टेज है। लोड पर टर्मिनल वोल्टेज I·r कम होता है।','EMF നോ-ലോഡ് വോൾട്ടേജ് ആണ്. ലോഡിൽ ടെർമിനൽ വോൾട്ടേജ് I·r കുറയും.');
+X('What does 230 V mean for AC?','AC में 230 V का क्या मतलब?','AC-യിൽ 230 V എന്നാൽ എന്ത്?');
+X('It is the RMS value. Peak is about 325 V.','यह RMS वैल्यू है। पीक करीब 325 V है।','അത് RMS വാല്യൂ ആണ്. പീക്ക് ഏകദേശം 325 V.');
+X('kW vs kWh?','kW बनाम kWh?','kW vs kWh?');
+X('kW is power (rate). kWh is energy (power × time).','kW पावर (रेट) है। kWh एनर्जी (पावर × टाइम) है।','kW പവർ (റേറ്റ്) ആണ്. kWh എനർജി (പവർ × ടൈം) ആണ്.');
+X('Conductor, insulator, semiconductor?','कंडक्टर, इंसुलेटर, सेमीकंडक्टर?','കണ്ടക്ടർ, ഇൻസുലേറ്റർ, സെമികണ്ടക്ടർ?');
+X('Conductor: many free electrons (copper). Insulator: almost none (rubber). Semiconductor: in between (silicon).','कंडक्टर: फ्री इलेक्ट्रॉन ज़्यादा (कॉपर)। इंसुलेटर: लगभग नहीं (रबर)। सेमीकंडक्टर: बीच में (सिलिकॉन)।','കണ്ടക്ടർ: ഫ്രീ ഇലക്ട്രോൺ കൂടുതൽ (കോപ്പർ). ഇൻസുലേറ്റർ: ഏതാണ്ട് ഇല്ല (റബ്ബർ). സെമികണ്ടക്ടർ: നടുവിൽ (സിലിക്കൺ).');
+X('Series vs parallel in homes?','घरों में सीरीज़ या पैरेलल?','വീടുകളിൽ സീരീസോ പാരലലോ?');
+X('Parallel: same voltage to every load, loads work independently.','पैरेलल: हर लोड को वही वोल्टेज, लोड अलग-अलग चलते हैं।','പാരലൽ: ഓരോ ലോഡിനും ഒരേ വോൾട്ടേജ്, ലോഡുകൾ സ്വതന്ത്രമായി പ്രവർത്തിക്കും.');
+/* MCQ */
+X('Unit of electric charge?','इलेक्ट्रिक चार्ज की यूनिट?','ഇലക്ട്രിക് ചാർജിന്റെ യൂണിറ്റ്?');
+X('Charge Q is in coulomb (C).','चार्ज Q कूलॉम (C) में होता है।','ചാർജ് Q കൂളോം (C)-ൽ ആണ്.');
+X('6 C passes in 2 s. Current?','2 s में 6 C गुज़रा। करंट?','2 s-ൽ 6 C കടന്നുപോയി. കറന്റ്?');
+X('I = Q ÷ t = 6 ÷ 2 = 3 A.','I = Q ÷ t = 6 ÷ 2 = 3 A।','I = Q ÷ t = 6 ÷ 2 = 3 A.');
+X('G = 1 ÷ R, in siemens (S).','G = 1 ÷ R, सीमेंस (S) में।','G = 1 ÷ R, സീമൻസ് (S)-ൽ.');
+X('Which is a semiconductor?','इनमें सेमीकंडक्टर कौन सा है?','ഇതിൽ സെമികണ്ടക്ടർ ഏത്?');
+X('Silicon sits between conductor and insulator.','सिलिकॉन कंडक्टर और इंसुलेटर के बीच में है।','സിലിക്കൺ കണ്ടക്ടറിനും ഇൻസുലേറ്ററിനും ഇടയിലാണ്.');
+X('4.7 kΩ in ohms?','4.7 kΩ ओह्म में?','4.7 kΩ ഓമിൽ?');
+X('k = 1000, so 4.7 × 1000 = 4700.','k = 1000, इसलिए 4.7 × 1000 = 4700।','k = 1000, അതുകൊണ്ട് 4.7 × 1000 = 4700.');
+X('Supply 50 Hz. Time period?','सप्लाई 50 Hz। टाइम पीरियड?','സപ്ലൈ 50 Hz. ടൈം പീരിയഡ്?');
+X('T = 1 ÷ 50 = 0.02 s = 20 ms.','T = 1 ÷ 50 = 0.02 s = 20 ms।','T = 1 ÷ 50 = 0.02 s = 20 ms.');
+X('Half-cycle average of a sine wave?','साइन वेव का हाफ-साइकल एवरेज?','സൈൻ വേവിന്റെ ഹാഫ്-സൈക്കിൾ ആവറേജ്?');
+X('Vav = 2Vm ÷ π = 0.637 Vm.','Vav = 2Vm ÷ π = 0.637 Vm।','Vav = 2Vm ÷ π = 0.637 Vm.');
+X('230 V RMS. Peak value ≈ ?','230 V RMS। पीक वैल्यू ≈ ?','230 V RMS. പീക്ക് വാല്യൂ ≈ ?');
+X('Vm = 1.414 × 230 ≈ 325 V.','Vm = 1.414 × 230 ≈ 325 V।','Vm = 1.414 × 230 ≈ 325 V.');
+X('Series circuit, one lamp removed. Others?','सीरीज़ सर्किट, एक लैंप निकाला। बाकी?','സീരീസ് സർക്യൂട്ട്, ഒരു ലാമ്പ് എടുത്തുമാറ്റി. ബാക്കി?');
+X('All off','सब बंद','എല്ലാം ഓഫ്');
+X('The only path is broken.','एकमात्र रास्ता टूट गया।','ഒരേയൊരു പാത്ത് മുറിഞ്ഞു.');
+X('Base equals hypotenuse, so ratio = 1.','बेस = हाइपोटेन्यूज़, इसलिए रेशियो = 1।','ബേസ് = ഹൈപ്പോട്ടിന്യൂസ്, അതുകൊണ്ട് റേഷ്യോ = 1.');
+X('Wire diameter doubles (same material, length). Resistance?','तार का डायमीटर दोगुना (मटीरियल, लेंथ वही)। रेसिस्टेंस?','വയർ ഡയാമീറ്റർ ഇരട്ടി (മെറ്റീരിയൽ, ലെങ്ത്ത് അതേ). റെസിസ്റ്റൻസ്?');
+X('One-fourth','एक-चौथाई','നാലിലൊന്ന്');
+X('Four times','चार गुना','നാല് മടങ്ങ്');
+X('Area ∝ d², so R ÷ 4.','एरिया ∝ d², इसलिए R ÷ 4।','ഏരിയ ∝ d², അതുകൊണ്ട് R ÷ 4.');
+X('Bulb rated 230 V, 100 W runs on 115 V. Power ≈ ?','230 V, 100 W का बल्ब 115 V पर चला। पावर ≈ ?','230 V, 100 W ബൾബ് 115 V-ൽ പ്രവർത്തിപ്പിച്ചു. പവർ ≈ ?');
+X('P = V² ÷ R, so (½)² = ¼.','P = V² ÷ R, इसलिए (½)² = ¼।','P = V² ÷ R, അതുകൊണ്ട് (½)² = ¼.');
+/* patterns */
+const tl=(s,i)=>{const r=xl(s);return r?r[i]:s};
+const both=(f)=>[f(0),f(1)];
+XR.push([/^(?:\S+\s)?Correct\.\s+(.+)$/s,m=>both(i=>['सही। ','ശരി. '][i]+tl(m[1],i))]);
+XR.push([/^(?:\S+\s)?Not quite\.\s+(.+)$/s,m=>both(i=>['पूरा सही नहीं। ','ഏതാണ്ട്. '][i]+tl(m[1],i))]);
+XR.push([/^Step (\d+) of (\d+) · (.+)$/,m=>both(i=>[`स्टेप ${m[1]} / ${m[2]} · `,`സ്റ്റെപ്പ് ${m[1]} / ${m[2]} · `][i]+tl(m[3],i))]);
+XR.push([/^Exam-style \(PSC \/ ISRO type\) · (\d+) of (\d+)$/,m=>[`एग्ज़ाम-स्टाइल (PSC / ISRO टाइप) · ${m[1]} / ${m[2]}`,`എക്സാം-സ്റ്റൈൽ (PSC / ISRO ടൈപ്പ്) · ${m[1]} / ${m[2]}`]]);
+XR.push([/^Mission (\d+) of (\d+) · tap a part to test it$/,m=>[`मिशन ${m[1]} / ${m[2]} · पार्ट टैप करके टेस्ट करो`,`മിഷൻ ${m[1]} / ${m[2]} · പാർട്ട് ടാപ്പ് ചെയ്ത് ടെസ്റ്റ് ചെയ്യൂ`]]);
+XR.push([/^Question (\d+) of (\d+) · Score (\d+)$/,m=>[`सवाल ${m[1]} / ${m[2]} · स्कोर ${m[3]}`,`ചോദ്യം ${m[1]} / ${m[2]} · സ്കോർ ${m[3]}`]]);
+XR.push([/^Score (\d+) \/ (\d+)$/,m=>[`स्कोर ${m[1]} / ${m[2]}`,`സ്കോർ ${m[1]} / ${m[2]}`]]);
+XR.push([/^Best on this device: (\d+) \/ (\d+)$/,m=>[`इस फोन पर बेस्ट: ${m[1]} / ${m[2]}`,`ഈ ഫോണിലെ ബെസ്റ്റ്: ${m[1]} / ${m[2]}`]]);
+XR.push([/^(L1 Fact|L2 Why \/ How|L3 Workshop|Interview) · card (\d+) of (\d+)$/,m=>{const n={'L1 Fact':['L1 फैक्ट','L1 ഫാക്ട്'],'L2 Why / How':['L2 क्यों / कैसे','L2 എന്തുകൊണ്ട് / എങ്ങനെ'],'L3 Workshop':['L3 वर्कशॉप','L3 വർക്ക്ഷോപ്പ്'],'Interview':['इंटरव्यू','ഇന്റർവ്യൂ']}[m[1]];return[`${n[0]} · कार्ड ${m[2]} / ${m[3]}`,`${n[1]} · കാർഡ് ${m[2]} / ${m[3]}`]}]);
+XR.push([/^(.+) · slide (\d+)$/,m=>{const r=xl(m[1]);return r?[r[0]+' · स्लाइड '+m[2],r[1]+' · സ്ലൈഡ് '+m[2]]:null}]);
+X('L1 Fact','L1 फैक्ट','L1 ഫാക്ട്');X('L2 Why / How','L2 क्यों / कैसे','L2 എന്തുകൊണ്ട് / എങ്ങനെ');X('L3 Workshop','L3 वर्कशॉप','L3 വർക്ക്ഷോപ്പ്');X('Interview','इंटरव्यू','ഇന്റർവ്യൂ');
+X('Tap card to flip','कार्ड टैप करके पलटो','കാർഡ് ടാപ്പ് ചെയ്ത് മറിക്കൂ');
+X('Random card','रैंडम कार्ड','റാൻഡം കാർഡ്');
+X('Answer','जवाब','ഉത്തരം');
+X('Got it','समझ गया','മനസ്സിലായി');
+X('Again','फिर से','വീണ്ടും');
+
+/* xt4: single words, labels, unit patterns */
+const W={'Start':['स्टार्ट','സ്റ്റാർട്ട്'],'Ampere':['एम्पियर','ആമ്പിയർ'],'Volt':['वोल्ट','വോൾട്ട്'],'Ohm':['ओह्म','ഓം'],'Conductor':['कंडक्टर','കണ്ടക്ടർ'],'Insulator':['इंसुलेटर','ഇൻസുലേറ്റർ'],'one':['एक','ഒന്ന്'],'many':['कई','ഒരുപാട്'],'Right':['सही','ശരി'],'Pause':['पॉज़','പോസ്'],'Replay':['रीप्ले','റീപ്ലേ'],'Play':['प्ले','പ്ലേ'],'Rate':['रेट','റേറ്റ്'],'Voltage':['वोल्टेज','വോൾട്ടേജ്'],'Length':['लेंथ','ലെങ്ത്ത്'],'Area':['एरिया','ഏരിയ'],'Copper':['कॉपर','കോപ്പർ'],'Aluminium':['एल्युमिनियम','അലുമിനിയം'],'Iron':['आयरन','ഇരുമ്പ്'],'Diameter':['डायमीटर','ഡയാമീറ്റർ'],'Next':['अगला','അടുത്തത്'],'Prev':['पिछला','മുമ്പത്തേത്'],'Increases':['बढ़ता है','കൂടും'],'Decreases':['घटता है','കുറയും'],'Glass':['ग्लास','ഗ്ലാസ്'],'Silicon':['सिलिकॉन','സിലിക്കൺ'],'Rubber':['रबर','റബ്ബർ'],'Neither':['कोई नहीं','രണ്ടുമല്ല'],'Open':['ओपन','ഓപ്പൺ'],'Closed':['क्लोज़्ड','ക്ലോസ്ഡ്'],'Short':['शॉर्ट','ഷോർട്ട്'],'Cell':['सेल','സെൽ'],'Switch':['स्विच','സ്വിച്ച്'],'Lamp':['लैंप','ലാമ്പ്'],'Count':['काउंट','കൗണ്ട്'],'Each':['हर एक','ഓരോന്നും'],'Series':['सीरीज़','സീരീസ്'],'Parallel':['पैरेलल','പാരലൽ'],'Equal':['बराबर','തുല്യം'],'base':['बेस','ബേസ്'],'Power':['पावर','പവർ'],'Time':['टाइम','ടൈം'],'Peak':['पीक','പീക്ക്'],'Frequency':['फ्रीक्वेंसी','ഫ്രീക്വൻസി'],'Phase':['फेज़','ഫേസ്'],'Side':['साइड','സൈഡ്'],'Angle':['एंगल','ആംഗിൾ'],'Impedance':['इम्पीडेंस','ഇമ്പീഡൻസ്'],'Coulomb':['कूलॉम','കൂളോം'],'Siemens':['सीमेंस','സീമൻസ്'],'Henry':['हेनरी','ഹെൻറി'],'Farad':['फैराड','ഫാരഡ്'],'Glow':['जलेंगे','കത്തും'],'Brighter':['ज़्यादा चमकेंगे','കൂടുതൽ തെളിയും'],'Unchanged':['वही रहेंगे','മാറ്റമില്ല'],'Doubles':['दोगुना','ഇരട്ടി'],'Halves':['आधा','പകുതി'],'Result':['रिज़ल्ट','റിസൾട്ട്'],'Equal to':['बराबर','തുല്യം']};
+for(const k in W)X(k,W[k][0],W[k][1]);
+X('2. Rubber is a …','2. रबर एक … है','2. റബ്ബർ ഒരു … ആണ്');
+X('Voltage: ON','वोल्टेज: ON','വോൾട്ടേജ്: ON');X('Switch: ON','स्विच: ON','സ്വിച്ച്: ON');
+X('4 A × 5 s → Q = 20 C. Units: C, A, s.','4 A × 5 s → Q = 20 C। यूनिट: C, A, s।','4 A × 5 s → Q = 20 C. യൂണിറ്റ്: C, A, s.');
+X('Copper, 100 m, 1.5 mm²: R = 0.0172 × 100 ÷ 1.5 ≈ 1.15 Ω.','कॉपर, 100 m, 1.5 mm²: R = 0.0172 × 100 ÷ 1.5 ≈ 1.15 Ω।','കോപ്പർ, 100 m, 1.5 mm²: R = 0.0172 × 100 ÷ 1.5 ≈ 1.15 Ω.');
+X('12 V across 4 Ω → I = 3 A.','4 Ω पर 12 V → I = 3 A।','4 Ω-ന് കുറുകെ 12 V → I = 3 A.');
+X('At 50 Hz: φ = 90° → delay = 5 ms.','50 Hz पर: φ = 90° → डिले = 5 ms।','50 Hz-ൽ: φ = 90° → ഡിലേ = 5 ms.');
+X('R ratios: L, 1 ÷ d²','R रेशियो: L, 1 ÷ d²','R റേഷ്യോ: L, 1 ÷ d²');
+X('kilo = 10<sup>3</sup>','किलो = 10<sup>3</sup>','കിലോ = 10<sup>3</sup>');
+X('base = 10<sup>0</sup>','बेस = 10<sup>0</sup>','ബേസ് = 10<sup>0</sup>');
+X('Width = π','विड्थ = π','വിഡ്ത്ത് = π');
+X('B lags','B लैग करता है','B ലാഗ് ചെയ്യുന്നു');X('B leads','B लीड करता है','B ലീഡ് ചെയ്യുന്നു');
+X('100 W bulb','100 W बल्ब','100 W ബൾബ്');X('60 W bulb','60 W बल्ब','60 W ബൾബ്');
+X('Battery (DC)','बैटरी (DC)','ബാറ്ററി (DC)');X('Socket (AC)','सॉकेट (AC)','സോക്കറ്റ് (AC)');
+X('Series: RT = nR','सीरीज़: RT = nR','സീരീസ്: RT = nR');X('Parallel: RT = R ÷ n','पैरेलल: RT = R ÷ n','പാരലൽ: RT = R ÷ n');
+const UN={coulomb:['कूलॉम','കൂളോം'],ampere:['एम्पियर','ആമ്പിയർ'],volt:['वोल्ट','വോൾട്ട്'],ohm:['ओह्म','ഓം'],siemens:['सीमेंस','സീമൻസ്'],watt:['वाट','വാട്ട്'],hertz:['हर्ट्ज़','ഹെർട്സ്'],second:['सेकंड','സെക്കൻഡ്'],degree:['डिग्री','ഡിഗ്രി']};
+XR.push([/^(\S+) · (coulomb|ampere|volt|ohm|siemens|watt|hertz|second|degree) \((.+)\)$/,m=>[`${m[1]} · ${UN[m[2]][0]} (${m[3]})`,`${m[1]} · ${UN[m[2]][1]} (${m[3]})`]]);
+XR.push([/^(cell|lamp|switch): (.+)$/,m=>{const n={cell:['सेल','സെൽ'],lamp:['लैंप','ലാമ്പ്'],switch:['स्विच','സ്വിച്ച്']}[m[1]];return[`${n[0]}: ${m[2]}`,`${n[1]}: ${m[2]}`]}]);
+XR.push([/^Got it: (\d+) of (\d+)$/,m=>[`समझ गया: ${m[1]} / ${m[2]}`,`മനസ്സിലായി: ${m[1]} / ${m[2]}`]]);
+X('Use the controls. Watch the picture.','कंट्रोल चलाओ। चित्र देखो।','കൺട്രോൾ ഉപയോഗിക്കൂ. ചിത്രം നോക്കൂ.');
 
 /* ===== Engine: slides, navigation, language, animation, storage ===== */
 const LS='cits_m0_v1';
@@ -707,6 +1015,7 @@ function init(){
     clearTimeout(rsT);try{localStorage.removeItem(LS)}catch(e){}try{sessionStorage.clear()}catch(e){}
     P.lang='all';P.reduce=null;P.study=false;P.theme='auto';P.slide=0;P.xp=0;P.pred={};P.chk={};P.quiz={};P.viva={};P.start={};P.sort={};
     try{history.replaceState(null,'','#1')}catch(e){}location.reload()};
+  autoInit();
   $('#prev').onclick=()=>go(cur-1);$('#next').onclick=()=>{if(cur===SL.length-1){location.href='index.html'}else go(cur+1)};
   document.addEventListener('keydown',e=>{const t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'))return;
     if(e.key==='ArrowRight'||e.key==='PageDown')go(cur+1);else if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);
@@ -852,7 +1161,7 @@ SL.push({id:'qit',menu:'Q = I × t, I = Q ÷ t',kind:'formula',title:'qit',
   const L2=['<i>I</i> = 3 A → 3 coulomb (C) every second','In 1 s: <i>Q</i> = 3 C','In 2 s: <i>Q</i> = 3 × 2 = 6 C','In <i>t</i> s: <b><i>Q</i> = <i>I</i> × <i>t</i></b>','Divide both sides by <i>t</i>','<b><i>I</i> = <i>Q</i> ÷ <i>t</i></b>'];
   const TM=[1,1,2,4,4,4];
   const CAP=['Rate: 3 C every second','Count after 1 second','Count after 2 seconds','Any time t','Divide both sides by t','Result'];
-   const sp=stepper(w,api,L2,6,3.6,['Rate','1 s','2 s','Any t','\u00f7 t','Result'],CAP);
+   const sp=stepper(w,api,L2,6,3.6,[BI('Rate','रेट','റേറ്റ്'),'1 s','2 s',BI('Any t','कोई t','ഏത് t'),'\u00f7 t',BI('Result','रिज़ल्ट','റിസൾട്ട്')],CAP);
   return(t,dt)=>{sp.step(dt);const I=3,s=sp.st,tm=TM[s];
    const tin=sp.tin,t0=api.reduce()?tm:Math.min(tm,tin%(tm+1.4)),tt=Math.round(t0*10)/10;
    pk.forEach((c,k)=>{const x=X0+((((k*gap+gap*I*t0)%L)+L)%L);c.setAttribute('cx',x.toFixed(1));c.setAttribute('cy',65)});
