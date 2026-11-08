@@ -7,7 +7,7 @@ input{width:100%;min-height:44px;font-size:16px;padding:0 12px;margin:6px 0;bord
 .bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--ok)}small{color:var(--m)}h2{margin:0 0 4px;font-size:18px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}</style></head><body>
 <header><h1>NSTI Calicut</h1><p>Electrician learning modules</p></header><main>
 <div class="card" id="who"></div><div id="list"></div>
-<p><a href="admin.html"><small>Admin</small></a></p></main>
+<div id="mat"></div><p><a href="admin.html"><small>Admin</small></a></p></main>
 <script src="config.js"></script><script>
 const C=window.NSTI,$=s=>document.querySelector(s);let prof=null;
 try{prof=JSON.parse(localStorage.getItem('nsti_profile')||'null')}catch(e){}
@@ -29,5 +29,8 @@ function who(){const w=$('#who');if(prof){w.innerHTML=`<div class="row"><div sty
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function draw(){$('#list').innerHTML=C.MODULES.map(m=>{const p=readP(m.key),pc=p?Math.round(((p.slide||0)+1)/m.slides*100):0;
  return `<div class="card"><h2>${esc(m.title)}</h2><small>${esc(m.sub)}</small><div class="bar"><i style="width:${pc}%"></i></div><div class="row"><small style="flex:1">${p?pc+'% seen':'Not started'}</small><a class="btn" href="${m.file}">${p?'Continue':'Open'}</a></div></div>`}).join('')}
-who();draw();sync();document.addEventListener('visibilitychange',()=>{if(!document.hidden){draw();sync()}});
+function applyLib(L){const rm=L.removed||[],hd=L.hidden||[];const ex=(L.modules||[]);C.MODULES=(C.MODULES||[]).filter(m=>!ex.find(e=>e.id===m.id)).concat(ex).filter(m=>!rm.includes(m.id)&&!hd.includes(m.id));
+ const R=(L.resources||[]).filter(x=>!x.hidden);const h=$('#mat');if(h)h.innerHTML=R.length?'<h2>Study material</h2>'+R.map(x=>`<div class="card"><div class="row"><b style="flex:1">${esc(x.title)}</b><a class="btn" target="_blank" rel="noopener" href="${esc(x.url)}">${x.type==='link'?'Open link':'Download'}</a></div></div>`).join(''):''}
+fetch('library.json?t='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null).then(L=>{if(L)applyLib(L);who();draw();sync()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){draw();sync()}});
 </script></body></html>
