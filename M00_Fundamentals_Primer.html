@@ -1539,8 +1539,8 @@ insAfter('ohm',{id:'twO',menu:'Exam twist: Ohm and power ratios',kind:'tip',titl
    {q:'R doubles, V same. Current becomes …',o:['2I','I ÷ 2','I ÷ 4','I'],a:1,why:'I = V ÷ R.'},
    {q:'Voltage halves, R constant. Power becomes …',o:['P ÷ 2','P ÷ 4','2P','4P'],a:1,why:'P = V² ÷ R, so (½)² = ¼.'},
    {q:'A 230 V, 100 W bulb runs on 115 V (R constant). Power ≈ ?',o:['50 W','25 W','12.5 W','100 W'],a:1,why:'Half voltage → one-fourth power = 25 W.'},
-   {q:'100 W and 60 W bulbs (same rated voltage) in SERIES. Which glows brighter?',o:['100 W','60 W','Both equal','Neither'],a:1,why:'R = V² ÷ P, so 60 W has more R. Same I, P = I²R: more R = brighter.'},
-   {q:'Same two bulbs in PARALLEL. Which is brighter?',o:['60 W','100 W','Both equal','Neither'],a:1,why:'Same V, P = V² ÷ R: lower R (100 W) gives more power.'}],'O');
+   {q:'A 230 V, 100 W bulb and a 230 V, 60 W bulb are joined in SERIES across 230 V. Which glows brighter?',o:['100 W bulb','60 W bulb','Both equal','Neither'],a:1,why:'R = V² ÷ P: 100 W bulb ≈ 529 Ω, 60 W bulb ≈ 882 Ω. Same current in series, P = I²R, so more R (60 W bulb) is brighter.'},
+   {q:'The same 230 V, 100 W bulb and 230 V, 60 W bulb are now joined in PARALLEL across 230 V. Which glows brighter?',o:['60 W bulb','100 W bulb','Both equal','Neither'],a:1,why:'Both get 230 V. P = V² ÷ R: lower R (100 W bulb, 529 Ω) gives more power than 882 Ω.'}],'O');
   s.appendChild(h('div','note',twNote))}});
 
 /* T3: series / parallel sums */
