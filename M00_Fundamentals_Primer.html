@@ -327,6 +327,8 @@ body.short .slide[data-id="fault1"] .s-vis svg,body.short [data-id="fault1"] svg
 .stcap{font-size:18px;margin:4px 0 2px;color:var(--fg)}.stcap b{color:var(--frm)}
 .ctl .btn.stb{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;min-height:52px;min-width:44px;padding:2px 6px;flex:1 1 0}
 .ctl .btn.stb b{font-size:18px}.ctl .btn.stb small{font-size:14px;font-weight:600}
+
+.fm,.ex,.defn{flex-shrink:0}.fm{overflow-y:hidden}
 </style>
 <script>/* ===== Terms: [English, Hindi, Malayalam, symbol/unit html] ===== */
 const T={
@@ -1543,8 +1545,9 @@ insAfter('ohm',{id:'twO',menu:'Exam twist: Ohm and power ratios',kind:'tip',titl
 
 /* T3: series / parallel sums */
 insAfter('parallel',{id:'twS',menu:'Exam twist: series and parallel sums',kind:'tip',title:'twistS',syl:'M2',exam:true,page(w,s,api){
-  w.innerHTML=S(400,200,`<text x="20" y="34" class="tx s">series</text><rect x="20" y="42" width="360" height="22" rx="6" fill="var(--line)"/><rect id="bs" x="20" y="42" width="60" height="22" rx="6" fill="var(--def)"/><text id="ts" x="380" y="34" class="tx s" text-anchor="end"></text>
-   <text x="20" y="104" class="tx s">parallel</text><rect x="20" y="112" width="360" height="22" rx="6" fill="var(--line)"/><rect id="bp" x="20" y="112" width="60" height="22" rx="6" fill="var(--tip)"/><text id="tp" x="380" y="104" class="tx s" text-anchor="end"></text><text x="200" y="176" class="tx m s">n equal resistors of value R</text>`,'Series and parallel totals for equal resistors');
+  w.innerHTML=S(400,150,`<text x="20" y="34" class="tx s">series</text><rect x="20" y="42" width="360" height="22" rx="6" fill="var(--line)"/><rect id="bs" x="20" y="42" width="60" height="22" rx="6" fill="var(--def)"/><text id="ts" x="380" y="34" class="tx s" text-anchor="end"></text>
+   <text x="20" y="104" class="tx s">parallel</text><rect x="20" y="112" width="360" height="22" rx="6" fill="var(--line)"/><rect id="bp" x="20" y="112" width="60" height="22" rx="6" fill="var(--tip)"/><text id="tp" x="380" y="104" class="tx s" text-anchor="end"></text>`,'Series and parallel totals for equal resistors');
+  w.insertBefore(h('div','defn','<b><i>n</i></b> = how many equal resistors. <b><i>R</i></b> = ohm value of each one. Set both below, then watch the two totals.'),w.firstChild);
   const c=h('div','ctl');w.appendChild(c);let n=2,R=10;
   slider(c,'Count <i>n</i>',1,10,1,2,x=>x,x=>{n=x;api.redraw()});slider(c,'Each <i>R</i>',1,20,1,10,x=>x+' Ω',x=>{R=x;api.redraw()});
   w.appendChild(h('div','fm','Series: <i>R</i><sub>T</sub> = <i>nR</i>'));w.appendChild(h('div','fm','Parallel: <i>R</i><sub>T</sub> = <i>R</i> ÷ <i>n</i>'));w.appendChild(h('div','ex','Two unequal: R<sub>T</sub> = (R<sub>1</sub>R<sub>2</sub>) ÷ (R<sub>1</sub> + R<sub>2</sub>). 10 Ω ∥ 15 Ω = 150 ÷ 25 = <b>6 Ω</b>.'));
