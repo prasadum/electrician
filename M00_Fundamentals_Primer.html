@@ -324,6 +324,9 @@ body.short .slide[data-id="fault1"] .s-vis svg,body.short [data-id="fault1"] svg
  .slide.stepped[data-step="2"] .s-vis svg{max-height:44vh}
 }
 .nav .btn.home{background:var(--b,#1a56cc);color:#fff;border-color:transparent}
+.stcap{font-size:18px;margin:4px 0 2px;color:var(--fg)}.stcap b{color:var(--frm)}
+.ctl .btn.stb{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;min-height:52px;min-width:44px;padding:2px 6px;flex:1 1 0}
+.ctl .btn.stb b{font-size:18px}.ctl .btn.stb small{font-size:14px;font-weight:600}
 </style>
 <script>/* ===== Terms: [English, Hindi, Malayalam, symbol/unit html] ===== */
 const T={
@@ -846,12 +849,13 @@ SL.push({id:'qit',menu:'Q = I × t, I = Q ÷ t',kind:'formula',title:'qit',
   const pk=[];for(let k=0;k<8;k++){const c=document.createElementNS(svgNS,'circle');c.setAttribute('r',12);c.setAttribute('fill','var(--conv)');$('#pk',w).appendChild(c);pk.push(c)}
   const L2=['<i>I</i> = 3 A → 3 coulomb (C) every second','In 1 s: <i>Q</i> = 3 C','In 2 s: <i>Q</i> = 3 × 2 = 6 C','In <i>t</i> s: <b><i>Q</i> = <i>I</i> × <i>t</i></b>','Divide both sides by <i>t</i>','<b><i>I</i> = <i>Q</i> ÷ <i>t</i></b>'];
   const TM=[1,1,2,4,4,4];
-  const sp=stepper(w,api,L2,6,3.6);
+  const CAP=['Rate: 3 C every second','Count after 1 second','Count after 2 seconds','Any time t','Divide both sides by t','Result'];
+   const sp=stepper(w,api,L2,6,3.6,['Rate','1 s','2 s','Any t','\u00f7 t','Result'],CAP);
   return(t,dt)=>{sp.step(dt);const I=3,s=sp.st,tm=TM[s];
    const tin=sp.tin,t0=api.reduce()?tm:Math.min(tm,tin%(tm+1.4)),tt=Math.round(t0*10)/10;
    pk.forEach((c,k)=>{const x=X0+((((k*gap+gap*I*t0)%L)+L)%L);c.setAttribute('cx',x.toFixed(1));c.setAttribute('cy',65)});
    const Qv=I*tt,Q=+Qv.toFixed(1),T=tt.toFixed(1);
-   const R=[`t = ${T} s   Q = ${Q} C`,`1 s → Q = 3 C`,`t = ${T} s → Q = 3 × ${T} = ${Q} C`,`Q = I × t = 3 × ${T} = ${Q} C`,tt>0?`Q ÷ t = ${Q} ÷ ${T} = 3 C per s`:'Q ÷ t = ?',tt>0?`I = Q ÷ t = ${Q} ÷ ${T} = 3 A`:'I = Q ÷ t = ?'][s];
+   const Qf=I*tm,Tf=tm;const R=[`3 A = 3 C every second`,`After 1 s: Q = 3 × 1 = 3 C`,`After 2 s: Q = 3 × 2 = 6 C`,`After 4 s: Q = I × t = 3 × 4 = 12 C`,`Q ÷ t = 12 ÷ 4 = 3 C per s`,`I = Q ÷ t = 12 ÷ 4 = 3 A`][s];
    $('#rd',w).textContent=R;$('#qb',w).setAttribute('width',(Q/12*360).toFixed(0));
    $('#rg',w).setAttribute('width',(tt*80).toFixed(1));$('#td',w).setAttribute('cx',(RX+tt*80).toFixed(1))}}});
 
@@ -1252,13 +1256,15 @@ SL.push({id:'peak',menu:'Peak · peak-to-peak · average',kind:'def',title:'peak
    $('#rd',w).textContent=['Vm = 325 V','Vpp = 2 × Vm = 650 V','Vav = 207 V (half cycle)'][k]}}});
 
 /* 25 Average value with pi */
-const stepper=(w,api,lines,n,every)=>{let st=0,tin=0,acc=0,auto=true,shown=-1;const c=h('div','ctl');
+const stepper=(w,api,lines,n,every,names,caps)=>{let st=0,tin=0,acc=0,auto=true,shown=-1;const c=h('div','ctl');
   const bt=[...Array(n)].map((_,i)=>button(c,String(i+1),()=>{st=i;tin=0;auto=false;shown=-1;api.redraw()}));
   bt.forEach((b,i)=>b.setAttribute('aria-label','Step '+(i+1)));w.appendChild(c);
+  if(names)bt.forEach((b,i)=>{b.classList.add('stb');b.innerHTML=`<b>${i+1}</b><small>${names[i]}</small>`});
+  const cap=h('div','stcap');if(names)w.appendChild(cap);
   const eq=h('div','ex eqs');w.appendChild(eq);
   api.setReplay(()=>{st=0;tin=0;acc=0;auto=true;shown=-1});
   return{get st(){return st},get tin(){return api.reduce()?9:tin},step(dt){if(api.playing&&auto){acc+=dt;if(acc>every&&st<n-1){st++;acc=0;tin=0}}tin+=dt;
-     if(shown!==st){shown=st;bt.forEach((b,i)=>b.classList.toggle('on',i===st));eq.innerHTML=lines.slice(0,st+1).map((l,i)=>`<div class="eql${i===st?' now fin':''}">${l}</div>`).join('')}}}};
+     if(shown!==st){shown=st;if(names)cap.innerHTML=`<b>Step ${st+1} of ${n}</b> · ${(caps||names)[st]}`;bt.forEach((b,i)=>b.classList.toggle('on',i===st));eq.innerHTML=lines.map((l,i)=>[l,i]).slice(names?Math.max(0,st-1):0,st+1).map(([l,i])=>`<div class="eql${i===st?' now fin':''}">${l}</div>`).join('')}}}};
 const INT=(a,b)=>`∫<sub>${a}</sub><sup>${b}</sup>`;
 SL.push({id:'avg',menu:'Average value = 2Vm ÷ π',kind:'formula',title:'avg',
  hook:'Rectified output reads lower.',
