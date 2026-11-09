@@ -18,7 +18,7 @@ input,select,.btn{min-height:44px;font-size:16px;border-radius:10px;border:1px s
 <b style="display:block;margin-top:12px">Share a link</b><div class="row" style="margin-top:8px"><input class="f" id="lti" placeholder="Title"><input class="f" id="lur" placeholder="https://..."><button class="btn" id="ladd">Add link</button></div><small>Files up to about 25 MB. Larger files: upload to Drive and share the link.</small></div>
 <h2>Trainee progress</h2><div class="row"><select id="bt"><option value="">All batches</option></select><button class="btn" id="csv">Download CSV</button></div><p id="m2"></p>
 <div class="w"><table><thead><tr><th>Email</th><th>Batch</th><th>Module</th><th>Slide</th><th>Quiz</th><th>Last seen</th></tr></thead><tbody id="tb"></tbody></table></div>
-<p><small>Hiding removes a module or file from the trainee home page. The file itself stays in the public repo, so anyone with the exact address can still open it.</small></p>
+
 </div></main>
 <script src="config.js"></script><script>
 const REPO='prasadum/electrician',API='https://api.github.com/repos/'+REPO+'/contents/';
