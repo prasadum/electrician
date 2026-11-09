@@ -23,7 +23,7 @@ input,select,.btn{min-height:44px;font-size:16px;border-radius:10px;border:1px s
 <script src="config.js"></script><script>
 const REPO='prasadum/electrician',API='https://api.github.com/repos/'+REPO+'/contents/';
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let rows=[],LIB={hidden:[],modules:[],removed:[],resources:[]},libSha=null,TK='';
+let rows=[],LIB={hidden:[],modules:[],removed:[],resources:[],order:[]},libSha=null,TK='';
 try{TK=sessionStorage.getItem('gh')||''}catch(e){}
 const msg=t=>{$('#m').textContent=t};
 const gh=(p,o={})=>fetch(API+p,Object.assign({headers:{Authorization:'Bearer '+TK,Accept:'application/vnd.github+json'}},o,{headers:Object.assign({Authorization:'Bearer '+TK,Accept:'application/vnd.github+json'},o.headers||{})}));
@@ -34,18 +34,19 @@ const b64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(Stri
 const GATE="<script>try{if(!localStorage.getItem('nsti_profile')&&!localStorage.getItem('nsti_admin'))location.replace('index.html')}catch(e){}<\/script>";
 const modB64=async f=>{let t=await f.text();if(t.indexOf('nsti_profile')<0||t.indexOf('nsti_profile')>3000)t=t.replace('<head>','<head>'+GATE);return btoa(unescape(encodeURIComponent(t)))};
 const enc=s=>btoa(unescape(encodeURIComponent(s)));
-async function loadLib(){const r=await gh('library.json?ref=main&t='+Date.now());if(r.ok){const j=await r.json();libSha=j.sha;LIB=Object.assign({hidden:[],modules:[],removed:[],resources:[]},JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))))))}else{LIB={hidden:[],modules:[],removed:[],resources:[]}}}
+async function loadLib(){const r=await gh('library.json?ref=main&t='+Date.now());if(r.ok){const j=await r.json();libSha=j.sha;LIB=Object.assign({hidden:[],modules:[],removed:[],resources:[],order:[]},JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))))))}else{LIB={hidden:[],modules:[],removed:[],resources:[]}}}
 async function saveLib(note){await put('library.json',enc(JSON.stringify(LIB,null,1)),note||'Update library');await loadLib();draw()}
-const allMods=()=>{const base=(NSTI.MODULES||[]).filter(m=>!LIB.removed.includes(m.id));const ex=LIB.modules.filter(m=>!LIB.removed.includes(m.id));return base.filter(b=>!ex.find(e=>e.id===b.id)).concat(ex)};
+const allMods=()=>{const base=(NSTI.MODULES||[]).filter(m=>!LIB.removed.includes(m.id));const ex=LIB.modules.filter(m=>!LIB.removed.includes(m.id));const all=base.filter(b=>!ex.find(e=>e.id===b.id)).concat(ex),o=LIB.order||[];return all.map((m,i)=>[m,o.indexOf(m.id)<0?1e3+i:o.indexOf(m.id)]).sort((a,b)=>a[1]-b[1]).map(x=>x[0])};
 function draw(){
  $('#mods').innerHTML=allMods().map(m=>{const h=LIB.hidden.includes(m.id);return `<div class="card"><div class="row"><div class="f"><b>${esc(m.title)}</b> <span class="tag ${h?'h':''}">${h?'Hidden':'Visible'}</span><br><small>${esc(m.file)}</small></div>
- <button class="btn ${h?'g2':'s'}" data-a="hide" data-id="${esc(m.id)}">${h?'Unhide':'Hide'}</button> <a class="btn" href="${esc(m.file)}" target="_blank">Open</a><button class="btn" data-a="rep" data-id="${esc(m.id)}">Replace file</button><button class="btn r" data-a="del" data-id="${esc(m.id)}">Delete</button></div></div>`}).join('')||'<small>No modules.</small>';
+ <button class="btn" data-a="up" data-id="${esc(m.id)}" aria-label="Move up">▲</button><button class="btn" data-a="dn" data-id="${esc(m.id)}" aria-label="Move down">▼</button><button class="btn ${h?'g2':'s'}" data-a="hide" data-id="${esc(m.id)}">${h?'Unhide':'Hide'}</button> <a class="btn" href="${esc(m.file)}" target="_blank">Open</a><button class="btn" data-a="rep" data-id="${esc(m.id)}">Replace file</button><button class="btn r" data-a="del" data-id="${esc(m.id)}">Delete</button></div></div>`}).join('')||'<small>No modules.</small>';
  $('#res').innerHTML=LIB.resources.map(x=>`<div class="card"><div class="row"><div class="f"><b>${esc(x.title)}</b> <span class="tag ${x.hidden?'h':''}">${x.hidden?'Hidden':'Visible'}</span> <span class="tag">${x.type==='link'?'Link':'File'}</span><br><small>${esc(x.url)}</small></div>
  <button class="btn ${x.hidden?'g2':'s'}" data-a="rhide" data-id="${esc(x.id)}">${x.hidden?'Unhide':'Hide'}</button><button class="btn r" data-a="rdel" data-id="${esc(x.id)}">Delete</button></div></div>`).join('')||'<small>Nothing added yet.</small>'}
 let ra=0;
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b)return;const id=b.dataset.id,a=b.dataset.a;
  try{
-  if(a==='hide'){const bk=JSON.stringify(LIB);try{LIB.hidden=LIB.hidden.includes(id)?LIB.hidden.filter(x=>x!==id):LIB.hidden.concat(id);msg('Saving...');await saveLib('Toggle '+id);msg('Saved.')}catch(x){LIB=JSON.parse(bk);draw();throw x}}
+  if(a==='up'||a==='dn'){const ids=allMods().map(m=>m.id),i=ids.indexOf(id),j=a==='up'?i-1:i+1;if(j<0||j>=ids.length)return;[ids[i],ids[j]]=[ids[j],ids[i]];LIB.order=ids;msg('Saving order...');await saveLib('Reorder modules');msg('Order saved.')}
+  else if(a==='hide'){const bk=JSON.stringify(LIB);try{LIB.hidden=LIB.hidden.includes(id)?LIB.hidden.filter(x=>x!==id):LIB.hidden.concat(id);msg('Saving...');await saveLib('Toggle '+id);msg('Saved.')}catch(x){LIB=JSON.parse(bk);draw();throw x}}
   else if(a==='rep'){const i=document.createElement('input');i.type='file';i.accept='.html';i.onchange=async()=>{try{const m=allMods().find(x=>x.id===id);msg('Uploading...');await put(m.file,await modB64(i.files[0]),'Replace '+m.file);msg('Replaced '+m.file+'. Live in about a minute.')}catch(x){msg('Failed: '+x.message)}};i.click()}
   else if(a==='del'){if(b.dataset.c!=='1'){b.dataset.c='1';b.textContent='Tap again to delete';setTimeout(()=>{b.dataset.c='';b.textContent='Delete'},4000);return}
    const m=allMods().find(x=>x.id===id);msg('Deleting...');await del(m.file,'Delete '+m.file);LIB.modules=LIB.modules.filter(x=>x.id!==id);LIB.removed=LIB.removed.concat(id);LIB.hidden=LIB.hidden.filter(x=>x!==id);await saveLib('Remove '+id);msg('Deleted.')}
