@@ -31,6 +31,8 @@ async function sha(p){const r=await gh(encodeURIComponent(p).replace(/%2F/g,'/')
 async function put(p,b64,note){const s=await sha(p);const r=await gh(p.split('/').map(encodeURIComponent).join('/'),{method:'PUT',body:JSON.stringify({message:note,content:b64,sha:s||undefined,branch:'main'})});if(!r.ok)throw new Error((await r.json()).message||r.status);return (await r.json()).content.sha}
 async function del(p,note){const s=await sha(p);if(!s)return;const r=await gh(p.split('/').map(encodeURIComponent).join('/'),{method:'DELETE',body:JSON.stringify({message:note,sha:s,branch:'main'})});if(!r.ok)throw new Error((await r.json()).message||r.status)}
 const b64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]);r.onerror=no;r.readAsDataURL(f)});
+const GATE="<script>try{if(!localStorage.getItem('nsti_profile'))location.replace('index.html')}catch(e){}<\/script>";
+const modB64=async f=>{let t=await f.text();if(t.indexOf('nsti_profile')<0||t.indexOf('nsti_profile')>3000)t=t.replace('<head>','<head>'+GATE);return btoa(unescape(encodeURIComponent(t)))};
 const enc=s=>btoa(unescape(encodeURIComponent(s)));
 async function loadLib(){const r=await gh('library.json?ref=main&t='+Date.now());if(r.ok){const j=await r.json();libSha=j.sha;LIB=Object.assign({hidden:[],modules:[],removed:[],resources:[]},JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))))))}else{LIB={hidden:[],modules:[],removed:[],resources:[]}}}
 async function saveLib(note){await put('library.json',enc(JSON.stringify(LIB,null,1)),note||'Update library');await loadLib();draw()}
@@ -44,7 +46,7 @@ let ra=0;
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b)return;const id=b.dataset.id,a=b.dataset.a;
  try{
   if(a==='hide'){const bk=JSON.stringify(LIB);try{LIB.hidden=LIB.hidden.includes(id)?LIB.hidden.filter(x=>x!==id):LIB.hidden.concat(id);msg('Saving...');await saveLib('Toggle '+id);msg('Saved.')}catch(x){LIB=JSON.parse(bk);draw();throw x}}
-  else if(a==='rep'){const i=document.createElement('input');i.type='file';i.accept='.html';i.onchange=async()=>{try{const m=allMods().find(x=>x.id===id);msg('Uploading...');await put(m.file,await b64(i.files[0]),'Replace '+m.file);msg('Replaced '+m.file+'. Live in about a minute.')}catch(x){msg('Failed: '+x.message)}};i.click()}
+  else if(a==='rep'){const i=document.createElement('input');i.type='file';i.accept='.html';i.onchange=async()=>{try{const m=allMods().find(x=>x.id===id);msg('Uploading...');await put(m.file,await modB64(i.files[0]),'Replace '+m.file);msg('Replaced '+m.file+'. Live in about a minute.')}catch(x){msg('Failed: '+x.message)}};i.click()}
   else if(a==='del'){if(b.dataset.c!=='1'){b.dataset.c='1';b.textContent='Tap again to delete';setTimeout(()=>{b.dataset.c='';b.textContent='Delete'},4000);return}
    const m=allMods().find(x=>x.id===id);msg('Deleting...');await del(m.file,'Delete '+m.file);LIB.modules=LIB.modules.filter(x=>x.id!==id);LIB.removed=LIB.removed.concat(id);LIB.hidden=LIB.hidden.filter(x=>x!==id);await saveLib('Remove '+id);msg('Deleted.')}
   else if(a==='rhide'){const x=LIB.resources.find(r=>r.id===id);x.hidden=!x.hidden;msg('Saving...');try{await saveLib('Toggle resource');msg('Saved.')}catch(y){x.hidden=!x.hidden;draw();throw y}}
@@ -54,7 +56,7 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]')
 $('#nadd').onclick=async()=>{try{const id=$('#nid').value.trim(),f=$('#nfl').files[0];if(!id||!f){msg('Enter an ID and choose a .html file.');return}
  const ex=allMods().find(m=>m.id===id);let m=ex;msg('Uploading...');
  if(!ex){const ti=$('#nti').value.trim();if(!ti){msg('Enter a title.');return}m={id,title:ti,sub:$('#nsb').value.trim(),file:id+'_'+ti.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_|_$/g,'')+'.html',key:$('#nky').value.trim()||('cits_'+id.toLowerCase()+'_v1'),slides:+$('#nsl').value||20,ready:true};LIB.modules=LIB.modules.filter(x=>x.id!==id).concat(m);LIB.removed=LIB.removed.filter(x=>x!==id)}
- await put(m.file,await b64(f),(ex?'Replace ':'Add ')+m.file);await saveLib('Library: '+id);msg((ex?'Replaced ':'Added ')+m.file+'. Live in about a minute.')}catch(x){msg('Failed: '+x.message)}};
+ await put(m.file,await modB64(f),(ex?'Replace ':'Add ')+m.file);await saveLib('Library: '+id);msg((ex?'Replaced ':'Added ')+m.file+'. Live in about a minute.')}catch(x){msg('Failed: '+x.message)}};
 $('#radd').onclick=async()=>{try{const t=$('#rti').value.trim(),f=$('#rfl').files[0];if(!t||!f){msg('Enter a title and choose a file.');return}if(f.size>25e6){msg('File is over 25 MB. Share a Drive link instead.');return}
  msg('Uploading...');const p='files/'+Date.now()+'_'+f.name.replace(/[^A-Za-z0-9._-]+/g,'_');await put(p,await b64(f),'Add '+p);LIB.resources.push({id:'r'+Date.now(),title:t,type:'file',path:p,url:p,hidden:false});await saveLib('Add resource');msg('Uploaded.');$('#rti').value='';$('#rfl').value=''}catch(x){msg('Failed: '+x.message)}};
 $('#ladd').onclick=async()=>{try{const t=$('#lti').value.trim(),u=$('#lur').value.trim();if(!t||!/^https?:\/\//.test(u)){msg('Enter a title and a link starting with https://');return}
