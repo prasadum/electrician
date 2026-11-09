@@ -9,7 +9,7 @@ input{width:100%;min-height:44px;font-size:16px;padding:0 12px;margin:6px 0;bord
 <div class="card" id="who"></div><div id="list"></div>
 <div id="mat"></div><p><a href="admin.html"><small>Admin</small></a></p></main>
 <script src="config.js"></script><script>
-const C=window.NSTI,$=s=>document.querySelector(s);let prof=null;
+const C=window.NSTI,$=s=>document.querySelector(s);let prof=null;const ADM=(()=>{try{return localStorage.getItem('nsti_admin')==='1'}catch(e){return false}})();
 try{prof=JSON.parse(localStorage.getItem('nsti_profile')||'null')}catch(e){}
 function readP(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}}
 const post=b=>fetch(C.SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(b)}).then(r=>r.json());
@@ -27,11 +27,11 @@ function who(){const w=$('#who');if(prof){w.innerHTML=`<div class="row"><div sty
      prof={email:em,token:j.token,batch:bt||j.batch||''};localStorage.setItem('nsti_profile',JSON.stringify(prof));
      if(j.data)Object.keys(j.data).forEach(id=>{const m=C.MODULES.find(x=>x.id===id);if(m&&!readP(m.key))localStorage.setItem(m.key,JSON.stringify(j.data[id]))});who();if(window.__L)applyLib(window.__L);draw();sync()}catch(e){ms('No internet')}}}}}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-function draw(){if(C.SCRIPT_URL&&!prof){$('#list').innerHTML='<div class="card"><small>Sign in with the 6-digit code sent to your email to open the modules.</small></div>';const m=$('#mat');if(m)m.innerHTML='';return}
+function draw(){if(C.SCRIPT_URL&&!prof&&!ADM){$('#list').innerHTML='<div class="card"><small>Sign in with the 6-digit code sent to your email to open the modules.</small></div>';const m=$('#mat');if(m)m.innerHTML='';return}
  $('#list').innerHTML=C.MODULES.map(m=>{const p=readP(m.key),pc=p?Math.round(((p.slide||0)+1)/m.slides*100):0;
  return `<div class="card"><h2>${esc(m.title)}</h2><small>${esc(m.sub)}</small><div class="bar"><i style="width:${pc}%"></i></div><div class="row"><small style="flex:1">${p?pc+'% seen':'Not started'}</small><a class="btn" href="${m.file}">${p?'Continue':'Open'}</a></div></div>`}).join('')}
-function applyLib(L){const rm=L.removed||[],hd=L.hidden||[];const ex=(L.modules||[]);C.MODULES=(C.MODULES||[]).filter(m=>!ex.find(e=>e.id===m.id)).concat(ex).filter(m=>!rm.includes(m.id)&&!hd.includes(m.id));
- const R=(L.resources||[]).filter(x=>!x.hidden);const h=$('#mat');if(h)h.innerHTML=(R.length&&(prof||!C.SCRIPT_URL))?'<h2>Study material</h2>'+R.map(x=>`<div class="card"><div class="row"><b style="flex:1">${esc(x.title)}</b><a class="btn" target="_blank" rel="noopener" href="${esc(x.url)}">${x.type==='link'?'Open link':'Download'}</a></div></div>`).join(''):''}
+function applyLib(L){const rm=L.removed||[],hd=L.hidden||[];const ex=(L.modules||[]);C.MODULES=(C.MODULES||[]).filter(m=>!ex.find(e=>e.id===m.id)).concat(ex).filter(m=>!rm.includes(m.id)&&(ADM||!hd.includes(m.id))).map(m=>hd.includes(m.id)?Object.assign({},m,{title:m.title+' (hidden from trainees)'}):m);
+ const R=(L.resources||[]).filter(x=>ADM||!x.hidden);const h=$('#mat');if(h)h.innerHTML=(R.length&&(prof||ADM||!C.SCRIPT_URL))?'<h2>Study material</h2>'+R.map(x=>`<div class="card"><div class="row"><b style="flex:1">${esc(x.title)}${x.hidden?' (hidden from trainees)':''}</b><a class="btn" target="_blank" rel="noopener" href="${esc(x.url)}">${x.type==='link'?'Open link':'Download'}</a></div></div>`).join(''):''}
 fetch('library.json?t='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null).then(L=>{window.__L=L;if(L)applyLib(L);who();draw();sync()});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){draw();sync()}});
 </script></body></html>

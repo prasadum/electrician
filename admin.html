@@ -8,7 +8,7 @@ input,select,.btn{min-height:44px;font-size:16px;border-radius:10px;border:1px s
 <div class="row" style="margin-top:8px"><input class="f" id="k" type="password" placeholder="Admin key (trainee data)"><input class="f" id="tk" type="password" placeholder="GitHub token (for changes)"><button class="btn" id="ld">Load</button></div>
 <small>The GitHub token is a fine-grained token for repo prasadum/electrician with Contents: Read and write. It stays in this tab only and is forgotten when you close it.</small><p id="m"></p></div>
 <div id="adm" hidden><div id="warn" hidden>No valid GitHub token in this tab, so Hide, Replace, Delete and uploads will not work. Paste the token above and tap Load again.</div>
-<h2>Modules</h2><div id="mods"></div>
+<p><small>Admin mode is on in this browser: the home page and all modules show everything, including hidden items, marked as hidden. <a href="#" id="lv">Leave admin mode</a></small></p><h2>Modules</h2><div id="mods"></div>
 <div class="card"><b>Add or replace a module (.html)</b>
 <div class="row" style="margin-top:8px"><input class="f" id="nid" placeholder="ID, e.g. M03"><input class="f" id="nti" placeholder="Title"><input class="f" id="nsb" placeholder="Short description"></div>
 <div class="row" style="margin-top:8px"><input class="f" id="nsl" type="number" min="1" placeholder="Number of slides"><input class="f" id="nky" placeholder="Progress key, e.g. cits_m3_v1"><input class="f" id="nfl" type="file" accept=".html"><button class="btn" id="nadd">Upload module</button></div>
@@ -31,7 +31,7 @@ async function sha(p){const r=await gh(encodeURIComponent(p).replace(/%2F/g,'/')
 async function put(p,b64,note){const s=await sha(p);const r=await gh(p.split('/').map(encodeURIComponent).join('/'),{method:'PUT',body:JSON.stringify({message:note,content:b64,sha:s||undefined,branch:'main'})});if(!r.ok)throw new Error((await r.json()).message||r.status);return (await r.json()).content.sha}
 async function del(p,note){const s=await sha(p);if(!s)return;const r=await gh(p.split('/').map(encodeURIComponent).join('/'),{method:'DELETE',body:JSON.stringify({message:note,sha:s,branch:'main'})});if(!r.ok)throw new Error((await r.json()).message||r.status)}
 const b64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]);r.onerror=no;r.readAsDataURL(f)});
-const GATE="<script>try{if(!localStorage.getItem('nsti_profile'))location.replace('index.html')}catch(e){}<\/script>";
+const GATE="<script>try{if(!localStorage.getItem('nsti_profile')&&!localStorage.getItem('nsti_admin'))location.replace('index.html')}catch(e){}<\/script>";
 const modB64=async f=>{let t=await f.text();if(t.indexOf('nsti_profile')<0||t.indexOf('nsti_profile')>3000)t=t.replace('<head>','<head>'+GATE);return btoa(unescape(encodeURIComponent(t)))};
 const enc=s=>btoa(unescape(encodeURIComponent(s)));
 async function loadLib(){const r=await gh('library.json?ref=main&t='+Date.now());if(r.ok){const j=await r.json();libSha=j.sha;LIB=Object.assign({hidden:[],modules:[],removed:[],resources:[]},JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))))))}else{LIB={hidden:[],modules:[],removed:[],resources:[]}}}
@@ -39,7 +39,7 @@ async function saveLib(note){await put('library.json',enc(JSON.stringify(LIB,nul
 const allMods=()=>{const base=(NSTI.MODULES||[]).filter(m=>!LIB.removed.includes(m.id));const ex=LIB.modules.filter(m=>!LIB.removed.includes(m.id));return base.filter(b=>!ex.find(e=>e.id===b.id)).concat(ex)};
 function draw(){
  $('#mods').innerHTML=allMods().map(m=>{const h=LIB.hidden.includes(m.id);return `<div class="card"><div class="row"><div class="f"><b>${esc(m.title)}</b> <span class="tag ${h?'h':''}">${h?'Hidden':'Visible'}</span><br><small>${esc(m.file)}</small></div>
- <button class="btn ${h?'g2':'s'}" data-a="hide" data-id="${esc(m.id)}">${h?'Unhide':'Hide'}</button><button class="btn" data-a="rep" data-id="${esc(m.id)}">Replace file</button><button class="btn r" data-a="del" data-id="${esc(m.id)}">Delete</button></div></div>`}).join('')||'<small>No modules.</small>';
+ <button class="btn ${h?'g2':'s'}" data-a="hide" data-id="${esc(m.id)}">${h?'Unhide':'Hide'}</button> <a class="btn" href="${esc(m.file)}" target="_blank">Open</a><button class="btn" data-a="rep" data-id="${esc(m.id)}">Replace file</button><button class="btn r" data-a="del" data-id="${esc(m.id)}">Delete</button></div></div>`}).join('')||'<small>No modules.</small>';
  $('#res').innerHTML=LIB.resources.map(x=>`<div class="card"><div class="row"><div class="f"><b>${esc(x.title)}</b> <span class="tag ${x.hidden?'h':''}">${x.hidden?'Hidden':'Visible'}</span> <span class="tag">${x.type==='link'?'Link':'File'}</span><br><small>${esc(x.url)}</small></div>
  <button class="btn ${x.hidden?'g2':'s'}" data-a="rhide" data-id="${esc(x.id)}">${x.hidden?'Unhide':'Hide'}</button><button class="btn r" data-a="rdel" data-id="${esc(x.id)}">Delete</button></div></div>`).join('')||'<small>Nothing added yet.</small>'}
 let ra=0;
@@ -66,7 +66,7 @@ $('#ld').onclick=async()=>{TK=$('#tk').value.trim()||TK;
  if(!TK&&!$('#k').value){msg('Enter the admin key, the GitHub token, or both.');return}
  if(TK){try{sessionStorage.setItem('gh',TK)}catch(e){}const t=await gh('?ref=main');if(!t.ok){TK='';try{sessionStorage.removeItem('gh')}catch(e){}msg('GitHub token rejected (wrong, expired, or no access to prasadum/electrician). Create a new token with Contents: Read and write.');$('#adm').hidden=false;$('#warn').hidden=false;return}await loadLib()}
  if($('#k').value&&NSTI.SCRIPT_URL){try{const j=await (await fetch(NSTI.SCRIPT_URL+'?action=summary&key='+encodeURIComponent($('#k').value))).json();if(!j.ok){msg('Wrong admin key.');return}rows=j.rows;$('#bt').innerHTML='<option value="">All batches</option>'+[...new Set(rows.map(x=>x.batch))].map(b=>`<option>${esc(b)}</option>`).join('');show()}catch(e){msg('Could not reach the server.');return}}
- $('#adm').hidden=false;$('#warn').hidden=!!TK;draw();msg(TK?'Signed in.':'Signed in (view only: add the GitHub token to change modules).')};
-$('#bt').onchange=show;
+ try{localStorage.setItem('nsti_admin','1')}catch(e){}$('#adm').hidden=false;$('#warn').hidden=!!TK;draw();msg(TK?'Signed in.':'Signed in (view only: add the GitHub token to change modules).')};
+$('#bt').onchange=show;$('#lv').onclick=e=>{e.preventDefault();try{localStorage.removeItem('nsti_admin')}catch(x){}msg('Admin mode off in this browser.')};
 $('#csv').onclick=()=>{if(!rows.length)return;const b=$('#bt').value,r=rows.filter(x=>!b||x.batch===b);const t='email,batch,module,slide,quiz,updated\n'+r.map(x=>[x.email,x.batch,x.module,x.slide,x.done,x.updated].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download='progress.csv';a.click()};
 </script></body></html>
