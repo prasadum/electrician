@@ -1149,7 +1149,7 @@ const HINTS={
  lagb:{lab:'Lead · lag',en:'Lag: peaks later. Lead: peaks first. ELI: in L, I lags. ICE: in C, I leads.',hi:'लैग: बाद में पीक। लीड: पहले पीक। ELI: L में I लैग। ICE: C में I लीड।',ml:'ലാഗ്: വൈകി പീക്ക്. ലീഡ്: ആദ്യം പീക്ക്. ELI: L-ൽ I ലാഗ്. ICE: C-യിൽ I ലീഡ്.',m:'5B',n:7},
  parb:{lab:'Parallel currents',en:'Branch currents at 90° add like a right triangle: I = √(I1² + I2²).',hi:'90° वाले ब्रांच करंट समकोण त्रिभुज की तरह जुड़ते हैं: I = √(I1² + I2²)।',ml:'90°-യിലുള്ള ബ്രാഞ്ച് കറന്റുകൾ മട്ടത്രികോണം പോലെ കൂടും: I = √(I1² + I2²).',m:'5B',n:13},
  pfb:{lab:'cos φ',en:'cos φ is the useful share of the apparent power. P = S × cos φ.',hi:'cos φ अपेरेंट पावर का काम का हिस्सा है। P = S × cos φ।',ml:'cos φ അപ്പാരന്റ് പവറിന്റെ ഉപയോഗപ്രദമായ പങ്കാണ്. P = S × cos φ.',m:'5B',n:15},
- par:{lab:'Parallel',en:'Parallel: same voltage on each branch. The branch currents add.',hi:'पैरेलल: हर ब्रांच पर वही वोल्टेज। ब्रांच करंट जुड़ते हैं।',ml:'പാരലൽ: ഓരോ ബ്രാഞ്ചിലും ഒരേ വോൾട്ടേജ്. ബ്രാഞ്ച് കറന്റുകൾ കൂടും.',m:2,n:21}
+ par:{lab:'Parallel',en:'Parallel: same voltage on each branch. The branch currents add.',hi:'पैरेलल: हर ब्रांच पर वही वोल्टेज। ब्रांच करंट जुड़ते हैं।',ml:'പാരലൽ: ഓരോ ബ്രാഞ്ചിലും ഒരേ വോൾട്ടേജ്. ബ്രാഞ്ച് കറന്റുകൾ കൂടും.',m:2,n:6}
 };
 const hintRow=keys=>{const row=h('div','hints'),tx=h('div','hinttx');tx.hidden=true;let open=null;
  keys.forEach(k=>{const H=HINTS[k];if(!H)return;const b=h('button','hint',H.lab);b.type='button';b.setAttribute('aria-expanded','false');
@@ -1459,7 +1459,7 @@ CS({id:'c_stari',menu:'Star: current and neutral',title:'t_stari',
 /* ===== Module 5C slides 9-16 ===== */
 /* ---------- 9 Delta ---------- */
 CS({id:'c_delta',menu:'Delta connection',title:'t_delta',
- flash:FB('Star current and voltage (this module, slides 7 and 8); parallel branches (Module 2, slide 21)','स्टार करंट और वोल्टेज (इसी मॉड्यूल की स्लाइड 7 और 8); पैरेलल ब्रांच (मॉड्यूल 2, स्लाइड 21)','സ്റ്റാർ കറന്റ്, വോൾട്ടേജ് (ഈ മൊഡ്യൂൾ, സ്ലൈഡ് 7, 8); പാരലൽ ബ്രാഞ്ച് (മൊഡ്യൂൾ 2, സ്ലൈഡ് 21)'),
+ flash:FB('Star current and voltage (this module, slides 7 and 8); parallel branches (Module 2, slide 6)','स्टार करंट और वोल्टेज (इसी मॉड्यूल की स्लाइड 7 और 8); पैरेलल ब्रांच (मॉड्यूल 2, स्लाइड 6)','സ്റ്റാർ കറന്റ്, വോൾട്ടേജ് (ഈ മൊഡ്യൂൾ, സ്ലൈഡ് 7, 8); പാരലൽ ബ്രാഞ്ച് (മൊഡ്യൂൾ 2, സ്ലൈഡ് 6)'),
  hook:L('In a delta, each coil sits directly between two lines. It sees the full line voltage. But each line wire feeds two coils.','डेल्टा में हर कॉइल सीधे दो लाइनों के बीच है। उसे पूरा लाइन वोल्टेज मिलता है। पर हर लाइन वायर दो कॉइल को फीड करता है।','ഡെൽറ്റയിൽ ഓരോ കോയിലും നേരിട്ട് രണ്ട് ലൈനിനിടയിലാണ്. അതിന് മുഴുവൻ ലൈൻ വോൾട്ടേജ് കിട്ടും. പക്ഷേ ഓരോ ലൈൻ വയറും രണ്ട് കോയിലിനെ പോറ്റുന്നു.'),
  defn:L('<b>Delta (Δ) connection:</b> the three coils form a closed triangle. The line voltage equals the phase voltage: VL = Vph. The line current is √3 times the phase current: IL = √3 × Iph.','<b>डेल्टा (Δ) कनेक्शन:</b> तीन कॉइल एक बंद त्रिभुज बनाती हैं। लाइन वोल्टेज = फेज़ वोल्टेज: VL = Vph। लाइन करंट फेज़ करंट का √3 गुना: IL = √3 × Iph।','<b>ഡെൽറ്റ (Δ) കണക്ഷൻ:</b> മൂന്ന് കോയിലും അടഞ്ഞ ത്രികോണം ഉണ്ടാക്കുന്നു. ലൈൻ വോൾട്ടേജ് = ഫേസ് വോൾട്ടേജ്: VL = Vph. ലൈൻ കറന്റ് ഫേസ് കറന്റിന്റെ √3 മടങ്ങ്: IL = √3 × Iph.'),
  real:`<svg viewBox="0 0 300 100" role="img" aria-label="A delta connected winding">${deltaSvg(150,52,34)}</svg>`,
