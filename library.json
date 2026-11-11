@@ -1,8 +1,10 @@
 {
  "hidden": [
-  "M02"
+  "M02",
+  "M05B"
  ],
  "modules": [],
  "removed": [],
- "resources": []
+ "resources": [],
+ "order": []
 }
