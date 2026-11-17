@@ -1203,6 +1203,7 @@ const FB=(en,hi,ml)=>L(en,hi,ml);
 const TPI=2*Math.PI;
 const fOhm=x=>x>=1000?fm1(x/1000)+' kΩ':fm1(x)+' Ω';
 const coilH=(x,y,w,hh,n,sw)=>{let s='';const dx=w/n;for(let i=0;i<n;i++){const cx=x+dx*(i+.5);s+=`<ellipse cx="${cx.toFixed(1)}" cy="${y}" rx="${(dx*.42).toFixed(1)}" ry="${hh/2}" fill="none" stroke="${CU}" stroke-width="${sw||3}"/>`}return s};
+const ring=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${c||'var(--warn)'}" stroke-width="3.5" stroke-dasharray="6 5"/>`;
 
 /* ---------- 1 Title ---------- */
 SL.push({id:'b_title',menu:'AC and RLC Circuits',kind:'def',title:'m5btitle',wide:true,

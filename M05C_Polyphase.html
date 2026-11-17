@@ -1209,6 +1209,7 @@ const cdiv=(a,b)=>{const d=b[0]*b[0]+b[1]*b[1];return [(a[0]*b[0]+a[1]*b[1])/d,(
 const cmul=(a,b)=>[a[0]*b[0]-a[1]*b[1],a[0]*b[1]+a[1]*b[0]];
 const csub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
 const fpic=(items,probe,solved)=>items.map((it,i)=>`<rect x="${it.x}" y="${it.y}" width="${it.w}" height="${it.h}" rx="10" fill="var(--card)" stroke="var(--wire)" stroke-width="2.5"/>${TT(it.x+it.w/2,it.y+it.h/2+5,it.t[0],it.t[1],it.t[2],'m')}${probe===i?ring(it.x+it.w/2,it.y+it.h/2,Math.max(it.w,it.h)/2+6,'var(--frm)'):''}`).join('')+(solved?`<path d="M170 20l20 24l50-60" transform="translate(100 66)" stroke="var(--ok)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`:'');
+const ring=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${c||'var(--warn)'}" stroke-width="3.5" stroke-dasharray="6 5"/>`;
 
 /* ===== Module 5C slides 1-8 ===== */
 const pos=(cx,cy,r,deg)=>[cx+r*Math.cos(deg*D2R),cy-r*Math.sin(deg*D2R)];

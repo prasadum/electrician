@@ -1214,6 +1214,7 @@ const chipTxt=(x,y,t,cls)=>`<text x="${x}" y="${y}" class="tx ${cls||''}">${t}</
 const cap=(host,html)=>{const e=h('div','rd',html);host.appendChild(e);return e};
 const put=(el,html)=>{if(el.__p!==html){el.__p=html;el.innerHTML=html;svgLang()}};
 const setGoto=(n)=>go(n);
+const ring=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${c||'var(--warn)'}" stroke-width="3.5" stroke-dasharray="6 5"/>`;
 
 /* common */
 const CS=(o)=>SL.push(Object.assign({syl:'M5A',kind:'def',hk:'rw'},o));
