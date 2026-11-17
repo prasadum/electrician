@@ -1326,10 +1326,15 @@ const legend=(x,y,items)=>items.map((it,k)=>`<rect x="${x+k*96}" y="${y-10}" wid
 /* ---------- 1 Title ---------- */
 SL.push({id:'p_title',menu:'Power, Energy and Power Factor',kind:'def',title:'m8title',wide:true,
  build(w,api){
-  w.innerHTML=S(420,200,`<g id="a"></g>`,'Voltage, current and power waves');
+  w.innerHTML=S(420,190,`<g id="a"></g>`,'Power triangle with a changing angle and a power factor dial');
   const rd=mkRd(w),c=mkCtl(w);button(c,L('Start','शुरू करो','തുടങ്ങാം'),()=>go(1),'on');
-  return t=>{put($('#a',w),vip(14,100,392,70,40,t,{p:1})+legend(60,192,[[['v','v','v'],'var(--def)'],[['i','i','i'],'var(--no)'],[['p = v × i','p = v × i','p = v × i'],'var(--frm)']]));
-   setRd(rd,`<span class="note" style="margin:0">${RD('Green area: power used. Red area: power sent back. Power factor tells how much is really used.','हरा हिस्सा: इस्तेमाल पावर। लाल हिस्सा: वापस गई पावर। पावर फैक्टर बताता है कितनी सच में इस्तेमाल हुई।','പച്ച ഭാഗം: ഉപയോഗിച്ച പവർ. ചുവപ്പ് ഭാഗം: തിരികെ പോയ പവർ. ശരിക്കും എത്ര ഉപയോഗിച്ചു എന്ന് പവർ ഫാക്ടർ പറയുന്നു.')}</span>`)}}});
+  return t=>{const f=30+25*Math.sin(t*.8),r=f*D2R,x0=20,y0=160,Pw=180*Math.cos(r),Qh=180*Math.sin(r),pf=Math.cos(r);
+   let s=`<path d="M${x0} ${y0}H${x0+Pw}V${(y0-Qh).toFixed(1)}Z" fill="rgba(240,140,30,.10)"/>`+arr(x0,y0,x0+Pw,y0,'var(--ok)',5)+arr(x0+Pw,y0,x0+Pw,y0-Qh,'var(--no)',5)+arr(x0,y0,x0+Pw,y0-Qh,'var(--frm)',5);
+   s+=`<path d="${arcPath(x0,y0,44,0,f)}" fill="none" stroke="var(--frm)" stroke-width="2.5"/>`+TXC(x0+62,y0-8,'φ','var(--frm)','15');
+   s+=TXC(x0+Pw/2,y0+24,'P (kW)','var(--ok)','15')+TXC(x0+Pw+42,y0-Qh/2+5,'Q (kVAR)','var(--no)','15')+TXC(x0+Pw/2-34,y0-Qh/2-12,'S (kVA)','var(--frm)','15');
+   const cx=362,cy=150,a=(1-pf)*180,p=pos(cx,cy,46,a);s+=`<path d="${arcPath(cx,cy,52,0,180)}" fill="none" stroke="var(--wire)" stroke-width="3"/><path d="M${cx} ${cy}L${p[0].toFixed(1)} ${p[1].toFixed(1)}" stroke="var(--no)" stroke-width="3"/>`+TXC(cx,cy+24,'cos φ = '+pf.toFixed(2),'var(--fg)','15')+TXC(cx+62,cy+5,'1','var(--mut)','14')+TXC(cx-62,cy+5,'0','var(--mut)','14');
+   put($('#a',w),s);
+   setRd(rd,`<span class="note" style="margin:0">${RD('P does the work. Q only builds magnetic fields. S is what the supply must carry. Power factor = P ÷ S.','P काम करती है। Q सिर्फ मैग्नेटिक फील्ड बनाती है। S वह है जो सप्लाई को देना पड़ता है। पावर फैक्टर = P ÷ S।','P ജോലി ചെയ്യുന്നു. Q മാഗ്നറ്റിക് ഫീൽഡ് മാത്രം ഉണ്ടാക്കുന്നു. S ആണ് സപ്ലൈ കൊണ്ടുപോകേണ്ടത്. പവർ ഫാക്ടർ = P ÷ S.')}</span>`)}}});
 
 /* ---------- 2 Recall ---------- */
 SL.push({id:'p_recall',menu:'Recall Rewind',kind:'tip',title:'recall',wide:true,page(w,s,api){
@@ -1353,16 +1358,16 @@ const APL=[{n:['Heater 2 kW','हीटर 2 kW','ഹീറ്റർ 2 kW'],kw:2
 const HRS=[1,2,4,8];
 CS({id:'p_wpe',menu:'Work, power and energy',title:'t_wpe',
  flash:FB('Power · energy · unit (Module 0, slide 24)','पावर · एनर्जी · यूनिट (मॉड्यूल 0, स्लाइड 24)','പവർ · എനർജി · യൂണിറ്റ് (മൊഡ്യൂൾ 0, സ്ലൈഡ് 24)'),
- hook:L('The KSEB bill counts “units”. One unit is 1 kWh.','KSEB बिल “यूनिट” गिनता है। एक यूनिट = 1 kWh।','KSEB ബിൽ “യൂണിറ്റ്” എണ്ണുന്നു. ഒരു യൂണിറ്റ് = 1 kWh.'),
+ hook:L('You know: kW × hours = units. Name plates also use joules and HP. How do they fit?','पता है: kW × घंटे = यूनिट। नेमप्लेट पर जूल और HP भी होते हैं। ये कैसे जुड़ते हैं?','അറിയാം: kW × മണിക്കൂർ = യൂണിറ്റ്. നെയിംപ്ലേറ്റിൽ ജൂളും HP-യും ഉണ്ട്. ഇവ എങ്ങനെ ചേരുന്നു?'),
  defn:L('<b>Work</b> = force × distance (joule, J). <b>Power</b> = work ÷ time (watt, W = J/s). <b>Energy</b> = power × time. 1 kWh = 3.6 MJ. 1 HP = 746 W.','<b>वर्क</b> = फ़ोर्स × दूरी (जूल, J)। <b>पावर</b> = वर्क ÷ समय (वाट, W = J/s)। <b>एनर्जी</b> = पावर × समय। 1 kWh = 3.6 MJ। 1 HP = 746 W।','<b>വർക്ക്</b> = ഫോഴ്സ് × ദൂരം (ജൂൾ, J). <b>പവർ</b> = വർക്ക് ÷ സമയം (വാട്ട്, W = J/s). <b>എനർജി</b> = പവർ × സമയം. 1 kWh = 3.6 MJ. 1 HP = 746 W.'),
  real:`<svg viewBox="0 0 300 110" role="img" aria-label="An electricity meter showing kWh"><rect x="90" y="10" width="120" height="90" rx="8" fill="#3a3f48"/><rect x="104" y="26" width="92" height="28" rx="3" fill="#b8f0c8"/>${TXC(150,46,'01234.5','#173','16')}${TXC(150,82,'kWh','#ddd','14')}</svg>`,
  play:L('Pick an appliance and the hours. Watch the units add up.','उपकरण और घंटे चुनो। यूनिट जुड़ते देखो।','ഉപകരണവും മണിക്കൂറും തിരഞ്ഞെടുക്കൂ. യൂണിറ്റ് കൂടുന്നത് നോക്കൂ.'),
- pred:{q:L('Which uses more energy: a 2 kW heater for 1 hour, or a 75 W fan for 10 hours?','किसमें ज़्यादा एनर्जी: 2 kW हीटर 1 घंटा, या 75 W फैन 10 घंटे?','ഏതിന് കൂടുതൽ എനർജി: 2 kW ഹീറ്റർ 1 മണിക്കൂർ, അല്ലെങ്കിൽ 75 W ഫാൻ 10 മണിക്കൂർ?'),o:[L('The heater','हीटर','ഹീറ്റർ'),L('The fan','फैन','ഫാൻ'),L('Equal','बराबर','തുല്യം')],a:0,why:L('Heater 2 kWh. Fan 0.75 kWh.','हीटर 2 kWh। फैन 0.75 kWh।','ഹീറ്റർ 2 kWh. ഫാൻ 0.75 kWh.')},
+ pred:{q:L('A pump name plate says 1 HP. In watts that is about …','पंप की नेमप्लेट पर 1 HP। वाट में करीब …','പമ്പിന്റെ നെയിംപ്ലേറ്റിൽ 1 HP. വാട്ടിൽ ഏകദേശം …'),o:['746 W','1000 W','100 W'],a:0,why:L('1 HP = 746 W. So a 1 HP motor is a bit less than 1 kW.','1 HP = 746 W। यानी 1 HP मोटर 1 kW से थोड़ी कम।','1 HP = 746 W. അതായത് 1 HP മോട്ടോർ 1 kW-ൽ അൽപം കുറവ്.')},
  labels:['energy','actp'],hints:['pvi'],rel:{c:['P','t','E'],h:'E'},
- fm:['<i>E</i> = <i>P</i> × <i>t</i>'],
- uses:L('E in kWh when P is in kW and t in hours. 1 unit = 1 kWh.','P kW में और t घंटों में हो तो E kWh में। 1 यूनिट = 1 kWh।','P kW-ലും t മണിക്കൂറിലും ആയാൽ E kWh-ൽ. 1 യൂണിറ്റ് = 1 kWh.'),
+ fm:['1 kWh = 1000 W × 3600 s = 3.6 MJ'],
+ uses:L('Uses E = P × t (Module 0, slide 24). 1 J = 1 W for 1 s. 1 HP = 746 W.','E = P × t इस्तेमाल (मॉड्यूल 0, स्लाइड 24)। 1 J = 1 s तक 1 W। 1 HP = 746 W।','E = P × t ഉപയോഗിക്കുന്നു (മൊഡ്യൂൾ 0, സ്ലൈഡ് 24). 1 J = 1 s നേരം 1 W. 1 HP = 746 W.'),
  ex:L('Example: 1 HP pump for 4 h = 0.746 × 4 ≈ 3 units.','उदाहरण: 1 HP पंप 4 घंटे = 0.746 × 4 ≈ 3 यूनिट।','ഉദാഹരണം: 1 HP പമ്പ് 4 മണിക്കൂർ = 0.746 × 4 ≈ 3 യൂണിറ്റ്.'),
- trick:L('kW × hours = units.','kW × घंटे = यूनिट।','kW × മണിക്കൂർ = യൂണിറ്റ്.'),
+ trick:L('1 unit = 3.6 MJ. 1 HP = 746 W.','1 यूनिट = 3.6 MJ। 1 HP = 746 W।','1 യൂണിറ്റ് = 3.6 MJ. 1 HP = 746 W.'),
  check:{q:L('A 230 V heater takes 5 A for 2 hours. Energy used is about …','230 V हीटर 2 घंटे 5 A लेता है। एनर्जी करीब …','230 V ഹീറ്റർ 2 മണിക്കൂർ 5 A എടുക്കുന്നു. എനർജി ഏകദേശം …'),o:['2.3 kWh','1150 kWh','0.46 kWh'],a:0},
  build(w,api){
   w.innerHTML=S(420,215,`<g id="a"></g>`,'Appliance, hours and the energy meter');
@@ -1489,9 +1494,9 @@ CS({id:'p_pf',menu:'Power factor',title:'t_pf',
  labels:['pfac'],hints:['lag','zt'],rel:{c:['P','S','cos φ'],h:'cos φ'},
  fm:['cos <i>φ</i> = <i>P</i> ÷ <i>S</i>'],
  uses:L('Also cos φ = R ÷ Z (series circuit). No unit. Range 0 to 1, with “lag” or “lead”.','cos φ = R ÷ Z भी (सीरीज़ सर्किट)। यूनिट नहीं। 0 से 1, “lag” या “lead” के साथ।','cos φ = R ÷ Z (സീരീസ് സർക്യൂട്ട്). യൂണിറ്റ് ഇല്ല. 0 മുതൽ 1, “lag” അല്ലെങ്കിൽ “lead” സഹിതം.'),
- ex:L('Example: R = 6 Ω, Z = 10 Ω gives cos φ = 0.6.','उदाहरण: R = 6 Ω, Z = 10 Ω से cos φ = 0.6।','ഉദാഹരണം: R = 6 Ω, Z = 10 Ω ആയാൽ cos φ = 0.6.'),
+ ex:L('Example: a motor with I 37° behind V reads 0.8 lag. A capacitor bank alone, I ahead of V, reads lead.','उदाहरण: मोटर, I, V से 37° पीछे: 0.8 lag। अकेला कैपेसिटर बैंक, I, V से आगे: lead।','ഉദാഹരണം: മോട്ടോർ, I, V-ക്ക് 37° പിന്നിൽ: 0.8 lag. കപ്പാസിറ്റർ ബാങ്ക് മാത്രം, I, V-ക്ക് മുന്നിൽ: lead.'),
  trick:L('PF = kW ÷ kVA.','PF = kW ÷ kVA।','PF = kW ÷ kVA.'),
- check:{q:L('A 230 V load takes 5 A and 920 W. Its power factor is …','230 V लोड 5 A और 920 W लेता है। PF …','230 V ലോഡ് 5 A, 920 W എടുക്കുന്നു. PF …'),o:['0.8','0.5','1.25'],a:0},
+ check:{q:L('A 230 V load takes 4 A and 644 W. Its power factor is …','230 V लोड 4 A और 644 W लेता है। PF …','230 V ലോഡ് 4 A, 644 W എടുക്കുന്നു. PF …'),o:['0.7','0.5','1.43'],a:0},
  build(w,api){
   w.innerHTML=S(420,215,`<g id="a"></g>`,'Voltage and current phasors for the selected load');
   const rd=mkRd(w),c=mkCtl(w);let m=1;
@@ -1502,34 +1507,7 @@ CS({id:'p_pf',menu:'Power factor',title:'t_pf',
    s+=TXC(340,70,'cos φ','var(--mut)','14')+TXC(340,104,fm1(pf),'var(--frm)','26')+TL(340,134,ph<0?['lagging','लैगिंग','ലാഗിംഗ്']:ph>0?['leading','लीडिंग','ലീഡിംഗ്']:['unity','यूनिटी','യൂണിറ്റി'],'var(--fg)');
    put($('#a',w),s);setRd(rd,`<span><b>${B3(PFL[m].n)}</b>: cos ${Math.abs(ph)}° = ${fm1(pf)} ${ph<0?RD('lag','लैग','ലാഗ്'):ph>0?RD('lead','लीड','ലീഡ്'):''}</span>`)}}});
 
-/* ---------- 9 Why low PF is bad ---------- */
-const WPF=[.5,.75,.9,1];
-CS({id:'p_why',menu:'Why low power factor is bad',title:'t_why',
- flash:FB('Heat = I²R (Module 2, slide 4); P = V I cos φ (slide 4)','गर्मी = I²R (मॉड्यूल 2, स्लाइड 4); P = V I cos φ (स्लाइड 4)','ചൂട് = I²R (മൊഡ്യൂൾ 2, സ്ലൈഡ് 4); P = V I cos φ (സ്ലൈഡ് 4)'),
- hook:L('Same 1 HP motor, same work. At low power factor its cable runs hotter.','वही 1 HP मोटर, वही काम। कम PF पर उसकी केबल ज़्यादा गर्म।','അതേ 1 HP മോട്ടോർ, അതേ ജോലി. കുറഞ്ഞ PF-ൽ അതിന്റെ കേബിൾ കൂടുതൽ ചൂടാകുന്നു.'),
- defn:L('<b>Low PF</b> means more current for the same kW. More current means more I²R loss, more voltage drop and bigger cables and switchgear.','<b>कम PF</b> यानी उतनी ही kW के लिए ज़्यादा करंट। ज़्यादा करंट यानी ज़्यादा I²R लॉस, ज़्यादा वोल्टेज ड्रॉप, बड़ी केबल और स्विचगियर।','<b>കുറഞ്ഞ PF</b> എന്നാൽ അതേ kW-ന് കൂടുതൽ കറന്റ്. കൂടുതൽ കറന്റ് എന്നാൽ കൂടുതൽ I²R നഷ്ടം, കൂടുതൽ വോൾട്ടേജ് ഡ്രോപ്പ്, വലിയ കേബിളും സ്വിച്ച്ഗിയറും.'),
- real:`<svg viewBox="0 0 300 110" role="img" aria-label="Motor with a warm cable"><rect x="190" y="34" width="80" height="50" rx="10" fill="#9aa5b1" stroke="#4a5560" stroke-width="2"/><path d="M30 60H190" stroke="#ff7a30" stroke-width="7"/><path d="M80 48c-6-8 6-10 0-18M120 48c-6-8 6-10 0-18" stroke="var(--no)" stroke-width="3" fill="none"/></svg>`,
- play:L('Slide the power factor. Watch the current and the cable heat.','पावर फैक्टर स्लाइड करो। करंट और केबल की गर्मी देखो।','പവർ ഫാക്ടർ സ്ലൈഡ് ചെയ്യൂ. കറന്റും കേബിൾ ചൂടും നോക്കൂ.'),
- pred:{q:L('Same kW. Power factor falls from 1 to 0.5. The current …','वही kW। PF 1 से 0.5। करंट …','അതേ kW. PF 1-ൽ നിന്ന് 0.5. കറന്റ് …'),o:[L('doubles','डबल','ഇരട്ടി'),L('halves','आधा','പകുതി'),L('stays','वही','അതേ')],a:0,why:L('I = P ÷ (V cos φ). Half the PF, double the current, four times the cable loss.','I = P ÷ (V cos φ)। PF आधा, करंट डबल, केबल लॉस चार गुना।','I = P ÷ (V cos φ). PF പകുതി, കറന്റ് ഇരട്ടി, കേബിൾ നഷ്ടം നാല് മടങ്ങ്.')},
- labels:['pfac','actp'],hints:['vir','pvi'],rel:{c:['P','cos φ','I','I²R'],h:'I'},
- fm:['<i>I</i> = <i>P</i> ÷ (<i>V</i> × cos <i>φ</i>)'],
- uses:L('Single-phase. P in W, V in V. Motor taken as 100 % efficient (746 W input) to keep it simple.','सिंगल-फेज़। P W में, V V में। आसानी के लिए मोटर 100 % एफिशिएंट (746 W इनपुट) मानी।','സിംഗിൾ-ഫേസ്. P W-ൽ, V V-ൽ. എളുപ്പത്തിന് മോട്ടോർ 100 % എഫിഷ്യന്റ് (746 W ഇൻപുട്ട്) ആയി എടുത്തു.'),
- ex:L('Example (ATI notes): 746 W at 230 V. PF 0.75: 4.33 A. PF 1: 3.24 A.','उदाहरण (ATI नोट्स): 230 V पर 746 W। PF 0.75: 4.33 A। PF 1: 3.24 A।','ഉദാഹരണം (ATI നോട്ട്സ്): 230 V-ൽ 746 W. PF 0.75: 4.33 A. PF 1: 3.24 A.'),
- trick:L('Low PF, high amps, hot wires.','कम PF, ज़्यादा एम्पियर, गर्म तार।','കുറഞ്ഞ PF, കൂടുതൽ ആമ്പിയർ, ചൂടുള്ള വയർ.'),
- check:{q:L('A cable carries 10 A, then 20 A. Its I²R loss becomes …','केबल में 10 A, फिर 20 A। I²R लॉस …','കേബിളിൽ 10 A, പിന്നെ 20 A. I²R നഷ്ടം …'),o:[L('4 times','4 गुना','4 മടങ്ങ്'),L('2 times','2 गुना','2 മടങ്ങ്'),L('the same','वही','അതേ')],a:0},
- build(w,api){
-  w.innerHTML=S(420,215,`<g id="a"></g>`,'Motor current and cable heating against power factor');
-  const rd=mkRd(w),c=mkCtl(w);let pi=1;
-  slider(c,'cos φ',0,3,1,1,x=>WPF[x],x=>{pi=x;api.redraw()});
-  return t=>{const pf=WPF[pi],I=746/(230*pf),loss=Math.pow(1/pf,2),hot=Math.min(1,(loss-1)/3);
-   let s=`<path d="M20 60H250" stroke="rgb(${Math.round(120+135*hot)},${Math.round(120-40*hot)},${Math.round(120-90*hot)})" stroke-width="${(6+3*hot).toFixed(1)}"/>`+flowDots([[20,60],[250,60]],t,Math.round(4+I),'var(--def)',30+10*I);
-   for(let k=0;k<3;k++)if(hot>.1)s+=`<path d="M${70+k*60} 46c-6-8 6-10 0-18" stroke="rgba(217,54,43,${hot.toFixed(2)})" stroke-width="3" fill="none"/>`;
-   s+=`<rect x="250" y="34" width="110" height="52" rx="10" fill="#9aa5b1" stroke="#4a5560" stroke-width="2"/>`+TXC(305,66,'1 HP','#222','15');
-   const B=(y,lab,v,mx,col,txt)=>`<text x="20" y="${y-6}" class="tx s" style="fill:${col};font-size:14px">${lab}</text><rect x="20" y="${y}" width="${Math.max(2,v/mx*200).toFixed(1)}" height="18" rx="3" fill="${col}"/><text x="${(26+Math.max(2,v/mx*200)).toFixed(1)}" y="${y+14}" class="tx" style="font-size:14px">${txt}</text>`;
-   s+=B(130,'I',I,7,'var(--def)',fm1(I)+' A')+B(186,'I²R',loss,4,'var(--no)','× '+fm1(loss));
-   put($('#a',w),s);setRd(rd,`<span>I = 746 ÷ (230 × ${pf}) = <b>${fm1(I)} A</b> · ${RD('cable loss','केबल लॉस','കേബിൾ നഷ്ടം')} × ${fm1(loss)}</span>`)}}});
-
-/* ---------- 10 Causes ---------- */
+/* ---------- 9 Causes ---------- */
 const CAU=[
  {n:['Induction motor, light load','इंडक्शन मोटर, हल्का लोड','ഇൻഡക്ഷൻ മോട്ടോർ, ലഘു ലോഡ്'],pf:'0.2 – 0.4',t:['Needs magnetising current even when idle.','खाली चलते भी मैग्नेटाइज़िंग करंट चाहिए।','ലോഡില്ലാതെയും മാഗ്നറ്റൈസിംഗ് കറന്റ് വേണം.']},
  {n:['Induction motor, full load','इंडक्शन मोटर, फुल लोड','ഇൻഡക്ഷൻ മോട്ടോർ, ഫുൾ ലോഡ്'],pf:'0.8 – 0.9',t:['Better, but still lagging.','बेहतर, पर फिर भी लैगिंग।','മെച്ചം, പക്ഷേ ഇപ്പോഴും ലാഗിംഗ്.']},
@@ -1559,33 +1537,39 @@ CS({id:'p_cause',menu:'Causes of low power factor',title:'t_cause',
   slider(c,L('Load','लोड','ലോഡ്'),0,CAU.length-1,1,0,x=>CAU[x].n[0],x=>{m=x;api.redraw()});
   return t=>{put($('#a',w),cauPic(m,t)+TXC(60,40,'PF','var(--mut)','14')+TXC(60,66,CAU[m].pf,'var(--frm)','18'));setRd(rd,`<span><b>${B3(CAU[m].n)}</b> · PF ${CAU[m].pf} · ${B3(CAU[m].t)}</span>`)}}});
 
-/* ---------- 11 Effects ---------- */
-const EPF=[.6,.8,1];
-const EFX=[['More current','ज़्यादा करंट','കൂടുതൽ കറന്റ്'],['Bigger kVA rating','बड़ी kVA रेटिंग','വലിയ kVA റേറ്റിംഗ്'],['Thicker cables','मोटी केबल','കട്ടിയുള്ള കേബിൾ'],['More I²R loss','ज़्यादा I²R लॉस','കൂടുതൽ I²R നഷ്ടം'],['More voltage drop','ज़्यादा वोल्टेज ड्रॉप','കൂടുതൽ വോൾട്ടേജ് ഡ്രോപ്പ്'],['Utility PF penalty','यूटिलिटी PF पेनल्टी','യൂട്ടിലിറ്റി PF പിഴ']];
-CS({id:'p_eff',menu:'Effects of low power factor',title:'t_eff',
- flash:FB('Why low PF is bad (slide 9); 3-phase power (Module 5C, slide 14)','कम PF क्यों बुरा (स्लाइड 9); 3-फेज़ पावर (मॉड्यूल 5C, स्लाइड 14)','കുറഞ്ഞ PF എന്തുകൊണ്ട് മോശം (സ്ലൈഡ് 9); 3-ഫേസ് പവർ (മൊഡ്യൂൾ 5C, സ്ലൈഡ് 14)'),
- hook:L('A 100 kW workshop at PF 0.6 needs a much bigger transformer than at PF 1.','PF 0.6 पर 100 kW वर्कशॉप को PF 1 से कहीं बड़ा ट्रांसफॉर्मर चाहिए।','PF 0.6-ൽ 100 kW വർക്ക്ഷോപ്പിന് PF 1-ലേതിനേക്കാൾ വളരെ വലിയ ട്രാൻസ്ഫോർമർ വേണം.'),
+/* ---------- 10 Effects of low PF (merged) ---------- */
+const WPF=[.5,.75,.9,1],WN=[6,4,2,0];
+const EFX=[['More current','ज़्यादा करंट','കൂടുതൽ കറന്റ്'],['Bigger kVA','बड़ी kVA','വലിയ kVA'],['Thicker cable','मोटी केबल','കട്ടിയുള്ള കേബിൾ'],['More I²R loss','ज़्यादा I²R लॉस','കൂടുതൽ I²R നഷ്ടം'],['More V drop','ज़्यादा V ड्रॉप','കൂടുതൽ V ഡ്രോപ്പ്'],['PF penalty','PF पेनल्टी','PF പിഴ']];
+CS({id:'p_why',menu:'Effects of low power factor',title:'t_eff',
+ flash:FB('Heat = I²R (Module 2, slide 4); P = V I cos φ (slide 4); 3-phase power (Module 5C, slide 14)','गर्मी = I²R (मॉड्यूल 2, स्लाइड 4); P = V I cos φ (स्लाइड 4); 3-फेज़ पावर (मॉड्यूल 5C, स्लाइड 14)','ചൂട് = I²R (മൊഡ്യൂൾ 2, സ്ലൈഡ് 4); P = V I cos φ (സ്ലൈഡ് 4); 3-ഫേസ് പവർ (മൊഡ്യൂൾ 5C, സ്ലൈഡ് 14)'),
+ hook:L('Same 1 HP motor, same work. At low power factor its cable runs hotter.','वही 1 HP मोटर, वही काम। कम PF पर उसकी केबल ज़्यादा गर्म।','അതേ 1 HP മോട്ടോർ, അതേ ജോലി. കുറഞ്ഞ PF-ൽ അതിന്റെ കേബിൾ കൂടുതൽ ചൂടാകുന്നു.'),
  defn:L('<b>One cause, many effects:</b> low PF → more current → bigger equipment, more losses, more voltage drop, and a penalty in the electricity bill.','<b>एक कारण, कई असर:</b> कम PF → ज़्यादा करंट → बड़े उपकरण, ज़्यादा लॉस, ज़्यादा वोल्टेज ड्रॉप, और बिल में पेनल्टी।','<b>ഒരു കാരണം, പല ഫലങ്ങൾ:</b> കുറഞ്ഞ PF → കൂടുതൽ കറന്റ് → വലിയ ഉപകരണങ്ങൾ, കൂടുതൽ നഷ്ടം, കൂടുതൽ വോൾട്ടേജ് ഡ്രോപ്പ്, ബില്ലിൽ പിഴ.'),
- real:`<svg viewBox="0 0 300 110" role="img" aria-label="Electricity bill with a penalty line"><rect x="90" y="8" width="120" height="96" rx="6" fill="var(--card)" stroke="var(--wire)" stroke-width="2"/>${[0,1,2].map(i=>`<path d="M104 ${30+i*16}h92" stroke="var(--mut)" stroke-width="3"/>`).join('')}<path d="M104 86h92" stroke="var(--no)" stroke-width="5"/></svg>`,
- play:L('Slide the power factor. Watch each effect box light up.','पावर फैक्टर स्लाइड करो। हर असर का बॉक्स जलता देखो।','പവർ ഫാക്ടർ സ്ലൈഡ് ചെയ്യൂ. ഓരോ ഫല ബോക്സും തെളിയുന്നത് നോക്കൂ.'),
- pred:{q:L('100 kW at PF 0.8. The kVA needed is …','PF 0.8 पर 100 kW। चाहिए kVA …','PF 0.8-ൽ 100 kW. വേണ്ട kVA …'),o:['125 kVA','80 kVA','100 kVA'],a:0,why:L('S = P ÷ cos φ = 100 ÷ 0.8 = 125 kVA.','S = P ÷ cos φ = 100 ÷ 0.8 = 125 kVA।','S = P ÷ cos φ = 100 ÷ 0.8 = 125 kVA.')},
- labels:['appp','pfac'],hints:['p3','vir'],rel:{c:['P','cos φ','S','I'],h:'S'},
- fm:['<i>S</i> = <i>P</i> ÷ cos <i>φ</i>'],
- uses:L('S in kVA, P in kW. 3-phase line current IL = S ÷ (√3 × VL).','S kVA में, P kW में। 3-फेज़ लाइन करंट IL = S ÷ (√3 × VL)।','S kVA-ൽ, P kW-ൽ. 3-ഫേസ് ലൈൻ കറന്റ് IL = S ÷ (√3 × VL).'),
- ex:L('Example: 100 kW, 400 V. PF 1: 100 kVA, 144 A. PF 0.6: 167 kVA, 241 A.','उदाहरण: 100 kW, 400 V। PF 1: 100 kVA, 144 A। PF 0.6: 167 kVA, 241 A।','ഉദാഹരണം: 100 kW, 400 V. PF 1: 100 kVA, 144 A. PF 0.6: 167 kVA, 241 A.'),
+ real:`<svg viewBox="0 0 300 110" role="img" aria-label="Motor with a warm cable"><rect x="190" y="34" width="80" height="50" rx="10" fill="#9aa5b1" stroke="#4a5560" stroke-width="2"/><path d="M30 60H190" stroke="#ff7a30" stroke-width="7"/><path d="M80 48c-6-8 6-10 0-18M120 48c-6-8 6-10 0-18" stroke="var(--no)" stroke-width="3" fill="none"/></svg>`,
+ play:L('Slide the power factor. Watch the current, the cable heat and the effect boxes.','पावर फैक्टर स्लाइड करो। करंट, केबल की गर्मी और असर के बॉक्स देखो।','പവർ ഫാക്ടർ സ്ലൈഡ് ചെയ്യൂ. കറന്റ്, കേബിൾ ചൂട്, ഫല ബോക്സുകൾ നോക്കൂ.'),
+ pred:{q:L('Same kW. Power factor falls from 1 to 0.5. The current …','वही kW। PF 1 से 0.5। करंट …','അതേ kW. PF 1-ൽ നിന്ന് 0.5. കറന്റ് …'),o:[L('doubles','डबल','ഇരട്ടി'),L('halves','आधा','പകുതി'),L('stays','वही','അതേ')],a:0,why:L('I = P ÷ (V cos φ). Half the PF, double the current, four times the cable loss.','I = P ÷ (V cos φ)। PF आधा, करंट डबल, केबल लॉस चार गुना।','I = P ÷ (V cos φ). PF പകുതി, കറന്റ് ഇരട്ടി, കേബിൾ നഷ്ടം നാല് മടങ്ങ്.')},
+ labels:['pfac','actp','appp'],hints:['vir','pvi','p3'],rel:{c:['P','cos φ','I','S'],h:'I'},
+ fm:['<i>I</i> = <i>P</i> ÷ (<i>V</i> × cos <i>φ</i>)','<i>S</i> = <i>P</i> ÷ cos <i>φ</i>'],
+ uses:L('Single-phase for I. S in kVA, P in kW. Motor taken as 100 % efficient (746 W input) to keep it simple.','I के लिए सिंगल-फेज़। S kVA में, P kW में। आसानी के लिए मोटर 100 % एफिशिएंट (746 W इनपुट) मानी।','I-ക്ക് സിംഗിൾ-ഫേസ്. S kVA-ൽ, P kW-ൽ. എളുപ്പത്തിന് മോട്ടോർ 100 % എഫിഷ്യന്റ് (746 W ഇൻപുട്ട്) ആയി എടുത്തു.'),
+ ex:L('Example (ATI notes): 746 W at 230 V. PF 0.75: 4.33 A. PF 1: 3.24 A. A 100 kW load at PF 0.6 needs 167 kVA, not 100 kVA.','उदाहरण (ATI नोट्स): 230 V पर 746 W। PF 0.75: 4.33 A। PF 1: 3.24 A। PF 0.6 पर 100 kW लोड को 100 नहीं, 167 kVA चाहिए।','ഉദാഹരണം (ATI നോട്ട്സ്): 230 V-ൽ 746 W. PF 0.75: 4.33 A. PF 1: 3.24 A. PF 0.6-ൽ 100 kW ലോഡിന് 100 അല്ല, 167 kVA വേണം.'),
  note:L('Utilities fix a minimum power factor in the tariff (often around 0.9) and charge extra below it. Check the current KSEB tariff order for the exact figure.','यूटिलिटी टैरिफ में न्यूनतम PF तय करती हैं (अक्सर करीब 0.9), उससे कम पर अतिरिक्त चार्ज। सही आँकड़ा मौजूदा KSEB टैरिफ ऑर्डर में देखो।','യൂട്ടിലിറ്റി താരിഫിൽ കുറഞ്ഞ PF നിശ്ചയിക്കുന്നു (പലപ്പോഴും ഏകദേശം 0.9), അതിൽ താഴെ അധിക ചാർജ്. കൃത്യമായ കണക്ക് നിലവിലെ KSEB താരിഫ് ഓർഡറിൽ നോക്കൂ.'),
- trick:L('kVA = kW ÷ PF.','kVA = kW ÷ PF।','kVA = kW ÷ PF.'),
- check:{q:L('60 kW at PF 0.75. kVA is …','PF 0.75 पर 60 kW। kVA …','PF 0.75-ൽ 60 kW. kVA …'),o:['80 kVA','45 kVA','60 kVA'],a:0},
+ trick:L('Low PF, high amps, hot wires. kVA = kW ÷ PF.','कम PF, ज़्यादा एम्पियर, गर्म तार। kVA = kW ÷ PF।','കുറഞ്ഞ PF, കൂടുതൽ ആമ്പിയർ, ചൂടുള്ള വയർ. kVA = kW ÷ PF.'),
+ check:{q:L('A cable carries 10 A, then 20 A. Its I²R loss becomes …','केबल में 10 A, फिर 20 A। I²R लॉस …','കേബിളിൽ 10 A, പിന്നെ 20 A. I²R നഷ്ടം …'),o:[L('4 times','4 गुना','4 മടങ്ങ്'),L('2 times','2 गुना','2 മടങ്ങ്'),L('the same','वही','അതേ')],a:0},
  build(w,api){
-  w.innerHTML=S(420,215,`<g id="a"></g>`,'Chain of effects of low power factor');
-  const rd=mkRd(w),c=mkCtl(w);let pi=0;
-  slider(c,'cos φ',0,2,1,0,x=>EPF[x],x=>{pi=x;api.redraw()});
-  return t=>{const pf=EPF[pi],Sv=100/pf,I=Sv/(1.732*.4),bad=1-pf;const n=Math.min(6,Math.floor(t*2)%8);
-   let s=`<rect x="10" y="80" width="80" height="50" rx="8" fill="${pf<1?'rgba(217,54,43,.25)':'rgba(31,160,90,.25)'}" stroke="var(--wire)" stroke-width="2"/>`+TXC(50,104,'PF','var(--fg)','14')+TXC(50,122,pf,'var(--fg)','15');
-   EFX.forEach((e,k)=>{const x=120+(k%2)*150,y=24+Math.floor(k/2)*62,on=pf<1&&k<n;s+=poly([[90,105],[x,y+20]],on?'var(--no)':'var(--mut)',1.4)+`<rect x="${x}" y="${y}" width="140" height="40" rx="6" fill="${on?'rgba(217,54,43,.18)':'var(--card)'}" stroke="${on?'var(--no)':'var(--wire)'}" stroke-width="2"/>`+TT(x+70,y+25,e[0],e[1],e[2],'s m','style="fill:var(--fg);font-size:13px"')});
-   put($('#a',w),s);setRd(rd,`<span>100 kW, 400 V: S = <b>${Math.round(Sv)} kVA</b>, IL ≈ <b>${Math.round(I)} A</b></span>`)}}});
+  w.innerHTML=S(300,150,`<g id="a"></g>`,'Motor current, cable heating and the effects of low power factor');
+  const rd=mkRd(w),c=mkCtl(w);let pi=1,t0=-1;
+  slider(c,'cos φ',0,3,1,1,x=>WPF[x],x=>{pi=x;t0=-1;api.redraw()});
+  return t=>{if(t0<0)t0=t;const pf=WPF[pi],I=746/(230*pf),loss=Math.pow(1/pf,2),hot=Math.min(1,(loss-1)/3),Sv=100/pf;
+   const lit=Math.min(WN[pi],Math.floor((t-t0)*2.5));
+   let s=`<path d="M10 40H200" stroke="rgb(${Math.round(120+135*hot)},${Math.round(120-40*hot)},${Math.round(120-90*hot)})" stroke-width="${(6+3*hot).toFixed(1)}"/>`+flowDots([[10,40],[200,40]],t,Math.round(4+I),'var(--def)',30+10*I);
+   for(let k=0;k<3;k++)if(hot>.1)s+=`<path d="M${50+k*55} 28c-6-8 6-10 0-18" stroke="rgba(217,54,43,${hot.toFixed(2)})" stroke-width="3" fill="none"/>`;
+   s+=`<rect x="200" y="16" width="90" height="48" rx="10" fill="#9aa5b1" stroke="#4a5560" stroke-width="2"/>`+TXC(245,46,'1 HP','#222','16');
+   const B=(y,lab,v,mx,col,txt)=>`<text x="10" y="${y+14}" class="tx" style="fill:${col};font-size:16px">${lab}</text><rect x="44" y="${y}" width="${Math.max(2,v/mx*170).toFixed(1)}" height="18" rx="3" fill="${col}"/><text x="${(50+Math.max(2,v/mx*170)).toFixed(1)}" y="${y+15}" class="tx" style="font-size:16px">${txt}</text>`;
+   s+=B(84,'I',I,7,'var(--def)',fm1(I)+' A')+B(118,'I²R',loss,4,'var(--no)','× '+fm1(loss));
+   const chips=EFX.map((e,k)=>`<span style="display:inline-block;margin:1px 2px;padding:0 6px;border-radius:8px;font-size:.85em;border:2px solid ${k<lit?'var(--no)':'var(--wire)'};background:${k<lit?'rgba(217,54,43,.18)':'transparent'};opacity:${k<lit?1:.45}">${RD(e[0],e[1],e[2])}</span>`).join('');
+   put($('#a',w),s);setRd(rd,`<span>I = <b>${fm1(I)} A</b> · 100 kW → S = <b>${Math.round(Sv)} kVA</b></span><span>${chips}</span>`)}}});
 
-/* ===== Module 8 slides 12-21 ===== */
+
+/* ===== Module 8 slides 11-21 ===== */
 const AX=[90,-30,210];
 /* ---------- 12 Capacitor correction ---------- */
 const QCV=[0,4,8,10,13.3,18];
@@ -1670,7 +1654,7 @@ CS({id:'p_bank',menu:'Star or delta capacitor bank',title:'t_bank',
 /* ---------- 15 Synchronous condenser ---------- */
 const EXC=[{n:['Under-excited','अंडर-एक्साइटेड','അണ്ടർ-എക്സൈറ്റഡ്'],ph:-40},{n:['Normal','नॉर्मल','നോർമൽ'],ph:0},{n:['Over-excited','ओवर-एक्साइटेड','ഓവർ-എക്സൈറ്റഡ്'],ph:70}];
 CS({id:'p_sync',menu:'Synchronous condenser and phase advancer',title:'t_sync',
- flash:FB('Phasors (Module 0, slide 34); capacitor correction (slide 12)','फेज़र (मॉड्यूल 0, स्लाइड 34); कैपेसिटर करेक्शन (स्लाइड 12)','ഫേസർ (മൊഡ്യൂൾ 0, സ്ലൈഡ് 34); കപ്പാസിറ്റർ കറക്ഷൻ (സ്ലൈഡ് 12)'),
+ flash:FB('Phasors (Module 0, slide 34); capacitor correction (slide 11)','फेज़र (मॉड्यूल 0, स्लाइड 34); कैपेसिटर करेक्शन (स्लाइड 11)','ഫേസർ (മൊഡ്യൂൾ 0, സ്ലൈഡ് 34); കപ്പാസിറ്റർ കറക്ഷൻ (സ്ലൈഡ് 11)'),
  hook:L('Large plants sometimes run a synchronous motor with no load, just to improve the power factor.','बड़े प्लांट कभी-कभी सिंक्रोनस मोटर बिना लोड चलाते हैं, सिर्फ़ PF सुधारने को।','വലിയ പ്ലാന്റുകൾ ചിലപ്പോൾ PF മെച്ചപ്പെടുത്താൻ മാത്രം സിൻക്രണസ് മോട്ടോർ ലോഡില്ലാതെ ഓടിക്കുന്നു.'),
  defn:L('<b>Synchronous condenser:</b> an over-excited synchronous motor on no load draws leading current, like a capacitor, and its kVAR can be adjusted smoothly. <b>Phase advancer:</b> an AC exciter on an induction motor shaft that feeds the rotor to improve its PF.','<b>सिंक्रोनस कंडेंसर:</b> बिना लोड ओवर-एक्साइटेड सिंक्रोनस मोटर लीडिंग करंट लेती है, कैपेसिटर जैसे, और kVAR आराम से बदल सकते हैं। <b>फेज़ एडवांसर:</b> इंडक्शन मोटर शाफ्ट पर AC एक्साइटर जो रोटर को देकर PF सुधारता है।','<b>സിൻക്രണസ് കണ്ടൻസർ:</b> ലോഡില്ലാത്ത ഓവർ-എക്സൈറ്റഡ് സിൻക്രണസ് മോട്ടോർ കപ്പാസിറ്റർ പോലെ ലീഡിംഗ് കറന്റ് എടുക്കുന്നു, kVAR സുഗമമായി മാറ്റാം. <b>ഫേസ് അഡ്വാൻസർ:</b> ഇൻഡക്ഷൻ മോട്ടോർ ഷാഫ്റ്റിലെ AC എക്സൈറ്റർ, റോട്ടറിന് നൽകി PF മെച്ചപ്പെടുത്തുന്നു.'),
  real:`<svg viewBox="0 0 300 110" role="img" aria-label="Large motor with no load coupled"><rect x="70" y="20" width="160" height="70" rx="14" fill="#9aa5b1" stroke="#4a5560" stroke-width="2"/><rect x="230" y="50" width="40" height="10" fill="#6b7580"/></svg>`,
@@ -1691,7 +1675,7 @@ CS({id:'p_sync',menu:'Synchronous condenser and phase advancer',title:'t_sync',
 
 /* ---------- 16 APFC ---------- */
 CS({id:'p_apfc',menu:'APFC panel',title:'t_apfc',
- flash:FB('Capacitor correction and over-correction (slide 12)','कैपेसिटर करेक्शन और ओवर-करेक्शन (स्लाइड 12)','കപ്പാസിറ്റർ കറക്ഷനും ഓവർ-കറക്ഷനും (സ്ലൈഡ് 12)'),
+ flash:FB('Capacitor correction and over-correction (slide 11)','कैपेसिटर करेक्शन और ओवर-करेक्शन (स्लाइड 11)','കപ്പാസിറ്റർ കറക്ഷനും ഓവർ-കറക്ഷനും (സ്ലൈഡ് 11)'),
  hook:L('Machines start and stop all day. A fixed capacitor is right at one load and wrong at another.','मशीनें दिन भर चालू-बंद होती हैं। फिक्स्ड कैपेसिटर एक लोड पर ठीक, दूसरे पर गलत।','മെഷീനുകൾ ദിവസം മുഴുവൻ ഓൺ-ഓഫ് ആകുന്നു. ഫിക്സഡ് കപ്പാസിറ്റർ ഒരു ലോഡിൽ ശരി, മറ്റൊന്നിൽ തെറ്റ്.'),
  defn:L('<b>APFC (automatic power factor correction) panel:</b> a CT and relay measure the PF and switch capacitor steps in or out through contactors to hold a set PF (for example 0.95).','<b>APFC पैनल:</b> CT और रिले PF नापते हैं और कॉन्टैक्टर से कैपेसिटर स्टेप जोड़ते-हटाते हैं ताकि तय PF (जैसे 0.95) बना रहे।','<b>APFC പാനൽ:</b> CT-യും റിലേയും PF അളന്ന് കോൺടാക്ടർ വഴി കപ്പാസിറ്റർ സ്റ്റെപ്പുകൾ ചേർക്കുകയും മാറ്റുകയും ചെയ്ത് നിശ്ചിത PF (ഉദാ. 0.95) നിലനിർത്തുന്നു.'),
  real:`<svg viewBox="0 0 300 110" role="img" aria-label="APFC panel with relay and capacitor steps"><rect x="80" y="6" width="140" height="98" rx="6" fill="#d7dbe0" stroke="#4a5560" stroke-width="2"/><rect x="100" y="16" width="100" height="22" rx="3" fill="#173"/>${TXC(150,32,'0.96','#b8f0c8','14')}${[0,1,2,3,4,5].map(i=>`<rect x="${92+i*20}" y="50" width="14" height="40" rx="3" fill="#c8ced4" stroke="#4a5560"/>`).join('')}</svg>`,
@@ -1743,7 +1727,7 @@ CS({id:'p_watt',menu:'Wattmeter',title:'t_watt',
 /* ---------- 18 Two-wattmeter method ---------- */
 const TWP=[0,30,60,75];
 CS({id:'p_2w',menu:'Two-wattmeter method',title:'t_2w',
- flash:FB('3-phase power (Module 5C, slide 14); wattmeter (slide 17)','3-फेज़ पावर (मॉड्यूल 5C, स्लाइड 14); वॉटमीटर (स्लाइड 17)','3-ഫേസ് പവർ (മൊഡ്യൂൾ 5C, സ്ലൈഡ് 14); വാട്ട്മീറ്റർ (സ്ലൈഡ് 17)'),
+ flash:FB('3-phase power (Module 5C, slide 14); wattmeter (slide 16)','3-फेज़ पावर (मॉड्यूल 5C, स्लाइड 14); वॉटमीटर (स्लाइड 16)','3-ഫേസ് പവർ (മൊഡ്യൂൾ 5C, സ്ലൈഡ് 14); വാട്ട്മീറ്റർ (സ്ലൈഡ് 16)'),
  hook:L('A 3-wire motor has no neutral. Two wattmeters still give the total power.','3-वायर मोटर में न्यूट्रल नहीं। फिर भी दो वॉटमीटर कुल पावर देते हैं।','3-വയർ മോട്ടോറിന് ന്യൂട്രൽ ഇല്ല. എന്നിട്ടും രണ്ട് വാട്ട്മീറ്റർ ആകെ പവർ തരുന്നു.'),
  defn:L('<b>Two-wattmeter method:</b> CCs in two lines, PCs from those lines to the third line. Total P = W1 + W2, for balanced or unbalanced 3-wire loads.','<b>टू-वॉटमीटर मेथड:</b> दो लाइनों में CC, PC उन लाइनों से तीसरी लाइन तक। कुल P = W1 + W2, बैलेंस्ड या अनबैलेंस्ड 3-वायर लोड के लिए।','<b>ടൂ-വാട്ട്മീറ്റർ മെത്തേഡ്:</b> രണ്ട് ലൈനുകളിൽ CC, PC ആ ലൈനുകളിൽ നിന്ന് മൂന്നാം ലൈനിലേക്ക്. ആകെ P = W1 + W2, ബാലൻസ്ഡ് അല്ലെങ്കിൽ അൺബാലൻസ്ഡ് 3-വയർ ലോഡിന്.'),
  real:`<svg viewBox="0 0 300 110" role="img" aria-label="Two wattmeters on a three-phase line"><path d="M20 30H280M20 55H280M20 80H280" stroke="var(--wire)" stroke-width="3"/><rect x="90" y="18" width="50" height="24" rx="4" fill="var(--card)" stroke="var(--wire)" stroke-width="2"/><rect x="90" y="43" width="50" height="24" rx="4" fill="var(--card)" stroke="var(--wire)" stroke-width="2"/></svg>`,
@@ -1816,7 +1800,7 @@ CS({id:'p_em',menu:'Energy meter',title:'t_em',
 /* ---------- 21 Smart meters ---------- */
 const SMM=[{n:['Manual reading','मैनुअल रीडिंग','മാനുവൽ റീഡിംഗ്'],t:['Meter reader visits; one reading a month.','मीटर रीडर आता है; महीने में एक रीडिंग।','മീറ്റർ റീഡർ വരുന്നു; മാസത്തിൽ ഒരു റീഡിംഗ്.']},{n:['AMR','AMR','AMR'],t:['Automated meter reading: the meter sends readings one way (radio, GPRS).','ऑटोमेटेड मीटर रीडिंग: मीटर एक तरफ़ रीडिंग भेजता है (रेडियो, GPRS)।','ഓട്ടോമേറ്റഡ് മീറ്റർ റീഡിംഗ്: മീറ്റർ ഒരു ദിശയിൽ റീഡിംഗ് അയയ്ക്കുന്നു (റേഡിയോ, GPRS).']},{n:['Smart meter','स्मार्ट मीटर','സ്മാർട്ട് മീറ്റർ'],t:['Two-way: readings go up; tariffs, prepaid balance and connect/disconnect come down. Supports time-of-day billing.','टू-वे: रीडिंग ऊपर जाती; टैरिफ, प्रीपेड बैलेंस, कनेक्ट/डिसकनेक्ट नीचे आते। टाइम-ऑफ़-डे बिलिंग।','ടൂ-വേ: റീഡിംഗ് മുകളിലേക്ക്; താരിഫ്, പ്രീപെയ്ഡ് ബാലൻസ്, കണക്ട്/ഡിസ്കണക്ട് താഴേക്ക്. ടൈം-ഓഫ്-ഡേ ബില്ലിംഗ്.']}];
 CS({id:'p_smart',menu:'Smart meters and AMR',title:'t_smart',
- flash:FB('Energy meter (slide 20)','एनर्जी मीटर (स्लाइड 20)','എനർജി മീറ്റർ (സ്ലൈഡ് 20)'),
+ flash:FB('Energy meter (slide 19)','एनर्जी मीटर (स्लाइड 19)','എനർജി മീറ്റർ (സ്ലൈഡ് 19)'),
  hook:L('New meters can be recharged like a mobile phone and read from the office.','नए मीटर मोबाइल जैसे रिचार्ज हो सकते हैं और ऑफ़िस से पढ़े जा सकते हैं।','പുതിയ മീറ്ററുകൾ മൊബൈൽ പോലെ റീചാർജ് ചെയ്യാം, ഓഫീസിൽ നിന്ന് വായിക്കാം.'),
  defn:L('<b>AMR:</b> one-way automatic reading. <b>Smart meter (AMI):</b> two-way communication between meter and utility: remote reading, prepaid, time-of-day tariff, remote connect and disconnect.','<b>AMR:</b> एक-तरफ़ा ऑटोमैटिक रीडिंग। <b>स्मार्ट मीटर (AMI):</b> मीटर और यूटिलिटी के बीच टू-वे कम्युनिकेशन: रिमोट रीडिंग, प्रीपेड, टाइम-ऑफ़-डे टैरिफ, रिमोट कनेक्ट/डिसकनेक्ट।','<b>AMR:</b> ഒരു ദിശ ഓട്ടോമാറ്റിക് റീഡിംഗ്. <b>സ്മാർട്ട് മീറ്റർ (AMI):</b> മീറ്ററും യൂട്ടിലിറ്റിയും തമ്മിൽ ടൂ-വേ കമ്മ്യൂണിക്കേഷൻ: റിമോട്ട് റീഡിംഗ്, പ്രീപെയ്ഡ്, ടൈം-ഓഫ്-ഡേ താരിഫ്, റിമോട്ട് കണക്ട്/ഡിസ്കണക്ട്.'),
  real:`<svg viewBox="0 0 300 110" role="img" aria-label="Meter with a radio symbol"><rect x="110" y="20" width="80" height="80" rx="8" fill="#e6e9ec" stroke="#4a5560" stroke-width="2"/><path d="M196 30a16 16 0 0 1 0 22M204 24a26 26 0 0 1 0 34" fill="none" stroke="var(--def)" stroke-width="3"/></svg>`,
@@ -1836,7 +1820,7 @@ CS({id:'p_smart',menu:'Smart meters and AMR',title:'t_smart',
     if(m===2){s+=`<path d="M110 130H300" stroke="var(--mut)" stroke-dasharray="5 5"/><rect x="${(290-u*180).toFixed(1)}" y="124" width="16" height="12" rx="2" fill="var(--ok)"/>`+TL(205,152,['← tariff, prepaid, ON/OFF','← टैरिफ, प्रीपेड, ON/OFF','← താരിഫ്, പ്രീപെയ്ഡ്, ON/OFF'],'var(--ok)')}}
    put($('#a',w),s);setRd(rd,`<span><b>${B3(SMM[m].n)}</b>: ${B3(SMM[m].t)}</span>`)}}});
 
-/* ===== Module 8 slides 22-29 ===== */
+/* ===== Module 8 slides 21-28 ===== */
 CS({id:'p_twist',exam:true,menu:'Exam twist: Module 8',kind:'tip',title:'twm8',hk:undefined,page(w,s,api){
   w.innerHTML=S(400,150,`<g id="bs"></g>`,'Bars showing how power and current change with the sliders');
   const rd=mkRd(w),c=mkCtl(w);let mode=0;const f=[2,2];
@@ -1850,14 +1834,14 @@ CS({id:'p_twist',exam:true,menu:'Exam twist: Module 8',kind:'tip',title:'twm8',h
   const sc=h('div');c.parentNode.insertBefore(sc,c.nextSibling);
   const labs=()=>{sc.innerHTML='';const nm=mode===0?['V','I']:['P','1 ÷ cos φ'];nm.forEach((n,i)=>slider(sc,n,0,4,1,f[i],x=>fmtMul(FLC[x]),x=>{f[i]=x;draw()}))};
   labs();draw();api.setReplay(()=>{draw()});
-  s.appendChild(h('div','flash',`<b>↩ ${UIB('fb')}</b><span>${L('Power triangle (slide 7), sizing (slide 13), two-wattmeter (slide 18)','पावर ट्रायंगल (स्लाइड 7), साइज़िंग (स्लाइड 13), टू-वॉटमीटर (स्लाइड 18)','പവർ ട്രയാംഗിൾ (സ്ലൈഡ് 7), സൈസിംഗ് (സ്ലൈഡ് 13), ടൂ-വാട്ട്മീറ്റർ (സ്ലൈഡ് 18)')}</span>`));
+  s.appendChild(h('div','flash',`<b>↩ ${UIB('fb')}</b><span>${L('Power triangle (slide 7), sizing (slide 12), two-wattmeter (slide 17)','पावर ट्रायंगल (स्लाइड 7), साइज़िंग (स्लाइड 12), टू-वॉटमीटर (स्लाइड 17)','പവർ ട്രയാംഗിൾ (സ്ലൈഡ് 7), സൈസിംഗ് (സ്ലൈഡ് 12), ടൂ-വാട്ട്മീറ്റർ (സ്ലൈഡ് 17)')}</span>`));
   miniQuiz(s,[
-   {q:L('A 230 V, single-phase motor takes 10 A at PF 0.8. Its input power is …','230 V सिंगल-फेज़ मोटर PF 0.8 पर 10 A लेती है। इनपुट पावर …','230 V സിംഗിൾ-ഫേസ് മോട്ടോർ PF 0.8-ൽ 10 A എടുക്കുന്നു. ഇൻപുട്ട് പവർ …'),o:['1840 W','2300 W','2875 W','1380 W'],a:0,why:L('230 × 10 × 0.8 = 1840 W.','230 × 10 × 0.8 = 1840 W।','230 × 10 × 0.8 = 1840 W.')},
-   {q:L('A load takes 6 kW and 8 kVAR. Its kVA and PF are …','लोड 6 kW और 8 kVAR लेता है। kVA और PF …','ലോഡ് 6 kW, 8 kVAR എടുക്കുന്നു. kVA, PF …'),o:['10 kVA, 0.6','14 kVA, 0.43','10 kVA, 0.8','2 kVA, 3'],a:0,why:L('S = √(36 + 64) = 10 kVA. PF = 6 ÷ 10 = 0.6.','S = √(36 + 64) = 10 kVA। PF = 6 ÷ 10 = 0.6।','S = √(36 + 64) = 10 kVA. PF = 6 ÷ 10 = 0.6.')},
+   {q:L('A 230 V, single-phase motor takes 8 A at PF 0.75. Its input power is …','230 V सिंगल-फेज़ मोटर PF 0.75 पर 8 A लेती है। इनपुट पावर …','230 V സിംഗിൾ-ഫേസ് മോട്ടോർ PF 0.75-ൽ 8 A എടുക്കുന്നു. ഇൻപുട്ട് പവർ …'),o:['1380 W','1840 W','1104 W','2453 W'],a:0,why:L('230 × 8 × 0.75 = 1380 W.','230 × 8 × 0.75 = 1380 W।','230 × 8 × 0.75 = 1380 W.')},
+   {q:L('A load takes 12 kW and 5 kVAR. Its kVA and PF are …','लोड 12 kW और 5 kVAR लेता है। kVA और PF …','ലോഡ് 12 kW, 5 kVAR എടുക്കുന്നു. kVA, PF …'),o:['13 kVA, 0.92','17 kVA, 0.71','13 kVA, 0.38','7 kVA, 1.7'],a:0,why:L('S = √(144 + 25) = 13 kVA. PF = 12 ÷ 13 ≈ 0.92.','S = √(144 + 25) = 13 kVA। PF = 12 ÷ 13 ≈ 0.92।','S = √(144 + 25) = 13 kVA. PF = 12 ÷ 13 ≈ 0.92.')},
    {q:L('A 100 kVA transformer feeds a load at PF 0.7. The most kW it can supply is …','100 kVA ट्रांसफॉर्मर PF 0.7 का लोड देता है। अधिकतम kW …','100 kVA ട്രാൻസ്ഫോർമർ PF 0.7 ലോഡിന് നൽകുന്നു. പരമാവധി kW …'),o:['70 kW','100 kW','143 kW','30 kW'],a:0,why:L('kW = kVA × PF = 100 × 0.7 = 70 kW.','kW = kVA × PF = 100 × 0.7 = 70 kW।','kW = kVA × PF = 100 × 0.7 = 70 kW.')},
-   {q:L('10 kW load, PF raised from 0.6 to 0.95 (tan φ: 1.333 and 0.329). Capacitor needed is about …','10 kW लोड, PF 0.6 से 0.95 (tan φ: 1.333 और 0.329)। कैपेसिटर करीब …','10 kW ലോഡ്, PF 0.6-ൽ നിന്ന് 0.95 (tan φ: 1.333, 0.329). കപ്പാസിറ്റർ ഏകദേശം …'),o:['10 kVAR','16.6 kVAR','3.5 kVAR','13.3 kVAR'],a:0,why:L('10 × (1.333 − 0.329) ≈ 10 kVAR.','10 × (1.333 − 0.329) ≈ 10 kVAR।','10 × (1.333 − 0.329) ≈ 10 kVAR.')},
+   {q:L('20 kW load, PF raised from 0.7 to 0.95 (tan φ: 1.020 and 0.329). Capacitor needed is about …','20 kW लोड, PF 0.7 से 0.95 (tan φ: 1.020 और 0.329)। कैपेसिटर करीब …','20 kW ലോഡ്, PF 0.7-ൽ നിന്ന് 0.95 (tan φ: 1.020, 0.329). കപ്പാസിറ്റർ ഏകദേശം …'),o:['13.8 kVAR','20 kVAR','6.6 kVAR','27 kVAR'],a:0,why:L('20 × (1.020 − 0.329) ≈ 13.8 kVAR.','20 × (1.020 − 0.329) ≈ 13.8 kVAR।','20 × (1.020 − 0.329) ≈ 13.8 kVAR.')},
    {q:L('Two-wattmeter method on a balanced load: W1 = 4 kW, W2 = 4 kW. The PF is …','बैलेंस्ड लोड पर टू-वॉटमीटर: W1 = 4 kW, W2 = 4 kW। PF …','ബാലൻസ്ഡ് ലോഡിൽ ടൂ-വാട്ട്മീറ്റർ: W1 = 4 kW, W2 = 4 kW. PF …'),o:['1','0.5','0','0.866'],a:0,why:L('Equal readings: tan φ = 0, φ = 0, PF = 1.','बराबर रीडिंग: tan φ = 0, φ = 0, PF = 1।','തുല്യ റീഡിംഗ്: tan φ = 0, φ = 0, PF = 1.')},
-   {q:L('An energy meter is marked 3200 imp/kWh. A 2 kW load runs for 1 hour. The LED blinks …','एनर्जी मीटर 3200 imp/kWh। 2 kW लोड 1 घंटा। LED झपकती है …','എനർജി മീറ്റർ 3200 imp/kWh. 2 kW ലോഡ് 1 മണിക്കൂർ. LED മിന്നുന്നത് …'),o:['6400 times','3200 times','1600 times','64 times'],a:0,why:L('2 kWh × 3200 = 6400 pulses.','2 kWh × 3200 = 6400 पल्स।','2 kWh × 3200 = 6400 പൾസ്.')}
+   {q:L('An energy meter is marked 1600 imp/kWh. A 1.5 kW load runs for 1 hour. The LED blinks …','एनर्जी मीटर 1600 imp/kWh। 1.5 kW लोड 1 घंटा। LED झपकती है …','എനർജി മീറ്റർ 1600 imp/kWh. 1.5 kW ലോഡ് 1 മണിക്കൂർ. LED മിന്നുന്നത് …'),o:['2400 times','1600 times','1067 times','24 times'],a:0,why:L('1.5 kWh × 1600 = 2400 pulses.','1.5 kWh × 1600 = 2400 पल्स।','1.5 kWh × 1600 = 2400 പൾസ്.')}
   ],'m8tw')}});
 
 const CMP8=[
@@ -1950,7 +1934,7 @@ SL.push({id:'p_fault',syl:'M8',menu:'Fault Finder: 5 missions',kind:'tip',title:
 
 CS({id:'p_rev',menu:'Quick revision · How they connect',kind:'formula',title:'revision',wide:true,hk:undefined,page(w){
   const noI=id=>SL.findIndex(x=>x.id===id)+1;
-  const R=[['E = P × t','Energy','p_wpe'],['P = V I cos φ','Active','p_act'],['Q = V I sin φ','Reactive','p_rea'],['S = V I','Apparent','p_app'],['S² = P² + Q²','Triangle','p_tri'],['cos φ = P ÷ S','PF','p_pf'],['I = P ÷ (V cos φ)','Low PF','p_why'],['kVA = kW ÷ PF','Effects','p_eff'],['Q − Qc','Correction','p_cap'],['P(tan φ1 − tan φ2)','Sizing','p_size'],['Delta: ⅓ µF','Bank','p_bank'],['P = W1 + W2','Two-wattmeter','p_2w'],['imp/kWh','Energy meter','p_em'],['Two-way','Smart meter','p_smart']];
+  const R=[['E = P × t','Energy','p_wpe'],['P = V I cos φ','Active','p_act'],['Q = V I sin φ','Reactive','p_rea'],['S = V I','Apparent','p_app'],['S² = P² + Q²','Triangle','p_tri'],['cos φ = P ÷ S','PF','p_pf'],['I = P ÷ (V cos φ)','Low PF','p_why'],['kVA = kW ÷ PF','Effects','p_why'],['Q − Qc','Correction','p_cap'],['P(tan φ1 − tan φ2)','Sizing','p_size'],['Delta: ⅓ µF','Bank','p_bank'],['P = W1 + W2','Two-wattmeter','p_2w'],['imp/kWh','Energy meter','p_em'],['Two-way','Smart meter','p_smart']];
   const M=[['R, X, Z','m5b',8],['P','a','p_act'],['Q','a','p_rea'],['S','a','p_tri'],['cos φ','a','p_pf'],['Qc','a','p_size']];
   w.innerHTML=`<p class="note" style="margin:2px 2px 8px">${RD('Tap a tile to open its slide.','टाइल टैप करके स्लाइड खोलो।','ടൈൽ ടാപ്പ് ചെയ്ത് സ്ലൈഡ് തുറക്കൂ.')}</p><div class="grid">${R.map(r=>`<button type="button" class="tile" data-g="${r[2]}"><b>${r[0]}</b><span>${BI(r[1],'','')} · ${RD('slide','स्लाइड','സ്ലൈഡ്')} ${noI(r[2])}</span></button>`).join('')}</div>
    <div class="beat" style="margin:12px 2px 6px">${term('connect')}</div><div class="mapw">${M.map((m,i)=>`${i?'<i>→</i>':''}<button type="button" class="mapn ${m[1]==='a'?'m2a':'m2'}" data-t="${m[1]}" data-k="${m[2]}"><b>${m[0]}</b><span>${m[1]==='m5b'?'M5B · '+m[2]:'M8 · '+noI(m[2])}</span></button>`).join('')}</div>`;
@@ -1991,12 +1975,12 @@ CS({id:'p_intv',menu:'Interview cards',kind:'law',title:'interview',wide:true,hk
 CS({id:'p_mcq',menu:'MCQ quiz',kind:'tip',title:'quiz',wide:true,hk:undefined,page(w,s,api){
   const Q=[
    [L('The unit of reactive power is …','रिएक्टिव पावर की यूनिट …','റിയാക്ടീവ് പവറിന്റെ യൂണിറ്റ് …'),['VAR','W','VA','kWh'],0,L('Volt-ampere reactive.','वोल्ट-एम्पियर रिएक्टिव।','വോൾട്ട്-ആമ്പിയർ റിയാക്ടീവ്.')],
-   [L('A 230 V load takes 10 A and 1.84 kW. Its PF is …','230 V लोड 10 A और 1.84 kW लेता है। PF …','230 V ലോഡ് 10 A, 1.84 kW എടുക്കുന്നു. PF …'),['0.8','0.6','1.25','0.9'],0,L('1840 ÷ 2300 = 0.8.','1840 ÷ 2300 = 0.8।','1840 ÷ 2300 = 0.8.')],
+   [L('A 230 V load takes 6 A and 1242 W. Its PF is …','230 V लोड 6 A और 1242 W लेता है। PF …','230 V ലോഡ് 6 A, 1242 W എടുക്കുന്നു. PF …'),['0.9','0.8','1.11','0.6'],0,L('1242 ÷ 1380 = 0.9.','1242 ÷ 1380 = 0.9।','1242 ÷ 1380 = 0.9.')],
    [L('P = 12 kW, Q = 16 kVAR. S is …','P = 12 kW, Q = 16 kVAR। S …','P = 12 kW, Q = 16 kVAR. S …'),['20 kVA','28 kVA','4 kVA','14 kVA'],0,L('√(144 + 256) = 20 kVA.','√(144 + 256) = 20 kVA।','√(144 + 256) = 20 kVA.')],
    [L('Low power factor is mainly caused by …','कम PF मुख्य रूप से किससे?','കുറഞ്ഞ PF പ്രധാനമായും ഉണ്ടാകുന്നത് …'),[L('lightly loaded induction motors','हल्के लोड वाली इंडक्शन मोटर','ലഘു ലോഡുള്ള ഇൻഡക്ഷൻ മോട്ടോർ'),L('filament lamps','फिलामेंट लैंप','ഫിലമെന്റ് ലാമ്പ്'),L('heaters','हीटर','ഹീറ്റർ'),L('capacitors','कैपेसिटर','കപ്പാസിറ്റർ')],0,L('They draw magnetising (lagging) current with little kW.','कम kW के साथ मैग्नेटाइज़िंग (लैगिंग) करंट लेती हैं।','കുറഞ്ഞ kW-നൊപ്പം മാഗ്നറ്റൈസിംഗ് (ലാഗിംഗ്) കറന്റ് എടുക്കുന്നു.')],
    [L('A 1 kVAR capacitor at 230 V, 50 Hz has a capacitance of about …','230 V, 50 Hz पर 1 kVAR कैपेसिटर का कैपेसिटेंस करीब …','230 V, 50 Hz-ൽ 1 kVAR കപ്പാസിറ്ററിന്റെ കപ്പാസിറ്റൻസ് ഏകദേശം …'),['60 µF','6 µF','600 µF','1 µF'],0,L('C = 1000 ÷ (314 × 230²) ≈ 60 µF.','C = 1000 ÷ (314 × 230²) ≈ 60 µF।','C = 1000 ÷ (314 × 230²) ≈ 60 µF.')],
    [L('In the two-wattmeter method, one reading is zero. The PF is …','टू-वॉटमीटर मेथड में एक रीडिंग ज़ीरो। PF …','ടൂ-വാട്ട്മീറ്റർ മെത്തേഡിൽ ഒരു റീഡിംഗ് പൂജ്യം. PF …'),['0.5','1','0','0.866'],0,L('φ = 60°, cos 60° = 0.5.','φ = 60°, cos 60° = 0.5।','φ = 60°, cos 60° = 0.5.')],
-   [L('A 3 HP motor runs for 4 hours. Energy used is about …','3 HP मोटर 4 घंटे चली। एनर्जी करीब …','3 HP മോട്ടോർ 4 മണിക്കൂർ ഓടി. എനർജി ഏകദേശം …'),['9 kWh','12 kWh','3 kWh','0.75 kWh'],0,L('3 × 0.746 × 4 ≈ 9 kWh (output basis).','3 × 0.746 × 4 ≈ 9 kWh (आउटपुट आधार पर)।','3 × 0.746 × 4 ≈ 9 kWh (ഔട്ട്പുട്ട് അടിസ്ഥാനത്തിൽ).')]
+   [L('A 5 HP motor runs for 2 hours. Energy used is about …','5 HP मोटर 2 घंटे चली। एनर्जी करीब …','5 HP മോട്ടോർ 2 മണിക്കൂർ ഓടി. എനർജി ഏകദേശം …'),['7.5 kWh','10 kWh','3.7 kWh','2.5 kWh'],0,L('5 × 0.746 × 2 ≈ 7.5 kWh (output basis).','5 × 0.746 × 2 ≈ 7.5 kWh (आउटपुट आधार पर)।','5 × 0.746 × 2 ≈ 7.5 kWh (ഔട്ട്പുട്ട് അടിസ്ഥാനത്തിൽ).')]
   ];
   const sv=P.quizG||(P.quizG={});let i=0,score=0,done=false;
   const draw=()=>{if(i>=Q.length){const best=Math.max(sv.best||0,score);sv.best=best;save();
@@ -2021,5 +2005,6 @@ const SVGR=[[/^Shunt: (\d+) turns × (\d+) A$/,'शंट: $1 टर्न × $2
 Object.assign(SVGX,{'Loss':['लॉस','നഷ്ടം'],'R st':['R स्टार्टर','R സ്റ്റാർട്ടർ'],'rheo':['रिओस्टेट','റിയോസ്റ്റാറ്റ്'],'field':['फील्ड','ഫീൽഡ്'],'OFF':['OFF','OFF'],'2× FL':['2× फुल लोड','2× ഫുൾ ലോഡ്']});
 [['Lead · lag','लीड · लैग','ലീഡ് · ലാഗ്'],['3-phase P','3-फेज़ P','3-ഫേസ് P'],['Star · delta','स्टार · डेल्टा','സ്റ്റാർ · ഡെൽറ്റ'],['pulses','पल्स','പൾസ്'],['Delta: ⅓ µF','डेल्टा: ⅓ µF','ഡെൽറ്റ: ⅓ µF'],['Two-way','टू-वे','ടൂ-വേ']].forEach(r=>X(r[0],r[1],r[2]));
 [typeof APL!=='undefined'?APL:[],typeof CAU!=='undefined'?CAU:[]].forEach(a=>a.forEach(o=>X(o.n[0],o.n[1],o.n[2])));
+[['2400 times','2400 बार','2400 തവണ'],['1600 times','1600 बार','1600 തവണ'],['1067 times','1067 बार','1067 തവണ'],['24 times','24 बार','24 തവണ']].forEach(r=>X(r[0],r[1],r[2]));
 
 window.addEventListener('DOMContentLoaded',init);</script></head><body></body></html>

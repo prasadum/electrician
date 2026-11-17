@@ -1355,9 +1355,9 @@ SL.push({id:'m2_ohm',syl:'M2',menu:'Ohm’s law',kind:'law',title:'ohmlaw',hk:'r
    setRd(rd,`<span>I = ${V} ÷ ${R} = <b>${f2(I)} A</b></span><span>V = I × R = ${f2(I)} × ${R} = <b>${V} V</b></span>`)}}});
 
 /* ---------- 5 Series ---------- */
-SL.push({id:'m2_series',syl:'M2',menu:'Series circuit',kind:'def',title:'series',hk:'sp',
+SL.push({id:'m2_series',syl:'M2',menu:'Series circuit',kind:'def',title:'series',hk:'rw',
  flash:'Series: one path (Module 0, slide 20). I = V ÷ R (Module 2, slide 4)',
- hook:'Festival lights. One bulb fused. The whole string is dark.',
+ hook:'You saw it in Module 0: one lamp out, all dark. Now the numbers: total R, one current, shared voltage.',
  play:'Drag R1, R2, R3 and V. Watch the voltage bars.',
  pred:{q:'3 equal lamps in series on 230 V. Voltage across each?',o:['76.7 V','230 V','690 V'],a:0,why:'Same current, equal R. 230 ÷ 3 ≈ 76.7 V each.'},
  labels:['series','current','vdrop'],
@@ -1384,7 +1384,7 @@ SL.push({id:'m2_series',syl:'M2',menu:'Series circuit',kind:'def',title:'series'
 /* ---------- 6 Parallel ---------- */
 SL.push({id:'m2_parallel',syl:'M2',menu:'Parallel circuit',kind:'def',title:'parallel',hk:'rw',
  flash:'Parallel: many paths (Module 0, slide 21). Conductance G = 1 ÷ R (Module 0, slide 12)',
- hook:'House wiring: every socket has its own path.',
+ hook:'You saw it in Module 0: one lamp out, the others glow. Now the numbers: total R falls, branch currents add.',
  play:'Drag R1, R2, R3 and V. Watch the branch currents.',
  pred:{q:'A third branch is added in parallel. Total resistance …',o:['Goes down','Goes up','Stays same'],a:0,why:'A new path makes flow easier. R total falls below the smallest R.'},
  labels:['parallel','current','conductance'],
@@ -1421,7 +1421,7 @@ SL.push({id:'m2_sp',syl:'M2',menu:'Series-parallel networks',kind:'def',title:'s
  uses:'Uses the series sum (slide 5) and the parallel pair (slide 6). Work from the inside out.',
  ex:'2 + (6 × 3 ÷ 9) = 2 + 2 = <b>4 Ω</b>. On 12 V: I = 3 A.',
  trick:'Parallel pair first. Then add in series.',
- check:{q:'The same 4 Ω network is on 12 V. Current from the source = ?',o:['3 A','1 A','6 A'],a:0},
+ check:{q:'The same 4 Ω network is on 18 V. Current from the source = ?',o:['4.5 A','1.5 A','9 A'],a:0},
  build(w,api){
   const NW=st=>{let g=wr('M50 85V50')+wr('M50 165V200')+symCell(50,125,90)+`<text x="68" y="108" class="tx" style="fill:var(--conv)">+</text>`;
    if(st===0){g+=wr('M50 50H110')+symRes(150,50,0)+wr('M190 50H300')+wr('M50 200H300')+wr('M240 50V85M240 165V200M300 50V85M300 165V200')+`<circle cx="240" cy="50" r="4" fill="var(--wire)"/><circle cx="240" cy="200" r="4" fill="var(--wire)"/>`+symRes(240,125,90)+symRes(300,125,90)+`<text x="150" y="34" class="tx m">R1</text><text x="214" y="130" class="tx" text-anchor="end">R2</text><text x="326" y="130" class="tx">R3</text><rect x="220" y="75" width="100" height="100" rx="10" fill="none" stroke="var(--frm)" stroke-width="3" stroke-dasharray="6 5"/>`}
@@ -1448,7 +1448,7 @@ SL.push({id:'m2_kcl',syl:'M2',menu:'Kirchhoff’s current law (KCL)',kind:'law',
  hook:'A busbar takes 40 A in. It must send 40 A out.',
  defn:'<b>Node:</b> a point where 3 or more wires meet. <b>KCL:</b> total current entering a node = total current leaving it. Charge cannot pile up.',
  play:'Drag I1, I2, I3. I4 changes so that in = out.',
- pred:{q:'3 A and 2 A enter a node. One wire leaves. Its current?',o:['5 A','1 A','6 A'],a:0,why:'In = out. 3 + 2 = 5 A must leave.'},
+ pred:{q:'4 A and 3 A enter a node. One wire leaves. Its current?',o:['7 A','1 A','12 A'],a:0,why:'In = out. 4 + 3 = 7 A must leave.'},
  labels:['node','current'],
  hints:['qit','m2p'],rel:{c:['Q','I','node','ΣI'],h:'ΣI'},
  fm:'ΣI<sub>in</sub> = ΣI<sub>out</sub>',
@@ -1536,7 +1536,7 @@ SL.push({id:'m2_lc',syl:'M2',menu:'L and C in series and parallel',kind:'formula
  hook:'Need a bigger capacitor? Join two in parallel.',
  defn:'<b>Inductor</b> (L, henry H) and <b>capacitor</b> (C, farad F) are two-terminal parts. Their combinations follow the same two rules as resistors, but swapped for C.',
  play:'Tap R, L or C. Tap Series or Parallel. Drag the values.',
- pred:{q:'Two 10 µF capacitors in parallel. Total C = ?',o:['20 µF','5 µF','10 µF'],a:0,why:'Capacitors in parallel add directly: 10 + 10 = 20 µF.'},
+ pred:{q:'Two capacitors are joined in parallel. The total C is …',o:['More than either','Less than either','Same as the bigger one'],a:0,why:'Parallel plates add area, so C adds. This is the opposite of resistors.'},
  labels:['inductor','capacitor','resist'],
  hints:['m2s','m2p','pre'],rel:{c:['R','L','C'],h:['L','C']},
  fm:'<i>C<sub>par</sub></i> = <i>C</i><sub>1</sub> + <i>C</i><sub>2</sub> · 1 ÷ <i>C<sub>ser</sub></i> = 1 ÷ <i>C</i><sub>1</sub> + 1 ÷ <i>C</i><sub>2</sub>',
@@ -1678,7 +1678,7 @@ SL.push({id:'m2_twist',syl:'M2',exam:true,menu:'Exam twist: Module 2',kind:'tip'
   draw();api.setReplay(draw);
   s.appendChild(h('div','flash',`<b>↩ ${UIB('fb')}</b><span>Series and parallel sums (Module 2, slides 5 and 6)</span>`));
   miniQuiz(s,[
-   {q:'Two 6 Ω resistors in parallel across a 12 V supply. Total current = ?',o:['4 A','2 A','1 A','8 A'],a:0,why:'R total = 3 Ω. I = 12 ÷ 3 = 4 A.'},
+   {q:'Two 8 Ω resistors in parallel across a 24 V supply. Total current = ?',o:['6 A','3 A','1.5 A','12 A'],a:0,why:'R total = 4 Ω. I = 24 ÷ 4 = 6 A.'},
    {q:'A copper wire of 2 Ω is drawn to twice its length (same volume). New resistance = ?',o:['4 Ω','8 Ω','2 Ω','16 Ω'],a:1,why:'Length × 2 and area ÷ 2, so R × 4 = 8 Ω.'},
    {q:'A 12 V battery drives 3 Ω, 4 Ω and 5 Ω in series. Voltage across the 5 Ω resistor?',o:['1 V','5 V','12 V','2.4 V'],a:1,why:'I = 12 ÷ 12 = 1 A. V = 1 × 5 = 5 V.'},
    {q:'At a node, 8 A and 5 A enter. One branch takes 6 A. Another branch carries …',o:['7 A','13 A','6 A','19 A'],a:0,why:'In = 13 A. Out = 6 + 7. So 7 A.'},
@@ -1850,7 +1850,7 @@ X('Cover the unknown in the triangle.','ट्रायंगल में अ�
 X('12 V across 4 Ω for 5 s. Charge passed = ?','4 Ω पर 12 V, 5 सेकंड के लिए। चार्ज = ?','4 Ω-ന് 12 V, 5 സെക്കൻഡ്. കടന്നുപോയ ചാർജ് = ?');
 X('I = V ÷ R. Double V, double I.','I = V ÷ R। V डबल तो I डबल।','I = V ÷ R. V ഇരട്ടിയായാൽ I ഇരട്ടി.');
 X('Series: one path (Module 0, slide 20). I = V ÷ R (Module 2, slide 4)','सीरीज़: एक पाथ (मॉड्यूल 0, स्लाइड 20)। I = V ÷ R (मॉड्यूल 2, स्लाइड 4)','സീരീസ്: ഒരു പാത്ത് (മോഡ്യൂൾ 0, സ്ലൈഡ് 20). I = V ÷ R (മോഡ്യൂൾ 2, സ്ലൈഡ് 4)');
-X('Festival lights. One bulb fused. The whole string is dark.','फेस्टिवल लाइट्स। एक बल्ब फ्यूज़। पूरी लड़ी बंद।','ഉത്സവ ലൈറ്റുകൾ. ഒരു ബൾബ് ഫ്യൂസായി. മുഴുവൻ സ്ട്രിംഗും ഓഫ്.');
+X('You saw it in Module 0: one lamp out, all dark. Now the numbers: total R, one current, shared voltage.','मॉड्यूल 0 में देखा: एक लैम्प गया, सब बंद। अब नंबर: टोटल R, एक करंट, बँटा वोल्टेज।','മൊഡ്യൂൾ 0-ൽ കണ്ടു: ഒരു ലാമ്പ് പോയാൽ എല്ലാം ഓഫ്. ഇനി നമ്പറുകൾ: ടോട്ടൽ R, ഒരേ കറന്റ്, പങ്കിട്ട വോൾട്ടേജ്.');
 X('3 equal lamps in series on 230 V. Voltage across each?','230 V पर सीरीज़ में 3 बराबर लैंप। हर एक पर वोल्टेज?','230 V-ൽ സീരീസിൽ 3 തുല്യ ലാമ്പുകൾ. ഓരോന്നിലും വോൾട്ടേജ്?');
 X('Drag R1, R2, R3 and V. Watch the voltage bars.','R1, R2, R3 और V ड्रैग करो। वोल्टेज बार देखो।','R1, R2, R3, V ഡ്രാഗ് ചെയ്യൂ. വോൾട്ടേജ് ബാറുകൾ ശ്രദ്ധിക്കൂ.');
 X('Uses I = V ÷ R (Module 2, slide 4). Same I through all. Voltage drops add up to V.','I = V ÷ R इस्तेमाल करता है (मॉड्यूल 2, स्लाइड 4)। सबमें वही I। वोल्टेज ड्रॉप जुड़कर V बनते हैं।','I = V ÷ R ഉപയോഗിക്കുന്നു (മോഡ്യൂൾ 2, സ്ലൈഡ് 4). എല്ലാറ്റിലും ഒരേ I. വോൾട്ടേജ് ഡ്രോപ്പുകൾ കൂട്ടിയാൽ V.');
@@ -1859,7 +1859,7 @@ X('Series: R adds. I same. V shares.','सीरीज़: R जुड़ता 
 X('4 Ω and 6 Ω in series on 20 V. Current = ?','20 V पर सीरीज़ में 4 Ω और 6 Ω। करंट = ?','20 V-ൽ സീരീസിൽ 4 Ω, 6 Ω. കറന്റ് = ?');
 X('Same current, equal R. 230 ÷ 3 ≈ 76.7 V each.','वही करंट, बराबर R। 230 ÷ 3 ≈ 76.7 V हर एक पर।','ഒരേ കറന്റ്, തുല്യ R. 230 ÷ 3 ≈ 76.7 V ഓരോന്നിലും.');
 X('Parallel: many paths (Module 0, slide 21). Conductance G = 1 ÷ R (Module 0, slide 12)','पैरेलल: कई पाथ (मॉड्यूल 0, स्लाइड 21)। कंडक्टेंस G = 1 ÷ R (मॉड्यूल 0, स्लाइड 12)','പാരലൽ: പല പാത്തുകൾ (മോഡ്യൂൾ 0, സ്ലൈഡ് 21). കണ്ടക്ടൻസ് G = 1 ÷ R (മോഡ്യൂൾ 0, സ്ലൈഡ് 12)');
-X('House wiring: every socket has its own path.','हाउस वायरिंग: हर सॉकेट का अपना पाथ।','ഹൗസ് വയറിംഗ്: ഓരോ സോക്കറ്റിനും സ്വന്തം പാത്ത്.');
+X('You saw it in Module 0: one lamp out, the others glow. Now the numbers: total R falls, branch currents add.','मॉड्यूल 0 में देखा: एक लैम्प गया, बाकी जलते हैं। अब नंबर: टोटल R घटता है, ब्रांच करंट जुड़ते हैं।','മൊഡ്യൂൾ 0-ൽ കണ്ടു: ഒരു ലാമ്പ് പോയാലും ബാക്കി കത്തും. ഇനി നമ്പറുകൾ: ടോട്ടൽ R കുറയുന്നു, ബ്രാഞ്ച് കറന്റ് കൂടുന്നു.');
 X('A third branch is added in parallel. Total resistance …','तीसरी ब्रांच पैरेलल में जुड़ती है। टोटल रेसिस्टेंस …','മൂന്നാമത്തെ ബ്രാഞ്ച് പാരലലായി ചേർക്കുന്നു. ടോട്ടൽ റെസിസ്റ്റൻസ് …');
 X('Goes down','घटता है','കുറയും');
 X('Goes up','बढ़ता है','കൂടും');
@@ -1880,7 +1880,7 @@ X('Press Step 1, 2, 3. Each step redraws the network.','स्टेप 1, 2, 3 
 X('Parallel Σ','पैरेलल Σ','പാരലൽ Σ');
 X('Uses the series sum (slide 5) and the parallel pair (slide 6). Work from the inside out.','सीरीज़ सम (स्लाइड 5) और पैरेलल पेयर (स्लाइड 6) इस्तेमाल होते हैं। अंदर से बाहर की तरफ हल करो।','സീരീസ് സം (സ്ലൈഡ് 5), പാരലൽ ജോഡി (സ്ലൈഡ് 6) ഉപയോഗിക്കുന്നു. അകത്തുനിന്ന് പുറത്തേക്ക് ചെയ്യൂ.');
 X('Parallel pair first. Then add in series.','पहले पैरेलल पेयर। फिर सीरीज़ में जोड़ो।','ആദ്യം പാരലൽ ജോഡി. പിന്നെ സീരീസിൽ കൂട്ടൂ.');
-X('The same 4 Ω network is on 12 V. Current from the source = ?','वही 4 Ω नेटवर्क 12 V पर है। सोर्स से करंट = ?','അതേ 4 Ω നെറ്റ്‌വർക്ക് 12 V-ൽ. സോഴ്സിൽ നിന്നുള്ള കറന്റ് = ?');
+X('The same 4 Ω network is on 18 V. Current from the source = ?','वही 4 Ω नेटवर्क 18 V पर है। सोर्स से करंट = ?','അതേ 4 Ω നെറ്റ്‌വർക്ക് 18 V-ൽ. സോഴ്സിൽ നിന്നുള്ള കറന്റ് = ?');
 X('6 ∥ 3 = 2 Ω. Then 2 + 2 = 4 Ω.','6 ∥ 3 = 2 Ω। फिर 2 + 2 = 4 Ω।','6 ∥ 3 = 2 Ω. പിന്നെ 2 + 2 = 4 Ω.');
 X('ΣIin = 3 + 2 = 5 A','ΣIin = 3 + 2 = 5 A','ΣIin = 3 + 2 = 5 A');
 X('ΣIout = 3 + 2 = 5 A','ΣIout = 3 + 2 = 5 A','ΣIout = 3 + 2 = 5 A');
@@ -1891,7 +1891,7 @@ X('Node:','नोड:','നോഡ്:');
 X('KCL:','KCL:','KCL:');
 X('A busbar takes 40 A in. It must send 40 A out.','बसबार में 40 A आता है। उसे 40 A बाहर भेजना ही पड़ेगा।','ബസ്ബാറിൽ 40 A വരുന്നു. 40 A പുറത്തേക്ക് പോകണം.');
 X('I = Q ÷ t: current is charge flow (Module 0, slide 6). Parallel branches (Module 2, slide 6)','I = Q ÷ t: करंट यानी चार्ज का फ्लो (मॉड्यूल 0, स्लाइड 6)। पैरेलल ब्रांच (मॉड्यूल 2, स्लाइड 6)','I = Q ÷ t: കറന്റ് എന്നാൽ ചാർജ് ഫ്ലോ (മോഡ്യൂൾ 0, സ്ലൈഡ് 6). പാരലൽ ബ്രാഞ്ചുകൾ (മോഡ്യൂൾ 2, സ്ലൈഡ് 6)');
-X('3 A and 2 A enter a node. One wire leaves. Its current?','एक नोड में 3 A और 2 A आते हैं। एक वायर बाहर जाता है। उसका करंट?','ഒരു നോഡിൽ 3 A, 2 A വരുന്നു. ഒരു വയർ പുറത്തേക്ക് പോകുന്നു. അതിലെ കറന്റ്?');
+X('4 A and 3 A enter a node. One wire leaves. Its current?','एक नोड में 4 A और 3 A आते हैं। एक वायर बाहर जाता है। उसका करंट?','ഒരു നോഡിൽ 4 A, 3 A വരുന്നു. ഒരു വയർ പുറത്തേക്ക്. അതിലെ കറന്റ്?');
 X('Drag I1, I2, I3. I4 changes so that in = out.','I1, I2, I3 ड्रैग करो। I4 बदलता है ताकि इन = आउट रहे।','I1, I2, I3 ഡ്രാഗ് ചെയ്യൂ. ഇൻ = ഔട്ട് ആകാൻ I4 മാറും.');
 X('Q→I→node→ΣI','Q→I→नोड→ΣI','Q→I→നോഡ്→ΣI');
 X('node','नोड','നോഡ്');
@@ -1900,7 +1900,7 @@ X('Charge in = charge out each second: I = Q ÷ t (Module 0, slide 6). Parallel 
 X('Node: 6 A + 4 A in. Out: 7 A and 3 A. Total in = 10 A = total out.','नोड: 6 A + 4 A अंदर। बाहर: 7 A और 3 A। टोटल इन = 10 A = टोटल आउट।','നോഡ്: 6 A + 4 A അകത്ത്. പുറത്ത്: 7 A, 3 A. ടോട്ടൽ ഇൻ = 10 A = ടോട്ടൽ ഔട്ട്.');
 X('What goes in must come out.','जो अंदर जाता है, वो बाहर आता है।','അകത്തു പോകുന്നത് പുറത്തു വരണം.');
 X('5 A enters a junction. 2 A leaves one wire. Charge through the other wire in 4 s = ?','जंक्शन में 5 A आता है। एक वायर से 2 A जाता है। दूसरे वायर से 4 सेकंड में चार्ज = ?','ജംഗ്ഷനിൽ 5 A വരുന്നു. ഒരു വയറിലൂടെ 2 A പോകുന്നു. മറ്റേ വയറിലൂടെ 4 സെക്കൻഡിൽ ചാർജ് = ?');
-X('In = out. 3 + 2 = 5 A must leave.','इन = आउट। 3 + 2 = 5 A बाहर जाना ही है।','ഇൻ = ഔട്ട്. 3 + 2 = 5 A പുറത്തു പോകണം.');
+X('In = out. 4 + 3 = 7 A must leave.','इन = आउट। 4 + 3 = 7 A बाहर जाना ही है।','ഇൻ = ഔട്ട്. 4 + 3 = 7 A പുറത്തു പോകണം.');
 X('Source','सोर्स','സോഴ്സ്');
 X('Loop: a closed path in a circuit. KVL: around any closed loop, the voltage rise from the source equals the sum of the voltage drops.','लूप: सर्किट में एक क्लोज़्ड पाथ। KVL: किसी भी क्लोज़्ड लूप में सोर्स का वोल्टेज राइज़ = सारे वोल्टेज ड्रॉप का सम।','ലൂപ്പ്: സർക്യൂട്ടിലെ ക്ലോസ്ഡ് പാത്ത്. KVL: ഏതൊരു ക്ലോസ്ഡ് ലൂപ്പിലും സോഴ്സിന്റെ വോൾട്ടേജ് റൈസ് = വോൾട്ടേജ് ഡ്രോപ്പുകളുടെ സം.');
 X('Loop:','लूप:','ലൂപ്പ്:');
@@ -1936,7 +1936,10 @@ X('Inductor','इंडक्टर','ഇൻഡക്ടർ');
 X('capacitor','कैपेसिटर','കപ്പാസിറ്റർ');
 X('Need a bigger capacitor? Join two in parallel.','बड़ा कैपेसिटर चाहिए? दो को पैरेलल में जोड़ दो।','വലിയ കപ്പാസിറ്റർ വേണോ? രണ്ടെണ്ണം പാരലലായി ചേർക്കൂ.');
 X('R series and parallel (Module 2, slides 5 and 6). Prefixes m and µ (Module 0, slide 23)','R सीरीज़ और पैरेलल (मॉड्यूल 2, स्लाइड 5 और 6)। प्रीफिक्स m और µ (मॉड्यूल 0, स्लाइड 23)','R സീരീസ്, പാരലൽ (മോഡ്യൂൾ 2, സ്ലൈഡ് 5, 6). പ്രിഫിക്സ് m, µ (മോഡ്യൂൾ 0, സ്ലൈഡ് 23)');
-X('Two 10 µF capacitors in parallel. Total C = ?','पैरेलल में दो 10 µF कैपेसिटर। टोटल C = ?','പാരലലായി രണ്ട് 10 µF കപ്പാസിറ്ററുകൾ. ടോട്ടൽ C = ?');
+X('Two capacitors are joined in parallel. The total C is …','दो कैपेसिटर पैरेलल में जोड़े। टोटल C …','രണ്ട് കപ്പാസിറ്റർ പാരലലായി ചേർത്തു. ടോട്ടൽ C …');
+X('More than either','दोनों से ज़्यादा','രണ്ടിനേക്കാളും കൂടുതൽ');
+X('Less than either','दोनों से कम','രണ്ടിനേക്കാളും കുറവ്');
+X('Same as the bigger one','बड़े वाले जितना','വലുതിന്റെ അത്ര');
 X('Tap R, L or C. Tap Series or Parallel. Drag the values.','R, L या C पर टैप करो। सीरीज़ या पैरेलल पर टैप करो। वैल्यू ड्रैग करो।','R, L, C ടാപ്പ് ചെയ്യൂ. സീരീസ് / പാരലൽ ടാപ്പ് ചെയ്യൂ. വാല്യൂ ഡ്രാഗ് ചെയ്യൂ.');
 X('L · henry (H)','L · हेनरी (H)','L · ഹെൻട്രി (H)');
 X('C · farad (F)','C · फैराड (F)','C · ഫാരഡ് (F)');
@@ -1947,7 +1950,7 @@ X('10 µF ∥ 10 µF = 20 µF. 10 µF in series with 10 µF = 5 µF. 4 mH + 4 mH
 X('Why: parallel capacitors add plate area. Series capacitors add the gap. Principle and construction: Module 5A.','क्यों: पैरेलल कैपेसिटर प्लेट एरिया जोड़ते हैं। सीरीज़ कैपेसिटर गैप जोड़ते हैं। प्रिंसिपल और कंस्ट्रक्शन: मॉड्यूल 5A।','എന്തുകൊണ്ട്: പാരലൽ കപ്പാസിറ്ററുകൾ പ്ലേറ്റ് ഏരിയ കൂട്ടും. സീരീസ് കപ്പാസിറ്ററുകൾ ഗ്യാപ്പ് കൂട്ടും. പ്രിൻസിപ്പിളും കൺസ്ട്രക്ഷനും: മോഡ്യൂൾ 5A.');
 X('C is the opposite of R.','C, R का उल्टा है।','C, R-ന്റെ നേർ വിപരീതം.');
 X('6 µF and 3 µF in series. Total C = ?','सीरीज़ में 6 µF और 3 µF। टोटल C = ?','സീരീസിൽ 6 µF, 3 µF. ടോട്ടൽ C = ?');
-X('Capacitors in parallel add directly: 10 + 10 = 20 µF.','पैरेलल कैपेसिटर सीधे जुड़ते हैं: 10 + 10 = 20 µF।','പാരലൽ കപ്പാസിറ്ററുകൾ നേരിട്ട് കൂടും: 10 + 10 = 20 µF.');
+X('Parallel plates add area, so C adds. This is the opposite of resistors.','पैरेलल प्लेटों का एरिया जुड़ता है, इसलिए C जुड़ता है। यह रेसिस्टर से उल्टा है।','പാരലൽ പ്ലേറ്റുകളുടെ ഏരിയ കൂടുന്നു, അതിനാൽ C കൂടുന്നു. ഇത് റെസിസ്റ്ററിന് എതിരാണ്.');
 X('Tight','टाइट','ടൈറ്റ്');X('Loose','लूज़','ലൂസ്');X('Turns','टर्न','ടേൺ');
 X('Bare conductor joint: two bare wires joined by winding. Test it: close, tight turns on clean, bright copper.','बेयर कंडक्टर जॉइंट: दो नंगे तार लपेटकर जोड़े जाते हैं। चेक करो: साफ़, चमकदार कॉपर पर पास-पास, टाइट टर्न।','ബെയർ കണ്ടക്ടർ ജോയിന്റ്: രണ്ട് നഗ്ന വയറുകൾ ചുറ്റി യോജിപ്പിക്കുന്നു. ചെക്ക് ചെയ്യൂ: വൃത്തിയുള്ള തിളങ്ങുന്ന കോപ്പറിൽ അടുത്തടുത്ത് ടൈറ്റ് ടേണുകൾ.');
 X('Bare conductor joint:','बेयर कंडक्टर जॉइंट:','ബെയർ കണ്ടക്ടർ ജോയിന്റ്:');
@@ -2002,7 +2005,8 @@ X('V ÷ n = 4 V each','V ÷ n = 4 V हर एक','V ÷ n = 4 V ഓരോന്
 X('Number of equal resistors','बराबर रेसिस्टर की संख्या','തുല്യ റെസിസ്റ്ററുകളുടെ എണ്ണം');
 X('Supply','सप्लाई','സപ്ലൈ');
 X('Series and parallel sums (Module 2, slides 5 and 6)','सीरीज़ और पैरेलल सम (मॉड्यूल 2, स्लाइड 5 और 6)','സീരീസ്, പാരലൽ സം (മോഡ്യൂൾ 2, സ്ലൈഡ് 5, 6)');
-X('Two 6 Ω resistors in parallel across a 12 V supply. Total current = ?','12 V सप्लाई पर पैरेलल में दो 6 Ω रेसिस्टर। टोटल करंट = ?','12 V സപ്ലൈയിൽ പാരലലായി രണ്ട് 6 Ω റെസിസ്റ്ററുകൾ. ടോട്ടൽ കറന്റ് = ?');
+X('Two 8 Ω resistors in parallel across a 24 V supply. Total current = ?','24 V सप्लाई पर पैरेलल में दो 8 Ω रेसिस्टर। टोटल करंट = ?','24 V സപ്ലൈയിൽ പാരലലായി രണ്ട് 8 Ω റെസിസ്റ്ററുകൾ. ടോട്ടൽ കറന്റ് = ?');
+X('R total = 4 Ω. I = 24 ÷ 4 = 6 A.','R टोटल = 4 Ω। I = 24 ÷ 4 = 6 A।','R ടോട്ടൽ = 4 Ω. I = 24 ÷ 4 = 6 A.');
 X('Paths','पाथ','പാത്തുകൾ');X('One','एक','ഒന്ന്');X('Many','कई','പലത്');
 X('Same in every part','हर पार्ट में वही','എല്ലാ പാർട്ടിലും ഒരേപോലെ');
 X('Splits and adds','बँटता और जुड़ता है','വിഭജിച്ച് കൂടുന്നു');
